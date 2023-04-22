@@ -1,8 +1,3 @@
-.content {
-  padding: 0 70px;
-  box-sizing: border-box;
-}
-
 .header {
   box-sizing: border-box;
   padding: 0 70px;
@@ -65,10 +60,6 @@
     box-shadow: none;
     border: none;
   }
-
-  .content {
-    padding: 0 50px;
-  }
 }
 
 @media screen and (max-width: 500px) {
@@ -89,9 +80,5 @@
 
   .header__link {
     font-size: 10px;
-  }
-
-  .content {
-    padding: 0 50px;
   }
 }
