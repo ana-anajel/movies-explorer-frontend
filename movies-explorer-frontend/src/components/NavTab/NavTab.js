@@ -1,12 +1,12 @@
 import React from 'react';
 import './NavTab.css';
+import Title from '../Title/Title';
+
 
 function NavTab() {
   return (
     <section className="navigation">
-      <div className="title">
-        <h2 className="title__text">О проекте</h2>
-      </div>
+      {<Title text={'О проекте'} />}
 
       <div className='navigation__container'>
 
@@ -39,11 +39,6 @@ function NavTab() {
         <p className='navigation__cell'>Back-end</p>
         <p className='navigation__cell'>Front-end</p>
       </div>
-
-
-
-
-
 
     </section>
   );

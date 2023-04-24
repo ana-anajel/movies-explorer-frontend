@@ -3,21 +3,6 @@
   padding: 110px 70px;
 }
 
-.title {
-  box-sizing: border-box;
-  padding: 0 0 23px;
-  border-bottom: 1px solid #000;
-}
-
-.title__text {
-  margin: 0;
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 27px;
-}
-
-
-
 .navigation__container {
   box-sizing: border-box;
   padding: 70px 0 110px;
@@ -125,15 +110,6 @@
 @media screen and (max-width: 577px) {
   .navigation {
     padding: 70px 18px;
-  }
-
-  .title {
-    padding: 0 0 28px;
-  }
-
-  .title__text {
-    font-size: 18px;
-    line-height: 22px;
   }
 
   .navigation__container {
