@@ -1,13 +1,13 @@
 .promo {
   box-sizing: border-box;
-  border: 1px solid orange;
+  padding: 75px 70px;
+  background-color: #F3C1F8;
   display: flex;
-  padding: 75px 0;
+  justify-content: space-between;
 }
 
-.promo__container {}
-
 .promo__title {
+  max-width: 640px;
   font-weight: 400;
   font-size: 50px;
   line-height: 58px;
@@ -16,6 +16,8 @@
 }
 
 .promo__subtitle {
+  max-width: 310px;
+  opacity: 0.5;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
@@ -29,6 +31,7 @@
   opacity: 0.6;
   width: 129px;
   height: 36px;
+  border-radius: 3px;
 }
 
 .promo__link {
@@ -41,7 +44,63 @@
 }
 
 .promo__image {
-  margin-left: 70px;
+  margin: 0 0 0 60px;
   width: 310px;
   height: 304px;
+}
+
+@media screen and (max-width: 924px) {
+  .promo {
+    padding: 140px 44px 76px;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .promo__container {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .promo__title {
+    max-width: 680px;
+    font-size: 40px;
+    line-height: 50px;
+    margin: 0 0 22px;
+  }
+
+  .promo__subtitle {
+    max-width: 260px;
+    margin: 0 auto 92px;
+  }
+
+  .promo__image {
+    margin: 0 0 48px;
+  }
+
+  .promo__box-link {
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 517px) {
+  .promo {
+    padding: 70px 10px 30px;
+  }
+
+  .promo__title {
+    max-width: 300px;
+    font-size: 30px;
+    line-height: 38px;
+    margin: 0 0 24px;
+  }
+
+  .promo__subtitle {
+    margin: 0 auto 80px;
+  }
+
+  .promo__image {
+    width: 210px;
+    height: 206px;
+    margin: 0 0 44px;
+  }
 }

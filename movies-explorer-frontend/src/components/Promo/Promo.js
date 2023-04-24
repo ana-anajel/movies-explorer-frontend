@@ -6,8 +6,8 @@ function Promo() {
   return (
     <section className="promo">
       <div className="promo__container">
-        <h1 className="promo__title">Учебный проект студента факультета Веб-<br />разработки.</h1>
-        <p className="promo__subtitle">Листайте ниже, чтобы узнать больше про этот<br />проект и его создателя.</p>
+        <h1 className="promo__title">Учебный проект студента факультета Веб-разработки.</h1>
+        <p className="promo__subtitle">Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
         <div className='promo__box-link'><a href='https://ya.ru/' className="promo__link">Узнать больше</a></div>
       </div>
       <img className='promo__image' alt="Изображение планеты из текстовых фраз." src={Planet} />
