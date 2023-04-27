@@ -5,22 +5,39 @@ import Title from '../Title/Title';
 
 function AboutProject() {
   return (
-    <section className="about">
-      {<Title text={'Технологии'} />}
+    <section className="about-project">
+      {<Title text={'О проекте'} />}
 
-      <div className='about__container'>
-        <h2 className='about__title'>7 технологий</h2>
-        <p className='about__text'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
+      <div className='about-project__container'>
+
+        <ul className="about-project__list">
+          <li className="about-project__element">
+            <h3 className="about-project__subtitle">Дипломный проект включал 5 этапов</h3>
+          </li>
+          <li className="about-project__element" >
+            <p className="about-project__text">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
+          </li>
+        </ul>
+
+        <ul className="about-project__list">
+          <li className="about-project__element">
+            <h3 className="about-project__subtitle">На выполнение диплома ушло 5 недель</h3>
+          </li>
+          <li className="about-project__element" >
+            <p className="about-project__text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
+          </li>
+        </ul>
+
       </div>
 
-      <div className='about__technologies'>
-        <p className='about__technology'>HTML</p>
-        <p className='about__technology'>CSS</p>
-        <p className='about__technology'>JS</p>
-        <p className='about__technology'>React</p>
-        <p className='about__technology'>Git</p>
-        <p className='about__technology'>Express.js</p>
-        <p className='about__technology'>mongoDB</p>
+      <div className='about-project__table'>
+        <p className='about-project__cell about-project__week'>1 неделя</p>
+        <p className='about-project__cell about-project__week'>4 недели</p>
+      </div>
+
+      <div className='about-project__table'>
+        <p className='about-project__cell'>Back-end</p>
+        <p className='about-project__cell'>Front-end</p>
       </div>
 
     </section>

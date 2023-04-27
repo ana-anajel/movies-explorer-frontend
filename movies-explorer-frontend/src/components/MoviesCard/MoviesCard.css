@@ -1,0 +1,42 @@
+.card {
+  width: 364px;
+  height: 271px;
+  background-color: #FDFDFD;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card__name {
+  box-sizing: border-box;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card__text {}
+
+.card__title {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  margin: 0 0 9px;
+}
+
+.card__subtitle {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #A0A0A0;
+  margin: 0;
+}
+
+.card__icon-add {
+  width: 30px;
+  height: 30px;
+}
+
+
+.card__image {
+  width: 364px;
+  height: 203px;
+}

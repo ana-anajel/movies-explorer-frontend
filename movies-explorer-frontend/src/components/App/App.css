@@ -3,7 +3,7 @@
   min-width: 320px;
   /* width: 100%; */
   /* background-color: #fff; */
-  background-color: olivedrab;
+  border: 1px solid red;
   font-family: "Inter", Arial, Helvetica, sans-serif;
   margin: 0 auto;
   padding: 0;
