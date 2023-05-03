@@ -1,5 +1,6 @@
 import React from 'react';
 import './Profile.css';
+import '../Animation/Animation.css';
 
 function Profile() {
   return (
@@ -20,8 +21,8 @@ function Profile() {
           </li>
         </ul>
 
-        <button className='profile__button'>Редактировать</button>
-        <button className='profile__button'>Выйти из аккаунта</button>
+        <button className='profile__button animation'>Редактировать</button>
+        <button className='profile__button animation'>Выйти из аккаунта</button>
 
       </div>
 
