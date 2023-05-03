@@ -1,7 +1,6 @@
 .portfolio {
   box-sizing: border-box;
   padding: 0 70px 125px;
-  border: solid 1px red;
 }
 
 .portfolio__title {

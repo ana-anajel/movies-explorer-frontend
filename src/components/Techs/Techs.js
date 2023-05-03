@@ -13,15 +13,15 @@ function Techs() {
         <p className='techs__text'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
       </div>
 
-      <div className='techs__technologies'>
-        <p className='techs__technology'>HTML</p>
-        <p className='techs__technology'>CSS</p>
-        <p className='techs__technology'>JS</p>
-        <p className='techs__technology'>React</p>
-        <p className='techs__technology'>Git</p>
-        <p className='techs__technology'>Express.js</p>
-        <p className='techs__technology'>mongoDB</p>
-      </div>
+      <ul className='techs__technologies'>
+        <li className='techs__element'><p className='techs__technology'>HTML</p></li>
+        <li className='techs__element'><p className='techs__technology'>CSS</p></li>
+        <li className='techs__element'><p className='techs__technology'>JS</p></li>
+        <li className='techs__element'><p className='techs__technology'>React</p></li>
+        <li className='techs__element'><p className='techs__technology'>Git</p></li>
+        <li className='techs__element'><p className='techs__technology'>Express.js</p></li>
+        <li className='techs__element'><p className='techs__technology'>mongoDB</p></li>
+      </ul>
 
     </section>
   );

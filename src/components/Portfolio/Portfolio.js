@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Pointer from '../../images/pointerDesktop.png';
 import './Portfolio.css';
+import '../Animation/Animation.css';
 
 function Portfolio() {
   return (
@@ -10,18 +12,18 @@ function Portfolio() {
       <ul className='portfolio__list'>
 
         <li className='portfolio__element'>
-          <a href='ya.ru' className='portfolio__link'>Статичный сайт</a>
-          <a href='ya.ru'><img className='portfolio__icon' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></a>
+          <Link to='https://github.com' className='portfolio__link animation'>Статичный сайт</Link>
+          <Link to='https://github.com'><img className='portfolio__icon animation' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
         </li>
 
         <li className='portfolio__element'>
-          <a href='ya.ru' className='portfolio__link'>Адаптивный сайт</a>
-          <a href='ya.ru'><img className='portfolio__icon' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></a>
+          <Link to='https://github.com' className='portfolio__link animation'>Адаптивный сайт</Link>
+          <Link to='https://github.com'><img className='portfolio__icon animation' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
         </li>
 
         <li className='portfolio__element'>
-          <a href='ya.ru' className='portfolio__link'>Одностраничное приложение</a>
-          <a href='ya.ru'><img className='portfolio__icon' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></a>
+          <Link to='https://github.com' className='portfolio__link animation'>Одностраничное приложение</Link>
+          <Link to='https://github.com'><img className='portfolio__icon animation' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
         </li>
 
       </ul>

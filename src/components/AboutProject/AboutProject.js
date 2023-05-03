@@ -30,15 +30,33 @@ function AboutProject() {
 
       </div>
 
-      <div className='about-project__table'>
-        <p className='about-project__cell about-project__week'>1 неделя</p>
-        <p className='about-project__cell about-project__week'>4 недели</p>
-      </div>
+      {/* <ul className='about-project__table'>
+        <li className='about-project__week'><p className='about-project__cell about-project__cell_type_first'>1 неделя</p></li>
+        <li className='about-project__week'><p className='about-project__cell'>4 недели</p></li>
+      </ul>
 
-      <div className='about-project__table'>
-        <p className='about-project__cell'>Back-end</p>
-        <p className='about-project__cell'>Front-end</p>
-      </div>
+      <ul className='about-project__table'>
+        <li className='about-project__el'><p className='about-project__te'>Back-end</p></li>
+        <li className='about-project__el'><p className='about-project__te'>Front-end</p></li>
+      </ul> */}
+
+      <ul className='about-project__table'>
+        <li className='about-project__table-element about-project__table-box about-project__table-element_color_black'>
+          <p className='about-project__text-element'>1 неделя</p>
+        </li>
+
+        <li className='about-project__table-element about-project__table-box'>
+          <p className='about-project__text-element'>4 неделя</p>
+        </li>
+
+        <li className='about-project__table-element'>
+          <p className='about-project__text-element about-project__text-technologies'>Back-end</p>
+        </li>
+
+        <li className='about-project__table-element'>
+          <p className='about-project__text-element about-project__text-technologies'>Front-end</p>
+        </li>
+      </ul>
 
     </section>
   );
