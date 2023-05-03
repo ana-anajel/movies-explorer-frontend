@@ -22,3 +22,7 @@
           123
         </a>
       </header>
+
+      @media screen and (max-width: 924px) {}
+
+@media screen and (max-width: 577px) {}
