@@ -1,58 +1,50 @@
 .menu {
+  border: 1px solid red;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  width: 676px;
-  border: 1px solid red;
 }
 
 .menu__list {
   list-style-type: none;
-  display: flex;
   margin: 0;
   padding: 0;
+  display: flex;
   align-items: center;
 }
 
 .menu__link {
-  color: #000;
   text-decoration: none;
-}
-
-.menu__link-account {
-  font-weight: 500;
   font-size: 14px;
   line-height: 16px;
+  color: black;
+  margin: auto;
+}
+
+.menu__text-bold {
+  font-weight: 500;
+}
+
+.menu__text {
+  margin: 0 16px;
+  font-weight: 400px;
 }
 
 .menu__avatar-container {
   width: 30px;
   height: 30px;
-  background-color: #F9F9F9;
   border-radius: 6px;
+  background-color: #F9F9F9;
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
-  align-items: center;
   margin-left: 13px;
+
 }
 
 .menu__avatar {
   width: 10.38px;
-  height: 10.67px;
-}
-
-.menu__link-movies {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 18px;
-}
-
-.menu__link-save-movies {
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 18px;
-  margin-left: 16px;
+  height: 10.66px;
 }
 
 @media screen and (max-width: 924px) {}
