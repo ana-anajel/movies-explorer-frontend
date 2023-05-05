@@ -14,8 +14,8 @@ function Footer() {
       <div className='footer__info'>
         <p className='footer__year'>© <span>{new Date().getFullYear()}</span></p>
         <ul className='footer__list'>
-          <li className='footer__element animation'><Link to='https://practicum.yandex.ru' className='footer__link'>Яндекс.Практикум</Link></li>
-          <li className='footer__element animation'><Link to='https://github.com' className='footer__link'>Github</Link></li>
+          <li className='footer__element animation'><Link to='https://practicum.yandex.ru' target="_blank" className='footer__link'>Яндекс.Практикум</Link></li>
+          <li className='footer__element animation'><Link to='https://github.com' target="_blank" className='footer__link'>Github</Link></li>
         </ul>
       </div>
 

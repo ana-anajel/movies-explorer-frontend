@@ -85,11 +85,11 @@
     will-change: transform;
   }
 
-  .header.open .menu {
+  .header.opened .menu {
     visibility: visible;
   }
 
-  .header.open .menu__blur {
+  .header.opened .menu__blur {
     display: block;
   }
 

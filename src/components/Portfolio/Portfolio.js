@@ -11,24 +11,24 @@ function Portfolio() {
 
       <ul className='portfolio__list'>
 
-        <li className='portfolio__element'>
-          <Link to='https://github.com' className='portfolio__link animation'>Статичный сайт</Link>
-          <Link to='https://github.com'><img className='portfolio__icon animation' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
+        <li className='portfolio__element animation'>
+          <Link to='https://github.com' target="_blank" className='portfolio__link'>Статичный сайт</Link>
+          <Link to='https://github.com' target="_blank" > <img className='portfolio__icon' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
+        </li >
+
+        <li className='portfolio__element animation'>
+          <Link to='https://github.com' target="_blank" className='portfolio__link'>Адаптивный сайт</Link>
+          <Link to='https://github.com' target="_blank"><img className='portfolio__icon' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
         </li>
 
-        <li className='portfolio__element'>
-          <Link to='https://github.com' className='portfolio__link animation'>Адаптивный сайт</Link>
-          <Link to='https://github.com'><img className='portfolio__icon animation' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
+        <li className='portfolio__element animation'>
+          <Link to='https://github.com' target="_blank" className='portfolio__link'>Одностраничное приложение</Link>
+          <Link to='https://github.com' target="_blank"><img className='portfolio__icon' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
         </li>
 
-        <li className='portfolio__element'>
-          <Link to='https://github.com' className='portfolio__link animation'>Одностраничное приложение</Link>
-          <Link to='https://github.com'><img className='portfolio__icon animation' alt='Изображение указателя для перехода по ссылке.' src={Pointer} /></Link>
-        </li>
+      </ul >
 
-      </ul>
-
-    </section>
+    </section >
   );
 }
 

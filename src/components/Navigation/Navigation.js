@@ -5,11 +5,10 @@ import Burger from '../Burger/Burger';
 import './Navigation.css';
 import '../Animation/Animation.css';
 
-function Navigation() {
-
+function Navigation({ handleBurgerClick }) {
   return (
     <>
-      <Burger />
+      <Burger handleBurgerClick={handleBurgerClick} />
       <span className='menu__blur' />
       <nav className='menu'>
         <span>

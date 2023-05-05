@@ -5,7 +5,7 @@ import Search from '../../images/search.svg'
 import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
-function SearchForm(props) {
+function SearchForm() {
   return (
     <form className='search'>
       <div className='search__form-element'>

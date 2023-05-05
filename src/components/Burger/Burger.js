@@ -2,10 +2,9 @@ import React from 'react';
 import './Burger.css';
 import '../Animation/Animation.css';
 
-function Burger() {
-
+function Burger({ handleBurgerClick }) {
   return (
-    <div className='burger open animation'>
+    <div onClick={handleBurgerClick} className='burger animation'>
       <span /><span /><span />
     </div>
   );

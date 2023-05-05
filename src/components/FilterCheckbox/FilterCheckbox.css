@@ -12,7 +12,7 @@
 }
 
 /* кнопка переключатель */
-.filter.activ .filter__checkbox-switch {
+.filter.active .filter__checkbox-switch {
   left: 18px;
 }
 

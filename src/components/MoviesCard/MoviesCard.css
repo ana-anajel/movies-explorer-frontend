@@ -47,18 +47,6 @@
   background-color: #000;
 }
 
-.card__mark_activ {
-  display: none;
-}
-
-.card.activ .card__mark {
-  display: none;
-}
-
-.card.activ .card__mark_activ {
-  display: block;
-}
-
 .card__mark {
   width: 10px;
   height: 13px;
