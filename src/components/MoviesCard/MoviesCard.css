@@ -1,13 +1,13 @@
 .card {
   overflow: hidden;
-  /* max-width: 364px; */
+  min-width: 280px;
   width: 100%;
   height: 271px;
   background-color: #FDFDFD;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
 }
 
-.card__name {
+.card__info-box {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -16,10 +16,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 500px;
+  width: 100%;
 }
-
-.card__text {}
 
 .card__title {
   font-weight: 500;
@@ -36,9 +34,35 @@
   margin: 0;
 }
 
-.card__icon-add {
+.card__button {
+  border: none;
   width: 30px;
   height: 30px;
+  border-radius: 50%;
+  background-color: #F9F9F9;
+  display: flex;
+}
+
+.card.activ .card__button {
+  background-color: #000;
+}
+
+.card__mark_activ {
+  display: none;
+}
+
+.card.activ .card__mark {
+  display: none;
+}
+
+.card.activ .card__mark_activ {
+  display: block;
+}
+
+.card__mark {
+  width: 10px;
+  height: 13px;
+  margin: auto;
 }
 
 
@@ -47,4 +71,26 @@
   object-fit: cover;
   width: 100%;
   height: 203px;
+}
+
+@media screen and (max-width: 924px) {
+  .card {
+    min-width: 270px;
+    height: 258px;
+  }
+
+  .card__image {
+    height: 190px;
+  }
+}
+
+@media screen and (max-width: 577px) {
+  .card {
+    min-width: 243px;
+    height: 236px;
+  }
+
+  .card__image {
+    height: 168px;
+  }
 }

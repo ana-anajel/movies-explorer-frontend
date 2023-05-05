@@ -6,23 +6,8 @@
 - обновление данных пользователей,
 - операции с карточками фильмов.
 
-Адрес репозитория: https://ana-anajel.github.io/movies-explorer-api/
+Адрес [Github](https://github.com/ana-anajel/movies-explorer-frontend) репозитория.
 
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          123
-        </a>
-      </header>
+Макет проекта [Figma](https://www.figma.com/file/OQUb5GkeMIupd67QPBtSJ8/Diploma-Pink?node-id=932-3593&t=Q0lqvDGhAcpJ4WrT-0).
 
-      @media screen and (max-width: 924px) {}
-
-@media screen and (max-width: 577px) {}
+<!-- Проект доступен по [ссылке](https://ana-anajel.github.io/movies-explorer-frontend/). -->

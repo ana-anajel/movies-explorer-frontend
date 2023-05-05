@@ -10,21 +10,18 @@ function MoviesCardList() {
 
         {/* <p className='cards__list-null'>Фильмов нет.</p> */}
 
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
-
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
+        <MoviesCard isActiv={false} />
+        <MoviesCard isActiv={false} />
+        <MoviesCard isActiv={true} />
+        <MoviesCard isActiv={true} />
+        <MoviesCard isActiv={true} />
+        <MoviesCard isActiv={true} />
+        <MoviesCard isActiv={true} />
+        <MoviesCard isActiv={true} />
+        <MoviesCard isActiv={false} />
+        <MoviesCard isActiv={false} />
+        <MoviesCard isActiv={false} />
+        <MoviesCard isActiv={false} />
 
       </div>
 

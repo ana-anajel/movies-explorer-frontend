@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Planet from '../../images/planetDesktop.png';
+import Planet from '../../images/planet.svg';
 import './Promo.css';
 import '../Animation/Animation.css';
 

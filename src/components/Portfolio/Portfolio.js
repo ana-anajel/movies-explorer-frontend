@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Pointer from '../../images/pointerDesktop.png';
+import Pointer from '../../images/pointer.svg';
 import './Portfolio.css';
 import '../Animation/Animation.css';
 
