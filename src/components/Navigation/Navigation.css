@@ -1,9 +1,13 @@
 .menu {
-  border: 1px solid red;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 3;
+}
+
+.menu__link-span {
+  display: none;
 }
 
 .menu__list {
@@ -22,13 +26,17 @@
   margin: auto;
 }
 
-.menu__text-bold {
-  font-weight: 500;
+.menu__text-movies {
+  font-weight: 500px;
 }
 
-.menu__text {
+.menu__text-save-movies {
   margin: 0 16px;
   font-weight: 400px;
+}
+
+.menu__text-profile {
+  font-weight: 500;
 }
 
 .menu__avatar-container {
@@ -39,7 +47,6 @@
   box-sizing: border-box;
   display: flex;
   margin-left: 13px;
-
 }
 
 .menu__avatar {
@@ -47,6 +54,107 @@
   height: 10.66px;
 }
 
-@media screen and (max-width: 924px) {}
+.menu__blur {
+  display: none;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.3;
+  transition: display .5s;
+  will-change: transform;
+}
 
-@media screen and (max-width: 577px) {}
+@media screen and (max-width: 924px) {
+  .menu {
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 520px;
+    height: 100%;
+    background-color: #FFFFFF;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    padding: 159px 90px 99px;
+    transition: visibility .3s;
+    will-change: transform;
+  }
+
+  .header.open .menu {
+    visibility: visible;
+  }
+
+  .header.open .menu__blur {
+    display: block;
+  }
+
+  .menu__link-span {
+    display: block;
+    font-weight: 400;
+  }
+
+  .menu__link_active {
+    border-bottom: 2px solid #000;
+  }
+
+  .menu__link-line {
+    background-color: black;
+    width: 100%;
+    height: 1px;
+    top: 0;
+    left: 0;
+  }
+
+  .menu__list-movies {
+    display: block;
+    text-align: center;
+  }
+
+  .menu__list:last-child {
+    margin-top: auto;
+  }
+
+  .menu__link {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .menu__link-movies {
+    margin-top: 28px;
+  }
+
+  .menu__text-movies {
+    font-weight: 400px;
+  }
+
+  .menu__text-save-movies {
+    margin: 0;
+    font-weight: 400px;
+  }
+
+  .menu__text-profile {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 577px) {
+  .menu {
+    width: 100%;
+    padding: 144px 10px 48px;
+  }
+
+  .menu__text-movies {
+    font-weight: 500px;
+  }
+
+  .menu__text-save-movies {
+    font-weight: 500px;
+  }
+}

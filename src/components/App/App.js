@@ -22,7 +22,7 @@ function App() {
 
         <Route path="/" element={(
           <>
-            <Header />
+            <Header theme={true} />
             <Main />
             <Footer />
           </>
@@ -30,7 +30,7 @@ function App() {
 
         <Route path='/movies' element={(
           <>
-            <Header />
+            <Header theme={false} />
             <Movies />
             <Footer />
           </>
@@ -38,7 +38,7 @@ function App() {
 
         <Route path='/saved-movies' element={(
           <>
-            <Header />
+            <Header theme={false} />
             <SavedMovies />
             <Footer />
           </>
@@ -46,7 +46,7 @@ function App() {
 
         <Route path='/profile' element={(
           <>
-            <Header />
+            <Header theme={false} />
             <Profile />
           </>
         )} />
