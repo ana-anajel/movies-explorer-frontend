@@ -1,45 +1,34 @@
-//import logo from '../../images/logo.svg';
 import React from 'react';
 import './SearchForm.css';
-import Search from '../../images/guard.png'
-import SearchB from '../../images/serch.png'
-import Check from '../../images/check.png'
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import Search from '../../images/search.svg'
+import SearchButton from '../../images/searchButton.svg'
+import '../Animation/Animation.css';
 
 function SearchForm(props) {
   return (
-    <div className='search'>
-
+    <form className='search'>
       <div className='search__form-element'>
 
-        <div>
-          <img src={Search} className='search__icon-search' alt="Иконка добавить. Флажёк в кругу." />
-          <input
-            className="search__form"
-            type="text"
-            placeholder="Фильм" />
+        <div className='search__button-icon'>
+          <img src={Search} className='search__icon' alt="Иконка поиска. Луппа." />
         </div>
 
+        <input
+          className="search__form"
+          type="text"
+          placeholder="Фильм"
+        />
 
-        <div className='search__box'>
+        <button className='search__button animation'>
+          <img src={SearchButton} className='search__icon' alt="Иконка поиска. Луппа." />
+        </button>
 
-          <img src={SearchB} className='search__icon-add' alt="Иконка добавить. Флажёк в кругу." />
-
-          <div className='search__f'>
-            <img src={Check} className='search__icon-add' alt="Иконка добавить. Флажёк в кругу." />
-            <p className='search__name'>Короткометражки</p>
-          </div>
-        </div>
+        <FilterCheckbox filter={'filter__max'} />
 
       </div>
-
-
-
-    </div>
-    // <input
-    //   className="SearchForm"
-    //   type="text"
-    //   placeholder="Фильм"
-    // />
+      <FilterCheckbox filter={'filter__min'} />
+    </form>
   );
 }
 

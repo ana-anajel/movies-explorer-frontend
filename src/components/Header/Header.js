@@ -7,10 +7,10 @@ import Navigation from '../Navigation/Navigation';
 import NavTab from '../NavTab/NavTab';
 
 function Header({ theme }) {
-  //временное решение
-  const autorsation = false;
+  //временное решение. true=> шапка для зареганого пользователя false => шапка с кнопками входа
+  const autorsation = true;
   return (
-    // open
+    // open, при добавлении класса открывается бургер меню
     <header className={`header ${theme ? 'header__theme' : ''}`}>
 
       <Link className='animation' to='/'>
