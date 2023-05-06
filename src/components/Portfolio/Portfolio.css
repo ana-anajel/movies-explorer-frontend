@@ -9,7 +9,7 @@
   line-height: 20px;
   color: #A0A0A0;
   margin: 0 0 50px;
-
+  letter-spacing: -0.04em;
 }
 
 .portfolio__list {
@@ -35,6 +35,7 @@
   font-size: 30px;
   line-height: 50px;
   margin: 0;
+  letter-spacing: -0.04em;
 }
 
 .portfolio__element:first-of-type {
@@ -47,7 +48,7 @@
 }
 
 .portfolio__icon {
-  width: 29px;
+  width: 19px;
 }
 
 @media screen and (max-width: 924px) {
@@ -61,7 +62,7 @@
   }
 
   .portfolio__icon {
-    width: 27px;
+    width: 17px;
   }
 }
 
@@ -83,6 +84,6 @@
   }
 
   .portfolio__icon {
-    width: 18px;
+    width: 11px;
   }
 }

@@ -1,6 +1,6 @@
 .search {
   box-sizing: border-box;
-  padding: 70px 0;
+  padding: 70px 0 69px;
 }
 
 .search__form-element {
@@ -50,6 +50,10 @@
 }
 
 @media screen and (max-width: 924px) {
+  .search {
+    padding: 70px 0 109px;
+  }
+
   .search__form-element {
     padding: 0 20px 0 19px;
   }

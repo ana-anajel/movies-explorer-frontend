@@ -25,6 +25,7 @@
   font-size: 20px;
   line-height: 24px;
   margin: 0 0 26px;
+  letter-spacing: -0.04em;
 }
 
 .about-project__text {
@@ -33,56 +34,6 @@
   line-height: 20px;
   margin: 0;
 }
-
-/* .about-project__table {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-.about-project__table:last-child {}
-
-.about-project__cell {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  margin: 0;
-}
-
-.about-project__cell_type_first {
-  color: #FFF;
-}
-
-.about-project__week {
-  box-sizing: border-box;
-  padding: 9px 0;
-  background-color: #000;
-  width: 228px;
-}
-
-.about-project__week:last-child {
-  background-color: #F2F2F2;
-  width: 912px;
-}
-
-.about-project__el {
-  margin-top: 14px;
-  width: 228px;
-}
-
-.about-project__el:last-child {
-  width: 912px;
-}
-
-.about-project__te {
-  color: #A0A0A0;
-  text-align: center;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-} */
 
 .about-project__table {
   list-style-type: none;

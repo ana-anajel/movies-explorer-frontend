@@ -18,7 +18,7 @@ function Header({ theme }) {
 
   return (
     // open, при добавлении класса открывается бургер меню
-    <header className={`header ${theme ? 'header__theme' : ''} ${isBurgerMenuOpen ? 'opened' : ''}`}>
+    <header className={`header ${theme ? 'theme' : ''} ${isBurgerMenuOpen ? 'opened' : ''}`}>
 
       <Link className='animation' to='/'>
         <img className='header__logo' alt="Логотип сайта. Черный круг." src={logo} />

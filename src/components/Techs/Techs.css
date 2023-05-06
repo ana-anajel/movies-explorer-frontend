@@ -64,11 +64,13 @@
 
   .techs__title {
     margin: 0 0 22px;
+    letter-spacing: -0.04em;
   }
 
   .techs__text {
     font-size: 12px;
     line-height: 18px;
+    letter-spacing: -0.04em;
   }
 
   .techs__element {
@@ -78,6 +80,7 @@
   .techs__technology {
     font-size: 12px;
     line-height: 15px;
+    letter-spacing: -0.04em;
   }
 }
 

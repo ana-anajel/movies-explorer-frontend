@@ -3,7 +3,6 @@ import './FilterCheckbox.css';
 import '../Animation/Animation.css';
 
 function FilterCheckbox({ filter }) {
-  // activ класс для +- переключателя
   const [isCheckBox, setIsCheckBox] = useState(false);
 
   function handleCheckBox() {
