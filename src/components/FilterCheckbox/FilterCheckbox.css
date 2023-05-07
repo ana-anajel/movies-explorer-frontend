@@ -14,6 +14,11 @@
 /* кнопка переключатель */
 .filter.active .filter__checkbox-switch {
   left: 18px;
+  background-color: #F5F5F5;
+}
+
+.filter.active .filter__checkbox {
+  background-color: #2BE080;
 }
 
 .filter__checkbox input {
@@ -24,7 +29,7 @@
   position: relative;
   width: 36px;
   height: 20px;
-  background-color: #2BE080;
+  background-color: #EBEBEB;
   border-radius: 20px;
 }
 

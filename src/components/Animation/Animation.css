@@ -7,3 +7,23 @@
   opacity: 0.6;
   cursor: pointer;
 }
+
+.animation__button {
+  opacity: 1;
+  transition: opacity 0.2s linear 0.1s;
+}
+
+.animation__button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.animation__link {
+  opacity: 1;
+  transition: opacity 0.2s linear 0.1s;
+}
+
+.animation__link:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}

@@ -20,23 +20,19 @@
 
 .menu__link {
   text-decoration: none;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
   color: black;
   margin: auto;
 }
 
 .active {
-  border-bottom: 2px solid #000;
-}
-
-.menu__text-movies {
-  font-weight: 500px;
+  font-weight: 500;
 }
 
 .menu__text-save-movies {
   margin: 0 16px;
-  font-weight: 400px;
 }
 
 .menu__text-profile {
@@ -89,6 +85,10 @@
     will-change: transform;
   }
 
+  .active {
+    border-bottom: 2px solid #000;
+  }
+
   .header.opened .menu {
     visibility: visible;
   }
@@ -99,7 +99,6 @@
 
   .menu__link-span {
     display: block;
-    font-weight: 400;
   }
 
   .menu__link-line {
@@ -122,19 +121,15 @@
   .menu__link {
     font-size: 18px;
     line-height: 22px;
+    font-weight: 500;
   }
 
   .menu__link-movies {
     margin-top: 28px;
   }
 
-  .menu__text-movies {
-    font-weight: 400px;
-  }
-
   .menu__text-save-movies {
     margin: 0;
-    font-weight: 400px;
   }
 
   .menu__text-profile {
