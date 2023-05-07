@@ -20,7 +20,7 @@ function SearchForm() {
           placeholder="Фильм"
         />
 
-        <button className='search__button animation'>
+        <button className='search__button animation__button'>
           <img src={SearchButton} className='search__icon' alt="Иконка поиска. Луппа." />
         </button>
 

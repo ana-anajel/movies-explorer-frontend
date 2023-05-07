@@ -25,7 +25,7 @@ function MoviesCardList() {
 
       </div>
 
-      <button className='cards__button-more animation'>Ещё</button>
+      <button className='cards__button-more animation__button'>Ещё</button>
 
     </div>
   );

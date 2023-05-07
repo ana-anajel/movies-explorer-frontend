@@ -10,7 +10,7 @@ function FilterCheckbox({ filter }) {
   }
   return (
     <div className={`filter ${filter} ${isCheckBox ? 'active' : ''}`}>
-      <div onClick={handleCheckBox} className='filter__checkbox animation'>
+      <div onClick={handleCheckBox} className='filter__checkbox animation__button'>
         <span className='filter__checkbox-switch' />
         <label><input type='checkbox' checked name='filter'></input></label>
       </div>

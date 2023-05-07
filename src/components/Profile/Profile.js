@@ -21,8 +21,8 @@ function Profile() {
           </li>
         </ul>
 
-        <button className='profile__button animation'>Редактировать</button>
-        <button className='profile__button animation'>Выйти из аккаунта</button>
+        <button className='profile__button animation__link'>Редактировать</button>
+        <button className='profile__button animation__link'>Выйти из аккаунта</button>
 
       </div>
 

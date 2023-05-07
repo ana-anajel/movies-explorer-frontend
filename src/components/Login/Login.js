@@ -50,12 +50,12 @@ function Login() {
           </ul>
 
           <button
-            className="sign-form__button animation"
+            className="sign-form__button animation__button"
             type="submit"
             aria-label="Кнопка сохранить"
           >Войти</button>
           <h2 className='sign-form__span'>Ещё не зарегистрированы?
-            <Link className='sign-form__link animation' to='/signup'> Регистрация</Link></h2>
+            <Link className='sign-form__link animation__link' to='/signup'> Регистрация</Link></h2>
         </form>
       </div>
     </div>

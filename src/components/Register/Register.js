@@ -8,7 +8,7 @@ function Register() {
   return (
     <div className="sign-form">
       <div className="sign-form__container">
-        <Link className='sign-form__link animation' to='/'>
+        <Link className='sign-form__link animation__button' to='/'>
           <img className='sign-form__logo' alt="Логотип сайта. Черный круг." src={logo} />
         </Link>
         <h1 className="sign-form__title">Добро пожаловать!</h1>
@@ -69,12 +69,12 @@ function Register() {
           </ul>
 
           <button
-            className="sign-form__button animation"
+            className="sign-form__button animation__button"
             type="submit"
             aria-label="Кнопка сохранить"
           >Зарегистрироваться</button>
           <h2 className='sign-form__span'>Уже зарегистрированы?
-            <Link className='sign-form__link animation' to='/signin'> Войти</Link>
+            <Link className='sign-form__link animation__link' to='/signin'> Войти</Link>
           </h2>
         </form>
       </div>

@@ -21,7 +21,7 @@ function MoviesCard({ isActiv }) {
           <p className='card__subtitle'>1ч 47м</p>
         </div>
 
-        <button className='card__button animation' onClick={handleLike}>
+        <button className='card__button animation__button' onClick={handleLike}>
           <img src={isLiked ? MarkActiv : Mark} className='card__mark' alt="Иконка добавить в закладки. Флажёк в кругу." />
         </button>
 
