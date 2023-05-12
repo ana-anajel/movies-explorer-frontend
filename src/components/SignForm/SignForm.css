@@ -1,0 +1,142 @@
+.sign-form {
+  box-sizing: border-box;
+  padding: 70px 0;
+}
+
+.sign-form__container {
+  width: 396px;
+  margin: 0 auto;
+}
+
+.sign-form__logo {
+  width: 38px;
+  height: 38px;
+  margin: 0 0 40px;
+}
+
+.sign-form__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+}
+
+.sign-form__form {
+  box-sizing: border-box;
+  padding: 40px 0 0;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.sign-form__label-container {
+  height: 335px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sign-form__element {}
+
+.sign-form__label {
+  display: inline-block;
+  /* height: 100%; */
+  width: 100%;
+  margin: 0 0 20px;
+}
+
+.sign-form__name {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #A0A0A0;
+  margin: 0 0 10px;
+}
+
+.sign-form__input {
+  border-radius: 8px;
+  background-color: #F9F9F9;
+  border: none;
+  height: 46px;
+  width: 100%;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.sign-form__input-error {
+  color: #FF4062;
+}
+
+.sign-form__error-message {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #FF4062;
+}
+
+.sign-form__button {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFF;
+  width: 100%;
+  height: 45px;
+  background-color: #000;
+  border-radius: 3px;
+  border: none;
+  padding: 0;
+}
+
+.sign-form__span {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #A0A0A0;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.sign-form__link {
+  color: #000;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 924px) {
+  .sign-form {
+    padding: 232px 0;
+  }
+}
+
+@media screen and (max-width: 577px) {
+  .sign-form {
+    padding: 56px 30px 30px;
+  }
+
+  .sign-form__container {
+    width: 260px
+  }
+
+  .sign-form__logo {
+    display: block;
+    margin: 0 auto 50px;
+  }
+
+  .sign-form__title {
+    text-align: center;
+  }
+
+  .sign-form__label-container {
+    height: 423px;
+  }
+
+  .sign-form__span {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
