@@ -7,6 +7,7 @@
 .profile__content {
   max-width: 410px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .profile__title {
@@ -25,8 +26,6 @@
 
 .profile__list-element {
   box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
 }
 
 .profile__list-element:last-child {
@@ -38,6 +37,12 @@
   border-bottom: #E8E8E8 1px solid;
 }
 
+.profile__label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .profile__element {
   font-weight: 400;
@@ -46,8 +51,17 @@
   margin: 0;
 }
 
+.profile__input {
+  text-align: right;
+  border: none;
+  color: #000;
+  background: none;
+  padding: 0;
+}
+
 .profile__element:first-child {
   font-weight: 500;
+  font-size: 11px;
 }
 
 .profile__button {
@@ -58,12 +72,19 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+  margin: 0;
 }
 
-.profile__button:last-child {
+.profile__logout {
+  text-decoration: none;
   color: #FF4062;
+  display: block;
   margin-top: 16px;
   font-weight: 500;
+}
+
+.profile__button-of {
+  display: none;
 }
 
 @media screen and (max-width: 924px) {

@@ -26,6 +26,7 @@ function Register() {
                   name="name"
                   type="name"
                   minLength="2"
+                  novalidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name"></span>
@@ -43,6 +44,7 @@ function Register() {
                   name="email"
                   type="email"
                   minLength="2"
+                  novalidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name"></span>
@@ -61,6 +63,7 @@ function Register() {
                   type="password"
                   minLength="2"
                   maxLength="30"
+                  novalidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">Что-то пошло не так...</span>

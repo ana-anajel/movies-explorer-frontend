@@ -5,13 +5,24 @@ import '../SignForm/SignForm.css';
 import '../Animation/Animation.css';
 
 function Login() {
+
+  function onSubmit(evt) {
+    evt.preventDefault();
+
+    console.log('hhfhfhf');
+
+  }
+
   return (
-    <div className="sign-form">
+    <article className="sign-form">
       <div className="sign-form__container">
         <img className='sign-form__logo' alt="Логотип сайта. Черный круг." src={logo} />
         <h1 className="sign-form__title">Рады видеть!</h1>
 
-        <form className='sign-form__form'>
+        <form
+          className='sign-form__form'
+          onSubmit={onSubmit}
+        >
           <ul className='sign-form__label-container'>
             <li>
               <label className="sign-form__label">
@@ -24,6 +35,7 @@ function Login() {
                   name="email"
                   type="email"
                   minLength="2"
+                  novalidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name"></span>
@@ -42,6 +54,7 @@ function Login() {
                   type="password"
                   minLength="2"
                   maxLength="30"
+                  novalidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name"></span>
@@ -58,7 +71,7 @@ function Login() {
             <Link className='sign-form__link animation__link' to='/signup'> Регистрация</Link></h2>
         </form>
       </div>
-    </div>
+    </article>
   );
 }
 
