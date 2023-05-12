@@ -66,9 +66,9 @@ function Profile() {
         </form>
 
         <Link
-          to='/signin'
           className='profile__button profile__logout animation__link'
           onClick={onLogout}
+          to='/signin'
         >Выйти из аккаунта</Link>
       </div>
 

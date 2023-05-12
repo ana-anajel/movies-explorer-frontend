@@ -21,7 +21,7 @@ function SearchForm() {
         />
 
         <button className='search__button animation__button'>
-          <img src={SearchButton} className='search__icon' alt="Иконка поиска. Луппа." />
+          <img src={SearchButton} className='search__icon' alt="Иконка кнопки поиска. Луппа." />
         </button>
 
         <FilterCheckbox filter={'filter__max'} />
