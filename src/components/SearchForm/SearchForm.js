@@ -6,6 +6,13 @@ import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
 function SearchForm() {
+  function handleChange(e) {
+    console.log(e.target.value);
+  }
+
+  function handleClick() {
+    console.log('clickButton');
+  }
   return (
     <form className='search'>
       <div className='search__form-element'>
@@ -18,9 +25,13 @@ function SearchForm() {
           className="search__form"
           type="text"
           placeholder="Фильм"
+          onChange={handleChange}
         />
 
-        <button className='search__button animation__button'>
+        <button
+          className='search__button animation__button'
+          onClick={handleClick}
+        >
           <img src={SearchButton} className='search__icon' alt="Иконка кнопки поиска. Луппа." />
         </button>
 

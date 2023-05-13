@@ -8,7 +8,7 @@ import NavTab from '../NavTab/NavTab';
 
 function Header({ theme }) {
   //временное решение. true=> шапка для зареганого пользователя false => шапка с кнопками входа
-  const autorsation = true;
+  const autorsation = false;
 
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
