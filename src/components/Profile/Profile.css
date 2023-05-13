@@ -75,7 +75,7 @@
   margin: 0;
 }
 
-.profile__logout {
+.profile__logout-button {
   text-decoration: none;
   color: #FF4062;
   display: block;
@@ -85,6 +85,45 @@
 
 .profile__button-of {
   display: none;
+}
+
+.profile__button-container {
+  position: relative;
+}
+
+.profile__save-button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 0 15px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #C2C2C2;
+  background: #F8F8F8;
+  border-radius: 3px;
+}
+
+.profile__save-button_activ {
+  background: #3456F3;
+  color: #FFF;
+}
+
+.profile__error-message {
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: -20px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+  color: #FF4062;
 }
 
 @media screen and (max-width: 924px) {

@@ -35,7 +35,7 @@ function Login() {
                   name="email"
                   type="email"
                   minLength="2"
-                  novalidate
+                  noValidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name"></span>
@@ -54,7 +54,7 @@ function Login() {
                   type="password"
                   minLength="2"
                   maxLength="30"
-                  novalidate
+                  noValidate
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name"></span>

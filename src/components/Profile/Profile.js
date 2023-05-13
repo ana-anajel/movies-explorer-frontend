@@ -4,8 +4,13 @@ import '../Animation/Animation.css';
 import { Link } from 'react-router-dom';
 
 function Profile() {
+  // useEffect(() => {
+
+  // }, [isEditProfile]);
+
   const [isEditProfile, setIsEditProfile] = useState(true);
   const [name, setName] = useState('Виталий');
+  const [email, setEmail] = useState('pochta@yandex.ru');
 
   function editProfileOn(e) {
     e.preventDefault();
@@ -14,6 +19,10 @@ function Profile() {
 
   function handleNameProfile(e) {
     setName(e.target.value);
+  }
+
+  function handleEmailProfile(e) {
+    setEmail(e.target.value);
   }
 
   function onLogout(e) {
@@ -49,27 +58,40 @@ function Profile() {
               <label className="profile__label-container">
                 <h3 className='profile__element'>E-mail</h3>
                 <input className='profile__element profile__input'
+                  onChange={handleEmailProfile}
                   disabled={isEditProfile}
-                  value='pochta@yandex.ru'
+                  type="email"
+                  value={email}
                   placeholder='E-mail'
                 />
               </label>
             </li>
           </ul>
 
-          <button
+          {isEditProfile ? (<button
             className='profile__button animation__link'
             type="submit"
-            aria-label="Кнопка редактировать"
-          >Редактировать</button>
+            aria-label="Редактировать"
+          >Редактировать</button>)
+            :
+            (<div className='profile__button-container'>
+              <span className="profile__error-message popup__input-error-name">При обновлении профиля произошла ошибка.</span>
+              <button
+                className='profile__save-button animation__button'
+                type="submit"
+                aria-label="Сохранить"
+              >Сохранить</button>
+            </div>)}
+
 
         </form>
 
-        <Link
-          className='profile__button profile__logout animation__link'
-          onClick={onLogout}
+        {isEditProfile ? (<Link
+          className='profile__button profile__logout-button animation__link'
           to='/signin'
+          onClick={onLogout}
         >Выйти из аккаунта</Link>
+        ) : ('')}
       </div>
 
     </article >
