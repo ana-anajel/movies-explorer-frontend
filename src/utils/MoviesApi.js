@@ -46,11 +46,11 @@ class MoviesApi extends BaseApi {
 
 }
 
-const auth = new MoviesApi({
+const api = new MoviesApi({
   url: 'https://api.nomoreparties.co/beatfilm-movies',
   headers: {
     'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('token')}`
   }
 });
-export { auth };
+export { api };

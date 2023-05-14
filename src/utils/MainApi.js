@@ -55,7 +55,7 @@ class MainApi extends BaseApi {
 
 }
 
-const api = new MainApi({
+const auth = new MainApi({
   //url: 'http://localhost:3001',
   url: 'https://api.dip.movies-explorer.nomoredomains.monster',
   headers: {
@@ -63,4 +63,4 @@ const api = new MainApi({
     authorization: `Bearer ${localStorage.getItem('token')}`
   }
 });
-export { api };
+export { auth };

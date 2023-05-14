@@ -65,7 +65,7 @@
   box-sizing: border-box;
 }
 
-.sign-form__input-error {
+.sign-form__input:invalid {
   color: #FF4062;
 }
 
@@ -90,6 +90,11 @@
   border-radius: 3px;
   border: none;
   padding: 0;
+}
+
+.sign-form__button_disabled {
+  color: #C2C2C2;
+  background-color: #F8F8F8;
 }
 
 .sign-form__span {
