@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // import { Route } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
 
 import { auth } from '../../utils/MainApi';
-import { api } from '../../utils/MoviesApi';
+// import { api } from '../../utils/MoviesApi';
 
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
@@ -18,38 +19,68 @@ import Footer from '../Footer/Footer';
 import Profile from '../Profile/Profile';
 
 function App() {
+  const navigate = useNavigate();
 
-  function handleCreateUser(data) {
-    console.log('Успех', data)
-    // auth.register(data.email, data.password)
-    //   .then(() => {
-    //     setRequestStatus(true);
-    //     history.push('/signin');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setRequestStatus(false);
-    //   })
-    //   .finally(() => {
-    //     setIsStatusPopupOpen(true);
-    //   });
+  //Авторизован пользователь или нет
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  function handleCreateUser({ name, email, password }) {
+    auth.register(name, email, password)
+      .then((res) => {
+        console.log(res)
+        // setRequestStatus(true);
+        navigate('/signin');
+      })
+      .catch((err) => {
+        console.log(err);
+        // setRequestStatus(false);
+      })
+      .finally(() => {
+        // setIsStatusPopupOpen(true);
+      });
   }
 
-  function handleLogin(data) {
-    console.log('Вошли', data)
-    // auth.authorize(data.email, data.password)
-    //   .then((res) => {
-    //     localStorage.setItem('token', res.token);
-    //     localStorage.setItem('email', data.email);
-    //     auth.setToken(res.token);
-    //     api.setToken(res.token);
-    //     setEmail(data.email);
-    //     setLoggedIn(true);
-    //     history.push('/');
-    //   })
-    //   .catch((err) => console.log(err, 'handleAuthorization'));
+  function handleAuthorization({ email, password }) {
+    auth.authorize(email, password)
+      .then((res) => {
+        console.log(res)
+        localStorage.setItem('token', res.token);
+        setLoggedIn(true);
+        navigate('/');
+      })
+      .catch((err) => console.log(err));
   }
 
+  function tokenCheck() {
+    // Проверяем наличие токена
+    // const token = localStorage.getItem('token');
+    auth
+      .checkToken()
+      .then((res) => {
+        console.log(res);
+        if (res) {
+          // авторизуем пользователя
+          setLoggedIn(true);
+          navigate('/');
+        }
+      })
+      .catch((err) => console.log(err, "tokenCheck"));
+  }
+
+  // useEffect(() => {
+  //   tokenCheck();
+  // }, [navigate])
+
+  function signOut() {
+    auth.signOut().then((res) => {
+      console.log(res)
+    })
+      .catch((err) => console.log(err));
+    localStorage.removeItem('token');
+    localStorage.clear();
+    console.log(localStorage.removeItem('token'))
+    navigate('/signin');
+  }
 
   return (
     <div className="page">
@@ -58,39 +89,39 @@ function App() {
           onCreateUser={handleCreateUser}
         />} />
         <Route path="/signin" element={<Login
-          onLogin={handleLogin}
+          onLogin={handleAuthorization}
         />} />
 
         <Route path="/" element={(
           <>
-            <Header theme={true} />
+            <Header theme={true} loggedIn={loggedIn} />
             <Main />
             <Footer />
           </>
         )} />
 
-        <Route path='/movies' element={(
+        <Route path='/movies' element={loggedIn ?
           <>
             <Header theme={false} />
             <Movies />
             <Footer />
           </>
-        )} />
+          : <Navigate to="/signin" replace />} />
 
-        <Route path='/saved-movies' element={(
+        <Route path='/saved-movies' element={loggedIn ?
           <>
             <Header theme={false} />
             <SavedMovies />
             <Footer />
           </>
-        )} />
+          : <Navigate to="/signin" replace />} />
 
-        <Route path='/profile' element={(
+        <Route path='/profile' element={loggedIn ?
           <>
             <Header theme={false} />
-            <Profile />
+            <Profile signOut={signOut} />
           </>
-        )} />
+          : <Navigate to="/signin" replace />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

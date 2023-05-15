@@ -3,11 +3,7 @@ import './Profile.css';
 import '../Animation/Animation.css';
 import { Link } from 'react-router-dom';
 
-function Profile() {
-  // useEffect(() => {
-
-  // }, [isEditProfile]);
-
+function Profile({ signOut }) {
   const [isEditProfile, setIsEditProfile] = useState(true);
   const [name, setName] = useState('Виталий');
   const [email, setEmail] = useState('pochta@yandex.ru');
@@ -23,11 +19,6 @@ function Profile() {
 
   function handleEmailProfile(e) {
     setEmail(e.target.value);
-  }
-
-  function onLogout(e) {
-    e.preventDefault();
-    console.log('onLogout');
   }
 
   return (
@@ -89,7 +80,7 @@ function Profile() {
         {isEditProfile ? (<Link
           className='profile__button profile__logout-button animation__link'
           to='/signin'
-          onClick={onLogout}
+          onClick={signOut}
         >Выйти из аккаунта</Link>
         ) : ('')}
       </div>

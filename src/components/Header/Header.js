@@ -6,10 +6,7 @@ import '../Animation/Animation.css';
 import Navigation from '../Navigation/Navigation';
 import NavTab from '../NavTab/NavTab';
 
-function Header({ theme }) {
-  //временное решение. true=> шапка для зареганого пользователя false => шапка с кнопками входа
-  const autorsation = false;
-
+function Header({ theme, loggedIn }) {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
 
   function handleBurgerClick() {
@@ -24,7 +21,7 @@ function Header({ theme }) {
         <img className='header__logo' alt="Логотип сайта. Черный круг." src={logo} />
       </Link>
 
-      {autorsation ? <Navigation handleBurgerClick={handleBurgerClick} /> : <NavTab />}
+      {loggedIn ? <Navigation handleBurgerClick={handleBurgerClick} /> : <NavTab />}
 
     </header>
   );

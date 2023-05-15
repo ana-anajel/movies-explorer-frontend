@@ -1,4 +1,5 @@
 import { BaseApi } from './BaseApi';
+import { MAIN_API } from "../constants/Api";
 
 class MainApi extends BaseApi {
   constructor(config) {
@@ -53,11 +54,17 @@ class MainApi extends BaseApi {
     });
   }
 
+  signOut() {
+    return super._request(`${this._url}/signout`, {
+      method: 'PATCH',
+      headers: this._headers
+    });
+  }
+
 }
 
 const auth = new MainApi({
-  //url: 'http://localhost:3001',
-  url: 'https://api.dip.movies-explorer.nomoredomains.monster',
+  url: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
     authorization: `Bearer ${localStorage.getItem('token')}`
