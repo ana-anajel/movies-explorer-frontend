@@ -64,10 +64,10 @@ class MainApi extends BaseApi {
 }
 
 const auth = new MainApi({
-  url: 'http://localhost:3000',
+  url: MAIN_API,
+  credentials: 'include',
   headers: {
-    'Content-Type': 'application/json',
-    authorization: `Bearer ${localStorage.getItem('token')}`
+    'Content-Type': 'application/json'
   }
 });
 export { auth };
