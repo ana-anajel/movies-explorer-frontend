@@ -7,10 +7,7 @@ function MoviesCardList() {
   return (
     <div className="cards">
       <div className='cards__list'>
-
-        {/* <p className='cards__list-null'>Фильмов нет.</p> */}
-
-        <MoviesCard isActiv={false} />
+        {/* <MoviesCard isActiv={false} />
         <MoviesCard isActiv={false} />
         <MoviesCard isActiv={true} />
         <MoviesCard isActiv={true} />
@@ -21,7 +18,7 @@ function MoviesCardList() {
         <MoviesCard isActiv={false} />
         <MoviesCard isActiv={false} />
         <MoviesCard isActiv={false} />
-        <MoviesCard isActiv={false} />
+        <MoviesCard isActiv={false} /> */}
 
       </div>
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // import { Route } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
 
 import { auth } from '../../utils/MainApi';
-// import { api } from '../../utils/MoviesApi';
+import { api } from '../../utils/MoviesApi';
 
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Register from '../Register/Register';
@@ -20,10 +20,35 @@ import Profile from '../Profile/Profile';
 
 function App() {
   const navigate = useNavigate();
+  //данные api
+  const [currentUser, setCurrentUser] = useState({});
+  const [movies, setMovies] = useState([]);
+  const [saveMovies, setSaveMovies] = useState([]);
 
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState('');
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     Promise.all([auth.getDataUser(), api.getInitialCards()])
+  //       .then(([dataUser, dataCards]) => {
+  //         setCurrentUser(dataUser);
+  //         setCards(dataCards);
+  //       })
+  //       .catch((err) => console.log(err, 'ошибка при получении данных'));
+  //   }
+  // }, [loggedIn]);
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     Promise.all([auth.getDataUser(), api.getInitialCards()])
+  //       .then(([dataUser, dataCards]) => {
+  //         setCurrentUser(dataUser);
+  //         setCards(dataCards);
+  //       })
+  //       .catch((err) => console.log(err, 'ошибка при получении данных'));
+  //   }
+  // }, [loggedIn]);
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
@@ -70,7 +95,7 @@ function App() {
           // авторизуем пользователя
           setCurrentUser({ name: res.name, email: res.email })
           setLoggedIn(true);
-          // navigate('/');
+          navigate('/movies');
         }
       })
       .catch((err) => console.log(err, "неавторизирован"));

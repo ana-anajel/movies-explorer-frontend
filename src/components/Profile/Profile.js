@@ -4,6 +4,7 @@ import '../Animation/Animation.css';
 import { Link } from 'react-router-dom';
 
 function Profile({ signOut, currentUser, dataProfile }) {
+  console.log(localStorage.clear, localStorage)
   const [isEditProfile, setIsEditProfile] = useState(true);
 
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
@@ -88,10 +89,10 @@ function Profile({ signOut, currentUser, dataProfile }) {
             </li>
           </ul>
 
-          {isEditProfile ? (<p
+          {isEditProfile ? (<span
             className='profile__button animation__link'
             onClick={editProfile}
-          >Редактировать</p>)
+          >Редактировать</span>)
             :
             (<div className='profile__button-container'>
               <span className="profile__error-message popup__input-error-name">{errorMessageName || errorMessageEmail}</span>
@@ -106,10 +107,10 @@ function Profile({ signOut, currentUser, dataProfile }) {
 
         </form>
 
-        {isEditProfile ? (<p
+        {isEditProfile ? (<span
           className='profile__button profile__logout-button animation__link'
           onClick={signOut}
-        >Выйти из аккаунта</p>
+        >Выйти из аккаунта</span>
         ) : ('')}
       </div>
 

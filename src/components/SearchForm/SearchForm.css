@@ -30,6 +30,11 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+  outline: none;
+}
+
+.search__form:invalid {
+  color: #FF4062;
 }
 
 .search__button {
@@ -43,7 +48,10 @@
   margin: 0 19px 0;
 }
 
-/*  */
+.search__button_disabled {
+  background-color: #F8F8F8;
+}
+
 .search__icon {
   width: 13px;
   margin: auto;
