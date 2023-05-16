@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // import { Route } from 'react-router-dom';
 // import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
@@ -23,14 +23,16 @@ function App() {
 
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
       .then((res) => {
-        console.log(res)
+        console.log('зареган', res)
         // setRequestStatus(true);
-        navigate('/signin');
+        handleAuthorization({ email, password });
       })
+      .then(() => navigate('/movies'))
       .catch((err) => {
         console.log(err);
         // setRequestStatus(false);
@@ -42,44 +44,50 @@ function App() {
 
   function handleAuthorization({ email, password }) {
     auth.authorize(email, password)
-      .then((res) => {
-        console.log(res)
-        localStorage.setItem('token', res.token);
+      .then(() => {
+        console.log('вошел, токен сохранен')
         setLoggedIn(true);
-        navigate('/');
+      })
+      .then(() => navigate('/'))
+      .catch((err) => console.log(err));
+  }
+
+  function handleUpdateUser({ name, email }) {
+    console.log(name, email)
+    auth.editDataUser(email, name)
+      .then(res => {
+        console.log(res)
+        setCurrentUser({ name: res.name, email: res.email });
       })
       .catch((err) => console.log(err));
   }
 
   function tokenCheck() {
-    // Проверяем наличие токена
-    // const token = localStorage.getItem('token');
-    auth
-      .checkToken()
+    // Проверяем наличие куки, делаем запрос
+    auth.checkToken()
       .then((res) => {
-        console.log(res);
         if (res) {
           // авторизуем пользователя
+          setCurrentUser({ name: res.name, email: res.email })
           setLoggedIn(true);
-          navigate('/');
+          // navigate('/');
         }
       })
-      .catch((err) => console.log(err, "tokenCheck"));
+      .catch((err) => console.log(err, "неавторизирован"));
   }
 
-  // useEffect(() => {
-  //   tokenCheck();
-  // }, [navigate])
+  useEffect(() => {
+    tokenCheck();
+  }, [loggedIn])
 
   function signOut() {
-    auth.signOut().then((res) => {
-      console.log(res)
-    })
-      .catch((err) => console.log(err));
-    localStorage.removeItem('token');
-    localStorage.clear();
-    console.log(localStorage.removeItem('token'))
-    navigate('/signin');
+    auth.signOut()
+      .then((res) => {
+        console.log(res)
+        // setLoggedIn(false)
+        // navigate('/');
+      })
+      .catch((err) => console.log('ошибка при выходе', err));
   }
 
   return (
@@ -102,7 +110,7 @@ function App() {
 
         <Route path='/movies' element={loggedIn ?
           <>
-            <Header theme={false} />
+            <Header theme={false} loggedIn={loggedIn} />
             <Movies />
             <Footer />
           </>
@@ -110,7 +118,7 @@ function App() {
 
         <Route path='/saved-movies' element={loggedIn ?
           <>
-            <Header theme={false} />
+            <Header theme={false} loggedIn={loggedIn} />
             <SavedMovies />
             <Footer />
           </>
@@ -118,8 +126,8 @@ function App() {
 
         <Route path='/profile' element={loggedIn ?
           <>
-            <Header theme={false} />
-            <Profile signOut={signOut} />
+            <Header theme={false} loggedIn={loggedIn} />
+            <Profile signOut={signOut} currentUser={currentUser} dataProfile={handleUpdateUser} />
           </>
           : <Navigate to="/signin" replace />} />
 

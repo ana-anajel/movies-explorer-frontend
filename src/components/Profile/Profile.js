@@ -3,31 +3,52 @@ import './Profile.css';
 import '../Animation/Animation.css';
 import { Link } from 'react-router-dom';
 
-function Profile({ signOut }) {
+function Profile({ signOut, currentUser, dataProfile }) {
   const [isEditProfile, setIsEditProfile] = useState(true);
-  const [name, setName] = useState('Виталий');
-  const [email, setEmail] = useState('pochta@yandex.ru');
 
-  function editProfileOn(e) {
-    e.preventDefault();
+  const [errorMessageEmail, setErrorMessageEmail] = useState('');
+  const [errorMessageName, setErrorMessageName] = useState('');
+
+  const [isValid, setIsValid] = useState(false);
+
+  const [name, setName] = useState(currentUser.name);
+  const [email, setEmail] = useState(currentUser.email);
+
+  function editProfile() {
     setIsEditProfile(false);
   }
 
-  function handleNameProfile(e) {
-    setName(e.target.value);
+  function handleInput(e, setErrorMessage, setValue) {
+    setErrorMessage(e.target.validationMessage.split('.')[0])
+    setIsValid(e.target.form.checkValidity());
+    setValue(e.target.value);
   }
 
-  function handleEmailProfile(e) {
-    setEmail(e.target.value);
+  function handleName(e) {
+    handleInput(e, setErrorMessageName, setName);
+  }
+
+  function handleEmail(e) {
+    handleInput(e, setErrorMessageEmail, setEmail);
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    setIsEditProfile(true);
+    dataProfile({
+      name: name,
+      email: email
+    });
   }
 
   return (
     <article className='profile'>
       <div className='profile__content'>
 
-        <h2 className='profile__title'>Привет, Виталий!</h2>
+        <h2 className='profile__title'>{`Привет, ${currentUser.name}!`}</h2>
         <form
-          onSubmit={editProfileOn}
+          onSubmit={onSubmit}
+          noValidate
         >
           <ul className='profile__list'>
 
@@ -35,10 +56,14 @@ function Profile({ signOut }) {
               <label className="profile__label-container">
                 <h3 className='profile__element'>Имя</h3>
                 <input className='profile__element profile__input'
-                  onChange={handleNameProfile}
+                  onChange={handleName}
                   disabled={isEditProfile}
                   type="text"
                   value={name}
+                  id="name"
+                  name="name"
+                  minLength="2"
+                  noValidate
                   placeholder='Имя профиля'
                   required
                 />
@@ -49,27 +74,31 @@ function Profile({ signOut }) {
               <label className="profile__label-container">
                 <h3 className='profile__element'>E-mail</h3>
                 <input className='profile__element profile__input'
-                  onChange={handleEmailProfile}
+                  onChange={handleEmail}
                   disabled={isEditProfile}
+                  id="email"
+                  name="email"
                   type="email"
                   value={email}
                   placeholder='E-mail'
+                  noValidate
+                  required
                 />
               </label>
             </li>
           </ul>
 
-          {isEditProfile ? (<button
+          {isEditProfile ? (<p
             className='profile__button animation__link'
-            type="submit"
-            aria-label="Редактировать"
-          >Редактировать</button>)
+            onClick={editProfile}
+          >Редактировать</p>)
             :
             (<div className='profile__button-container'>
-              <span className="profile__error-message popup__input-error-name">При обновлении профиля произошла ошибка.</span>
+              <span className="profile__error-message popup__input-error-name">{errorMessageName || errorMessageEmail}</span>
               <button
-                className='profile__save-button animation__button'
+                className={`profile__save-button ${isValid ? 'profile__save-button_activ' : ''} animation__button`}
                 type="submit"
+                disabled={!isValid}
                 aria-label="Сохранить"
               >Сохранить</button>
             </div>)}
@@ -77,11 +106,10 @@ function Profile({ signOut }) {
 
         </form>
 
-        {isEditProfile ? (<Link
+        {isEditProfile ? (<p
           className='profile__button profile__logout-button animation__link'
-          to='/signin'
           onClick={signOut}
-        >Выйти из аккаунта</Link>
+        >Выйти из аккаунта</p>
         ) : ('')}
       </div>
 

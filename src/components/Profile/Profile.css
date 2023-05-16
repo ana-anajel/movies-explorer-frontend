@@ -59,6 +59,10 @@
   padding: 0;
 }
 
+.profile__input:invalid {
+  color: #FF4062;
+}
+
 .profile__element:first-child {
   font-weight: 500;
   font-size: 11px;
@@ -73,12 +77,12 @@
   font-size: 13px;
   line-height: 16px;
   margin: 0;
+  text-decoration: none;
+  display: block;
 }
 
 .profile__logout-button {
-  text-decoration: none;
   color: #FF4062;
-  display: block;
   margin-top: 16px;
   font-weight: 500;
 }

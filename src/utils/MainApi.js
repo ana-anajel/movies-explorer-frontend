@@ -21,6 +21,7 @@ class MainApi extends BaseApi {
   authorize(email, password) {
     return super._request(`${this._url}/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         email,
@@ -32,6 +33,7 @@ class MainApi extends BaseApi {
   checkToken() {
     return super._request(`${this._url}/users/me`, {
       method: 'GET',
+      credentials: 'include',
       headers: this._headers
     });
   }
@@ -39,6 +41,7 @@ class MainApi extends BaseApi {
   getDataUser() {
     return super._request(`${this._url}/users/me`, {
       method: 'GET',
+      credentials: 'include',
       headers: this._headers
     });
   }
@@ -46,6 +49,7 @@ class MainApi extends BaseApi {
   editDataUser(email, name) {
     return super._request(`${this._url}/users/me`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         email,
@@ -57,15 +61,13 @@ class MainApi extends BaseApi {
   signOut() {
     return super._request(`${this._url}/signout`, {
       method: 'PATCH',
-      headers: this._headers
+      credentials: 'include'
     });
   }
-
 }
 
 const auth = new MainApi({
   url: MAIN_API,
-  credentials: 'include',
   headers: {
     'Content-Type': 'application/json'
   }
