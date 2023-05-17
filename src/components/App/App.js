@@ -21,6 +21,9 @@ import Profile from '../Profile/Profile';
 function App() {
   const navigate = useNavigate();
   //данные api
+  const [listMovies, setListMovies] = useState({})
+
+
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
   const [saveMovies, setSaveMovies] = useState([]);
@@ -34,8 +37,6 @@ function App() {
   const [error, setError] = useState(false);
   const [nullRequest, setNullRequest] = useState(false);
 
-
-
   // useEffect(() => {
   //   if (loggedIn) {
   //     Promise.all([auth.getDataUser(), api.getInitialCards()])
@@ -47,18 +48,17 @@ function App() {
   //   }
   // }, [loggedIn]);
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     Promise.all([auth.getDataUser(), api.getInitialCards()])
-  //       .then(([dataUser, dataCards]) => {
-  //         setCurrentUser(dataUser);
-  //         setCards(dataCards);
-  //       })
-  //       .catch((err) => console.log(err, 'ошибка при получении данных'));
-  //   }
-  // }, [loggedIn]);
+  useEffect(() => {
+    api.getMovies()
+      .then((res) => {
+        setListMovies(res);
+        setMovies(listMovies);
+      })
+      .catch((err) => console.log(err))
+  }, [loggedIn])
 
   function filterMovies(search, listMovies) {
+
     // console.log(listMovies)
     return listMovies.filter((item) => {
       return item.nameEN.toLowerCase().includes(search.toLowerCase()) ||
@@ -123,7 +123,7 @@ function App() {
     console.log(name, email)
     auth.editDataUser(email, name)
       .then(res => {
-        console.log(res)
+        // console.log(res)
         setCurrentUser({ name: res.name, email: res.email });
       })
       .catch((err) => console.log(err));

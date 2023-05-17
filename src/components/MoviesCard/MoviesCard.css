@@ -8,9 +8,6 @@
 }
 
 .card__info-box {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
   box-sizing: border-box;
   padding: 14px;
   display: flex;
@@ -19,11 +16,18 @@
   width: 100%;
 }
 
+.card__text-box {
+  width: calc(100% - 30px * 2);
+}
+
 .card__title {
   font-weight: 500;
   font-size: 15px;
   line-height: 18px;
-  margin: 0 0 9px;
+  margin: 0 0 9px 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card__subtitle {
@@ -41,6 +45,7 @@
   border-radius: 50%;
   background-color: #F9F9F9;
   display: flex;
+  margin-left: 30px;
 }
 
 .card.activ .card__button {

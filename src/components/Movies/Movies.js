@@ -6,12 +6,12 @@ import Preloader from '../Preloader/Preloader';
 import ErrorSearch from '../ErrorSearch/ErrorSearch';
 
 function Movies({ dataSearch, movies, loading, nullRequest, error, request }) {
-  console.log({
-    'загрузка?': loading,
-    'movies?': nullRequest, movies,
-    'ошибка?': error,
-    'запрос?': request
-  })
+  // console.log({
+  //   'загрузка?': loading,
+  //   'movies?': nullRequest, movies,
+  //   'ошибка?': error,
+  //   'запрос?': request
+  // })
 
   return (
     <div className="movies">

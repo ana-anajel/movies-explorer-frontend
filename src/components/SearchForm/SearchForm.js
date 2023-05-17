@@ -43,7 +43,7 @@ function SearchForm({ dataSearch }) {
           value={search || ''}
           id="search"
           name="search"
-          minLength="2"
+          minLength="1"
           maxLength="30"
           noValidate
           required
