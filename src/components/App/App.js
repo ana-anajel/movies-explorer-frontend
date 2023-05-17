@@ -4,6 +4,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 // import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import { auth } from '../../utils/MainApi';
 import { api } from '../../utils/MoviesApi';
@@ -34,40 +35,18 @@ function App() {
   const [error, setError] = useState(false);
   const [nullRequest, setNullRequest] = useState(false);
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     Promise.all([auth.getDataUser(), api.getInitialCards()])
-  //       .then(([dataUser, dataCards]) => {
-  //         setCurrentUser(dataUser);
-  //         setCards(dataCards);
-  //       })
-  //       .catch((err) => console.log(err, 'ошибка при получении данных'));
-  //   }
-  // }, [loggedIn]);
-
-  // useEffect(() => {
-  //   api.getMovies()
-  //     .then((res) => {
-  //       setListMovies(res);
-  //       setMovies(listMovies);
-  //     })
-  //     .catch((err) => console.log(err))
-  // }, [loggedIn])
-
-  function filterMovies(search, listMovies) {
-
-    // console.log(listMovies)
-    return listMovies.filter((item) => {
+  function filterMovies(search, arr) {
+    return arr.filter((item) => {
       return item.nameEN.toLowerCase().includes(search.toLowerCase()) ||
         item.nameRU.toLowerCase().includes(search.toLowerCase())
     })
   }
 
-  // function filterTime(listMovies) {
-  //   return listMovies.filter((item) => {
-  //     return item.nameEN.toLowerCase().includes(search.toLowerCase())
-  //   })
-  // }
+  function filterTime(arr) {
+    return arr.filter((item) => {
+      return item.duration > 50;
+    })
+  }
 
   const dataSearch = ({ search, isChecked }) => {
     setLoading(true);
@@ -76,7 +55,11 @@ function App() {
     setRequest(false);
     api.getMovies()
       .then((res) => {
-        setMovies(filterMovies(search, res));
+        if (isChecked) {
+          setMovies(filterMovies(search, filterTime(res)));
+        } else {
+          setMovies(filterMovies(search, res));
+        }
       })
       .then(() => {
         setNullRequest(movies.length === 0);
@@ -89,6 +72,52 @@ function App() {
         setLoading(false);
         setRequest(true);
       })
+  }
+
+  const dataSaveSearch = ({ search, isChecked }) => {
+    setLoading(true);
+    setError(false);
+    setNullRequest(false);
+    setRequest(false);
+
+    api.getSaveMovies()
+      .then((res) => {
+        if (isChecked) {
+          setMovies(filterMovies(search, filterTime(res)));
+        } else {
+          setMovies(filterMovies(search, res));
+        }
+      })
+      .then(() => {
+        setNullRequest(movies.length === 0);
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err, 'ошибка при поиске в сохраненках')
+      })
+      .finally(() => {
+        setLoading(false);
+        setRequest(true);
+      })
+  }
+
+  function addMovie(data) {
+    auth.createMovie(data)
+      .then((newMovie) => {
+        setSaveMovies([newMovie, ...saveMovies]);
+        console.log(saveMovies);
+      })
+      .catch((err) => console.log(err, 'не удалось создать карточку'));
+  }
+
+  function deleteMovie(card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        setSaveMovies(() => saveMovies.filter((mov) => mov._id !== card._id));
+        console.log(saveMovies);
+        // setCards((cards) => cards.filter((el) => el._id !== card._id));
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleCreateUser({ name, email, password }) {
@@ -155,7 +184,6 @@ function App() {
       })
       .catch((err) => console.log('ошибка при выходе', err));
   }
-
   return (
     <div className="page">
       <Routes>
@@ -183,6 +211,7 @@ function App() {
               loading={loading}
               error={error}
               nullRequest={nullRequest}
+              addMovie={addMovie}
               request={request} />
             <Footer />
           </>
@@ -191,7 +220,9 @@ function App() {
         <Route path='/saved-movies' element={loggedIn ?
           <>
             <Header theme={false} loggedIn={loggedIn} />
-            <SavedMovies />
+            <SavedMovies
+              deleteMovie={deleteMovie}
+            />
             <Footer />
           </>
           : <Navigate to="/signin" replace />} />

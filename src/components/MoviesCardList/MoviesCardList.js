@@ -3,7 +3,7 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
-function MoviesCardList({ movies }) {
+function MoviesCardList({ movies, addMovie, deleteMovie, type }) {
   const [sise, setSise] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
@@ -21,7 +21,6 @@ function MoviesCardList({ movies }) {
         setStartIndex(5);
       }
     }
-
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -46,9 +45,11 @@ function MoviesCardList({ movies }) {
 
   const moviesElements = movies.slice(0, showMore ? startIndex : movies.length).map((card) => (
     <MoviesCard
-      isActiv={false}
+      addMovie={addMovie}
+      deleteMovie={deleteMovie}
       key={card.id}
       card={card}
+      type={type}
     // onCardDelete={onCardDelete}
     // onCardLike={onCardLike}
     // onCardClick={onCardClick}

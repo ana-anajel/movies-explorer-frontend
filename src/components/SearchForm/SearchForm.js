@@ -5,7 +5,7 @@ import Search from '../../images/search.svg'
 import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
-function SearchForm({ dataSearch }) {
+function SearchForm({ dataSearch, loading }) {
   const [errorMessageSearch, setErrorMessageSearch] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [search, setSearch] = useState('');
@@ -48,11 +48,10 @@ function SearchForm({ dataSearch }) {
           noValidate
           required
         />
-
         <button
-          disabled={!isValid}
+          disabled={!isValid || loading}
           type='submit'
-          className={`search__button ${!isValid ? 'search__button_disabled' : ''} animation__button `}
+          className={`search__button ${!isValid || loading ? 'search__button_disabled' : ''} animation__button `}
         >
           <img src={SearchButton} className='search__icon' alt="Иконка кнопки поиска. Луппа." />
         </button>

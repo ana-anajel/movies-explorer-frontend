@@ -3,11 +3,11 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
+function SavedMovies({ deleteMovie, type }) {
   return (
     <div className="movies">
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList type={false} deleteMovie={deleteMovie} />
     </div>
   );
 }

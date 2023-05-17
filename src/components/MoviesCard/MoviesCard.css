@@ -48,7 +48,7 @@
   margin-left: 30px;
 }
 
-.card.activ .card__button {
+.card__button_activ {
   background-color: #000;
 }
 

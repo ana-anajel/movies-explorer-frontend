@@ -9,35 +9,6 @@ class MoviesApi extends BaseApi {
     });
   }
 
-  // getMovies() {
-  //   return super._request(`${this._url}/movies`, {
-  //     method: 'GET',
-  //     credentials: "include",
-  //     headers: this._headers
-  //   });
-  // }
-
-  // createMovie(data) {
-  //   return super._request(`${this._url}/movies`, {
-  //     method: 'POST',
-  //     credentials: "include",
-  //     headers: this._headers,
-  //     body: JSON.stringify({
-  //       country,
-  //       director,
-  //       duration,
-  //       year,
-  //       description,
-  //       image,
-  //       trailerLink,
-  //       thumbnail,
-  //       nameRU,
-  //       nameEN,
-  //       movieId,
-  //     } = data)
-  //   });
-  // }
-
   deleteLikeMovie(id) {
     return super._request(`${this._url}/movies/${id}/likes`, {
       method: 'DELETE',
@@ -53,15 +24,6 @@ class MoviesApi extends BaseApi {
       headers: this._headers,
     });
   }
-
-  deleteMovie(id) {
-    return super._request(`${this._url}/movies/${id}`, {
-      method: 'DELETE',
-      credentials: "include",
-      headers: this._headers,
-    });
-  }
-
 }
 
 const api = new MoviesApi({

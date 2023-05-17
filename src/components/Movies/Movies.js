@@ -5,25 +5,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import ErrorSearch from '../ErrorSearch/ErrorSearch';
 
-function Movies({ dataSearch, movies, loading, nullRequest, error, request }) {
-  // console.log({
-  //   'загрузка?': loading,
-  //   'movies?': nullRequest, movies,
-  //   'ошибка?': error,
-  //   'запрос?': request
-  // })
-
+function Movies({ dataSearch, movies, loading, nullRequest, error, request, addMovie }) {
   return (
     <div className="movies">
-      <SearchForm dataSearch={dataSearch} />
-      {request &&
-        <>
-          {loading && <Preloader />}
-          {!loading && !error && !nullRequest && <MoviesCardList movies={movies} />}
-          {error && <ErrorSearch message={'При запросе произошла ошибка.'} />}
-          {nullRequest && <ErrorSearch message={'Ничего не найдено.'} />}
-        </>
-      }
+      <SearchForm dataSearch={dataSearch} loading={loading} />
+      {loading && <Preloader />}
+      {nullRequest && <ErrorSearch message={'Ничего не найдено.'} />}
+      {error && <ErrorSearch message={'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'} />}
+      {!loading && !error && !nullRequest && <MoviesCardList movies={movies} addMovie={addMovie} type={true} />}
     </div>
   );
 }
