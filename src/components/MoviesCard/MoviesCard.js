@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Mark from '../../images/mark.svg';
 import MarkActiv from '../../images/markActiv.svg'
-import CardImage from '../../images/card-image.png'
 import './MoviesCard.css';
 import '../Animation/Animation.css';
+import { MOVIES_API } from "../../constants/Api";
 
 function MoviesCard({ isActiv, card, onCardDelete, onCardLike, onCardClick }) {
   const [isLiked, setIsLiked] = useState(false);
@@ -28,7 +28,7 @@ function MoviesCard({ isActiv, card, onCardDelete, onCardLike, onCardClick }) {
 
       </div>
 
-      <img src={`https://api.nomoreparties.co${card.image.url}`} className='card__image' alt="Фото в карточке фильма." />
+      <img src={`${MOVIES_API}${card.image.url}`} className='card__image' alt="Фото в карточке фильма." />
     </div>
   );
 }

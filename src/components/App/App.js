@@ -21,9 +21,6 @@ import Profile from '../Profile/Profile';
 function App() {
   const navigate = useNavigate();
   //данные api
-  const [listMovies, setListMovies] = useState({})
-
-
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
   const [saveMovies, setSaveMovies] = useState([]);
@@ -48,14 +45,14 @@ function App() {
   //   }
   // }, [loggedIn]);
 
-  useEffect(() => {
-    api.getMovies()
-      .then((res) => {
-        setListMovies(res);
-        setMovies(listMovies);
-      })
-      .catch((err) => console.log(err))
-  }, [loggedIn])
+  // useEffect(() => {
+  //   api.getMovies()
+  //     .then((res) => {
+  //       setListMovies(res);
+  //       setMovies(listMovies);
+  //     })
+  //     .catch((err) => console.log(err))
+  // }, [loggedIn])
 
   function filterMovies(search, listMovies) {
 
@@ -80,6 +77,8 @@ function App() {
     api.getMovies()
       .then((res) => {
         setMovies(filterMovies(search, res));
+      })
+      .then(() => {
         setNullRequest(movies.length === 0);
       })
       .catch((err) => {

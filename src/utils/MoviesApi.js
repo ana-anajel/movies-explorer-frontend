@@ -2,12 +2,8 @@ import { BaseApi } from './BaseApi';
 import { MOVIES_API } from "../constants/Api";
 
 class MoviesApi extends BaseApi {
-  constructor(config) {
-    super(config);
-  }
-
   getMovies() {
-    return super._request(MOVIES_API, {
+    return super._request(`${this._url}/beatfilm-movies`, {
       method: 'GET',
       headers: this._headers
     });
