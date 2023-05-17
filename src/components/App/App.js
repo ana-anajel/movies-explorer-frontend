@@ -28,6 +28,14 @@ function App() {
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(false);
 
+  //состояния
+  const [request, setRequest] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [nullRequest, setNullRequest] = useState(false);
+
+
+
   // useEffect(() => {
   //   if (loggedIn) {
   //     Promise.all([auth.getDataUser(), api.getInitialCards()])
@@ -49,6 +57,40 @@ function App() {
   //       .catch((err) => console.log(err, 'ошибка при получении данных'));
   //   }
   // }, [loggedIn]);
+
+  function filterMovies(search, listMovies) {
+    // console.log(listMovies)
+    return listMovies.filter((item) => {
+      return item.nameEN.toLowerCase().includes(search.toLowerCase()) ||
+        item.nameRU.toLowerCase().includes(search.toLowerCase())
+    })
+  }
+
+  // function filterTime(listMovies) {
+  //   return listMovies.filter((item) => {
+  //     return item.nameEN.toLowerCase().includes(search.toLowerCase())
+  //   })
+  // }
+
+  const dataSearch = ({ search, isChecked }) => {
+    setLoading(true);
+    setError(false);
+    setNullRequest(false);
+    setRequest(false);
+    api.getMovies()
+      .then((res) => {
+        setMovies(filterMovies(search, res));
+        setNullRequest(movies.length === 0);
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err, 'ошибка при поиске')
+      })
+      .finally(() => {
+        setLoading(false);
+        setRequest(true);
+      })
+  }
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
@@ -136,7 +178,13 @@ function App() {
         <Route path='/movies' element={loggedIn ?
           <>
             <Header theme={false} loggedIn={loggedIn} />
-            <Movies />
+            <Movies
+              dataSearch={dataSearch}
+              movies={movies}
+              loading={loading}
+              error={error}
+              nullRequest={nullRequest}
+              request={request} />
             <Footer />
           </>
           : <Navigate to="/signin" replace />} />

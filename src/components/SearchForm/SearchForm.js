@@ -24,8 +24,7 @@ function SearchForm({ dataSearch }) {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    // dataSearch({ search: search, isChecked: isChecked });
-    console.log({ search: search, isChecked: isChecked });
+    dataSearch({ search: search, isChecked: isChecked });
   }
 
   return (

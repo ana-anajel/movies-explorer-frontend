@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './ErrorSearch.css';
 
-function ErrorSearch() {
-
-  const [message, setMessage] = useState('');
-  const errorMessage = 'Ничего не найдено.';
+function ErrorSearch({ message }) {
   return (
     <div className="error-search">
       <span className="error-search__message">{message}</span>

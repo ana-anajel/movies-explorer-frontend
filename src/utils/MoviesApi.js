@@ -1,5 +1,5 @@
 import { BaseApi } from './BaseApi';
-import { MAIN_API } from "../constants/Api";
+import { MOVIES_API } from "../constants/Api";
 
 class MoviesApi extends BaseApi {
   constructor(config) {
@@ -7,12 +7,19 @@ class MoviesApi extends BaseApi {
   }
 
   getMovies() {
-    return super._request(`${this._url}/movies`, {
+    return super._request(MOVIES_API, {
       method: 'GET',
-      credentials: "include",
       headers: this._headers
     });
   }
+
+  // getMovies() {
+  //   return super._request(`${this._url}/movies`, {
+  //     method: 'GET',
+  //     credentials: "include",
+  //     headers: this._headers
+  //   });
+  // }
 
   // createMovie(data) {
   //   return super._request(`${this._url}/movies`, {
@@ -62,7 +69,7 @@ class MoviesApi extends BaseApi {
 }
 
 const api = new MoviesApi({
-  url: MAIN_API,
+  url: MOVIES_API,
   headers: {
     'Content-Type': 'application/json'
   }
