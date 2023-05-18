@@ -3,7 +3,7 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
-function MoviesCardList({ movies, addMovie, deleteMovie, type }) {
+function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
   const [sise, setSise] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
@@ -45,14 +45,12 @@ function MoviesCardList({ movies, addMovie, deleteMovie, type }) {
 
   const moviesElements = movies.slice(0, showMore ? startIndex : movies.length).map((card) => (
     <MoviesCard
+      saveMovies={saveMovies}
       addMovie={addMovie}
       deleteMovie={deleteMovie}
-      key={card.id}
+      key={card.id || card._id}
       card={card}
       type={type}
-    // onCardDelete={onCardDelete}
-    // onCardLike={onCardLike}
-    // onCardClick={onCardClick}
     />
   ))
 

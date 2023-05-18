@@ -110,6 +110,7 @@ class MainApi extends BaseApi {
   deleteMovie(id) {
     return super._request(`${this._url}/movies/${id}`, {
       method: 'DELETE',
+      credentials: "include",
       headers: this._headers,
     });
   }

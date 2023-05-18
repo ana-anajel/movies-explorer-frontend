@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Link } from 'react-router-dom';
 import Mark from '../../images/mark.svg';
 import MarkActiv from '../../images/markActiv.svg';
@@ -7,14 +8,24 @@ import './MoviesCard.css';
 import '../Animation/Animation.css';
 import { MOVIES_API } from "../../constants/Api";
 
-function MoviesCard({ addMovie, card, deleteMovie, type }) {
-  const [isLiked, setIsLiked] = useState(false);
+function MoviesCard({ saveMovies, addMovie, card, deleteMovie, type }) {
+  const currentUser = useContext(CurrentUserContext);
+
+  const isLiked = saveMovies?.some((i) => i.movieId === card.id);
 
   function handleLike() {
-    addMovie(card);
-    setIsLiked(!isLiked);
+    if (isLiked) {
+      const saveCard = saveMovies.find((i) => i.movieId === card.id);
+      deleteMovie(saveCard);
+    } else {
+      addMovie(card);
+    }
   }
 
+  function handleDeleteMovie() {
+    console.log(card)
+    deleteMovie(card);
+  }
 
   return (
     <div className='card'>
@@ -32,14 +43,14 @@ function MoviesCard({ addMovie, card, deleteMovie, type }) {
           type ? <button className={`card__button ${isLiked ? 'card__button_activ' : ''} animation__button`} onClick={handleLike}>
             <img src={isLiked ? MarkActiv : Mark} className='card__mark' alt="Иконка добавить в закладки. Флажёк в кругу." />
           </button>
-            : <button className={`card__button animation__button`} onClick={deleteMovie}>
-              <img src={DeleteMark} className='card__mark' alt="Иконка добавить в закладки. Флажёк в кругу." />
+            : <button className={`card__button animation__button`} onClick={handleDeleteMovie}>
+              <img src={DeleteMark} className='card__mark_delete' alt="Иконка удалить закладок. крестик в кругу." />
             </button>
         }
 
       </div>
 
-      <Link to={card.trailerLink} target="_blank" ><img src={MOVIES_API + card.image.url} className='card__image' alt="Фото в карточке фильма." /></Link>
+      <Link to={card.trailerLink} target="_blank" ><img src={type ? (MOVIES_API + card.image.url) : card.image} className='card__image' alt="Фото в карточке фильма." /></Link>
     </div>
   );
 }

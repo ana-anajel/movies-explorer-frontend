@@ -44,7 +44,7 @@ function App() {
 
   function filterTime(arr) {
     return arr.filter((item) => {
-      return item.duration > 50;
+      return item.duration < 40;
     })
   }
 
@@ -80,16 +80,16 @@ function App() {
     setNullRequest(false);
     setRequest(false);
 
-    api.getSaveMovies()
+    auth.getSaveMovies()
       .then((res) => {
         if (isChecked) {
-          setMovies(filterMovies(search, filterTime(res)));
+          setSaveMovies(filterMovies(search, filterTime(res)));
         } else {
-          setMovies(filterMovies(search, res));
+          setSaveMovies(filterMovies(search, res));
         }
       })
       .then(() => {
-        setNullRequest(movies.length === 0);
+        setNullRequest(saveMovies.length === 0);
       })
       .catch((err) => {
         setError(true);
@@ -105,25 +105,26 @@ function App() {
     auth.createMovie(data)
       .then((newMovie) => {
         setSaveMovies([newMovie, ...saveMovies]);
-        console.log(saveMovies);
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
   }
 
   function deleteMovie(card) {
-    api.deleteCard(card._id)
+    auth.deleteMovie(card._id)
       .then(() => {
-        setSaveMovies(() => saveMovies.filter((mov) => mov._id !== card._id));
-        console.log(saveMovies);
-        // setCards((cards) => cards.filter((el) => el._id !== card._id));
+        const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
+        setSaveMovies(updateSaveMovies);
       })
       .catch((err) => console.log(err));
   }
 
+  // useEffect(() => {
+  //   console.log(saveMovies);
+  // }, [saveMovies]); // коллбэк useEffect вызовется после обновления saveMovies
+
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
       .then((res) => {
-        console.log('зареган', res)
         // setRequestStatus(true);
         handleAuthorization({ email, password });
       })
@@ -140,7 +141,6 @@ function App() {
   function handleAuthorization({ email, password }) {
     auth.authorize(email, password)
       .then(() => {
-        console.log('вошел, токен сохранен')
         setLoggedIn(true);
       })
       .then(() => navigate('/'))
@@ -151,7 +151,6 @@ function App() {
     console.log(name, email)
     auth.editDataUser(email, name)
       .then(res => {
-        // console.log(res)
         setCurrentUser({ name: res.name, email: res.email });
       })
       .catch((err) => console.log(err));
@@ -163,7 +162,7 @@ function App() {
       .then((res) => {
         if (res) {
           // авторизуем пользователя
-          setCurrentUser({ name: res.name, email: res.email })
+          setCurrentUser({ name: res.name, email: res.email, id: res._id })
           setLoggedIn(true);
           navigate('/movies');
         }
@@ -186,56 +185,65 @@ function App() {
   }
   return (
     <div className="page">
-      <Routes>
-        <Route path="/signup" element={<Register
-          onCreateUser={handleCreateUser}
-        />} />
-        <Route path="/signin" element={<Login
-          onLogin={handleAuthorization}
-        />} />
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route path="/signup" element={<Register
+            onCreateUser={handleCreateUser}
+          />} />
+          <Route path="/signin" element={<Login
+            onLogin={handleAuthorization}
+          />} />
 
-        <Route path="/" element={(
-          <>
-            <Header theme={true} loggedIn={loggedIn} />
-            <Main />
-            <Footer />
-          </>
-        )} />
+          <Route path="/" element={(
+            <>
+              <Header theme={true} loggedIn={loggedIn} />
+              <Main />
+              <Footer />
+            </>
+          )} />
 
-        <Route path='/movies' element={loggedIn ?
-          <>
-            <Header theme={false} loggedIn={loggedIn} />
-            <Movies
-              dataSearch={dataSearch}
-              movies={movies}
-              loading={loading}
-              error={error}
-              nullRequest={nullRequest}
-              addMovie={addMovie}
-              request={request} />
-            <Footer />
-          </>
-          : <Navigate to="/signin" replace />} />
+          <Route path='/movies' element={loggedIn ?
+            <>
+              <Header theme={false} loggedIn={loggedIn} />
+              <Movies
+                dataSearch={dataSearch}
+                movies={movies}
+                saveMovies={saveMovies}
+                loading={loading}
+                error={error}
+                nullRequest={nullRequest}
+                addMovie={addMovie}
+                deleteMovie={deleteMovie} />
+              <Footer />
+            </>
+            : <Navigate to="/signin" replace />} />
 
-        <Route path='/saved-movies' element={loggedIn ?
-          <>
-            <Header theme={false} loggedIn={loggedIn} />
-            <SavedMovies
-              deleteMovie={deleteMovie}
-            />
-            <Footer />
-          </>
-          : <Navigate to="/signin" replace />} />
+          <Route path='/saved-movies' element={loggedIn ?
+            <>
+              <Header theme={false} loggedIn={loggedIn} />
+              <SavedMovies
+                dataSaveSearch={dataSaveSearch}
+                saveMovies={saveMovies}
+                deleteMovie={deleteMovie}
 
-        <Route path='/profile' element={loggedIn ?
-          <>
-            <Header theme={false} loggedIn={loggedIn} />
-            <Profile signOut={signOut} currentUser={currentUser} dataProfile={handleUpdateUser} />
-          </>
-          : <Navigate to="/signin" replace />} />
+                loading={loading}
+                error={error}
+                nullRequest={nullRequest}
+              />
+              <Footer />
+            </>
+            : <Navigate to="/signin" replace />} />
 
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+          <Route path='/profile' element={loggedIn ?
+            <>
+              <Header theme={false} loggedIn={loggedIn} />
+              <Profile signOut={signOut} currentUser={currentUser} dataProfile={handleUpdateUser} />
+            </>
+            : <Navigate to="/signin" replace />} />
+
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </CurrentUserContext.Provider>
     </div >
   );
 }

@@ -58,6 +58,12 @@
   margin: auto;
 }
 
+.card__mark_delete {
+  width: 8px;
+  height: 8px;
+  margin: auto;
+}
+
 
 .card__image {
   background-color: #000;
