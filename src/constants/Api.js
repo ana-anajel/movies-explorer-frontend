@@ -1,2 +1,2 @@
-export const MAIN_API = "http://localhost:3000";
+export const MAIN_API = "https://api.dip.movies-explorer.nomoredomains.monster";
 export const MOVIES_API = "https://api.nomoreparties.co";
