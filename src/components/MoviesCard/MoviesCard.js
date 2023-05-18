@@ -23,7 +23,6 @@ function MoviesCard({ saveMovies, addMovie, card, deleteMovie, type }) {
   }
 
   function handleDeleteMovie() {
-    console.log(card)
     deleteMovie(card);
   }
 

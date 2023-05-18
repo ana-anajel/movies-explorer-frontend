@@ -61,16 +61,9 @@ function App() {
           setMovies(filterMovies(search, res));
         }
       })
-      .then(() => {
-        setNullRequest(movies.length === 0);
-      })
       .catch((err) => {
         setError(true);
         console.log(err, 'ошибка при поиске')
-      })
-      .finally(() => {
-        setLoading(false);
-        setRequest(true);
       })
   }
 
@@ -78,7 +71,6 @@ function App() {
     setLoading(true);
     setError(false);
     setNullRequest(false);
-    setRequest(false);
 
     auth.getSaveMovies()
       .then((res) => {
@@ -88,16 +80,9 @@ function App() {
           setSaveMovies(filterMovies(search, res));
         }
       })
-      .then(() => {
-        setNullRequest(saveMovies.length === 0);
-      })
       .catch((err) => {
         setError(true);
         console.log(err, 'ошибка при поиске в сохраненках')
-      })
-      .finally(() => {
-        setLoading(false);
-        setRequest(true);
       })
   }
 
@@ -118,9 +103,10 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  // useEffect(() => {
-  //   console.log(saveMovies);
-  // }, [saveMovies]); // коллбэк useEffect вызовется после обновления saveMovies
+  useEffect(() => {
+    setNullRequest(movies.length === 0);
+    setLoading(false);
+  }, [movies, saveMovies]);
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
