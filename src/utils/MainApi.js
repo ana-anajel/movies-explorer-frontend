@@ -60,8 +60,8 @@ class MainApi extends BaseApi {
 
   signOut() {
     return super._request(`${this._url}/signout`, {
-      method: 'PATCH',
-      credentials: 'include'
+      method: 'POST',
+      credentials: "include"
     });
   }
 

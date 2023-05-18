@@ -35,6 +35,11 @@ function App() {
   const [error, setError] = useState(false);
   const [nullRequest, setNullRequest] = useState(false);
 
+  const [saveRequest, setSaveRequest] = useState(false);
+  const [saveloading, setSaveLoading] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const [saveNullRequest, setSaveNullRequest] = useState(false);
+
   function filterMovies(search, arr) {
     return arr.filter((item) => {
       return item.nameEN.toLowerCase().includes(search.toLowerCase()) ||
@@ -52,7 +57,7 @@ function App() {
     setLoading(true);
     setError(false);
     setNullRequest(false);
-    setRequest(false);
+    setRequest(true);
     api.getMovies()
       .then((res) => {
         if (isChecked) {
@@ -68,10 +73,10 @@ function App() {
   }
 
   const dataSaveSearch = ({ search, isChecked }) => {
-    setLoading(true);
-    setError(false);
-    setNullRequest(false);
-
+    setSaveLoading(true);
+    setSaveError(false);
+    setSaveNullRequest(false);
+    setSaveRequest(true);
     auth.getSaveMovies()
       .then((res) => {
         if (isChecked) {
@@ -81,7 +86,7 @@ function App() {
         }
       })
       .catch((err) => {
-        setError(true);
+        setSaveError(true);
         console.log(err, 'ошибка при поиске в сохраненках')
       })
   }
@@ -104,24 +109,30 @@ function App() {
   }
 
   useEffect(() => {
-    setNullRequest(movies.length === 0);
+    if (request) {
+      setNullRequest(movies.length === 0);
+      setRequest(false);
+    }
     setLoading(false);
-  }, [movies, saveMovies]);
+  }, [movies]);
+
+  useEffect(() => {
+    if (saveRequest) {
+      setSaveNullRequest(movies.length === 0);
+      setSaveRequest(false);
+    }
+    setSaveLoading(false);
+  }, [saveMovies]);
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
       .then((res) => {
-        // setRequestStatus(true);
         handleAuthorization({ email, password });
       })
       .then(() => navigate('/movies'))
       .catch((err) => {
         console.log(err);
-        // setRequestStatus(false);
       })
-      .finally(() => {
-        // setIsStatusPopupOpen(true);
-      });
   }
 
   function handleAuthorization({ email, password }) {
@@ -134,7 +145,6 @@ function App() {
   }
 
   function handleUpdateUser({ name, email }) {
-    console.log(name, email)
     auth.editDataUser(email, name)
       .then(res => {
         setCurrentUser({ name: res.name, email: res.email });
@@ -163,12 +173,12 @@ function App() {
   function signOut() {
     auth.signOut()
       .then((res) => {
-        console.log(res)
-        // setLoggedIn(false)
-        // navigate('/');
+        setLoggedIn(false)
+        navigate('/');
       })
       .catch((err) => console.log('ошибка при выходе', err));
   }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -211,10 +221,9 @@ function App() {
                 dataSaveSearch={dataSaveSearch}
                 saveMovies={saveMovies}
                 deleteMovie={deleteMovie}
-
-                loading={loading}
-                error={error}
-                nullRequest={nullRequest}
+                loading={saveloading}
+                error={saveError}
+                nullRequest={saveNullRequest}
               />
               <Footer />
             </>

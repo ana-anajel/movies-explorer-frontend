@@ -4,7 +4,6 @@ import '../Animation/Animation.css';
 import { Link } from 'react-router-dom';
 
 function Profile({ signOut, currentUser, dataProfile }) {
-  console.log(localStorage.clear, localStorage)
   const [isEditProfile, setIsEditProfile] = useState(true);
 
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
