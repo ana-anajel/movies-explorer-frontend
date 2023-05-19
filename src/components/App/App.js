@@ -129,7 +129,6 @@ function App() {
       .then((res) => {
         handleAuthorization({ email, password });
       })
-      .then(() => navigate('/movies'))
       .catch((err) => {
         console.log(err);
       })
@@ -140,7 +139,7 @@ function App() {
       .then(() => {
         setLoggedIn(true);
       })
-      .then(() => navigate('/'))
+      .then(() => navigate('/movies'))
       .catch((err) => console.log(err));
   }
 
@@ -158,12 +157,13 @@ function App() {
       .then((res) => {
         if (res) {
           // авторизуем пользователя
+          console.log(res, 'autorise')
           setCurrentUser({ name: res.name, email: res.email, id: res._id })
           setLoggedIn(true);
           navigate('/movies');
         }
       })
-      .catch((err) => console.log(err, "неавторизирован"));
+      .catch((err) => console.log(err, "Пользователь неавторизирован."));
   }
 
   useEffect(() => {
@@ -232,7 +232,7 @@ function App() {
           <Route path='/profile' element={loggedIn ?
             <>
               <Header theme={false} loggedIn={loggedIn} />
-              <Profile signOut={signOut} currentUser={currentUser} dataProfile={handleUpdateUser} />
+              <Profile signOut={signOut} dataProfile={handleUpdateUser} />
             </>
             : <Navigate to="/signin" replace />} />
 

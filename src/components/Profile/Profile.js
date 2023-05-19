@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 import '../Animation/Animation.css';
-import { Link } from 'react-router-dom';
 
-function Profile({ signOut, currentUser, dataProfile }) {
+function Profile({ signOut, dataProfile }) {
+  const currentUser = useContext(CurrentUserContext);
   const [isEditProfile, setIsEditProfile] = useState(true);
-
   const [errorMessageEmail, setErrorMessageEmail] = useState('');
   const [errorMessageName, setErrorMessageName] = useState('');
 

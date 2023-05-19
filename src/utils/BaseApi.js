@@ -24,8 +24,4 @@ export class BaseApi {
   _request(url, options) {
     return fetch(url, options).then(this._checkResponse);
   }
-
-  setToken(token) {
-    this._headers.authorization = `Bearer ${token}`
-  }
 }

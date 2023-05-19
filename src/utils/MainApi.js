@@ -9,6 +9,7 @@ class MainApi extends BaseApi {
   register(name, email, password) {
     return super._request(`${this._url}/signup`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name,

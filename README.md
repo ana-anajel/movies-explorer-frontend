@@ -14,4 +14,4 @@
 Backend: https://api.dip.movies-explorer.nomoredomains.monster
 
 <!-- Проект доступен по [ссылке](https://ana-anajel.github.io/movies-explorer-frontend/). -->
-Front-end: https://diploma.movies-explorer.nomoredomains.monster/
+Front-end: https://diploma.movies-explorer.nomoredomains.monster
