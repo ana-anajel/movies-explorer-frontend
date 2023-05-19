@@ -53,23 +53,24 @@ function App() {
     })
   }
 
-  const dataSearch = ({ search, isChecked }) => {
+  useEffect(() => {
+    if (localStorage.getItem('dataSearchChecked')) {
+      dataSearch();
+    }
+  }, []);
+
+  const dataSearch = () => {
     setLoading(true);
     setError(false);
     setNullRequest(false);
     setRequest(true);
-    // localStorage.setItem('dataSearch', JSON.stringify({
-    //   search: search,
-    //   isChecked: isChecked
-    // }));
-
 
     api.getMovies()
       .then((res) => {
-        if (isChecked) {
-          setMovies(filterMovies(search, filterTime(res)));
+        if (localStorage.getItem('dataSearchChecked')) {
+          setMovies(filterMovies(localStorage.getItem('dataSearch'), filterTime(res)));
         } else {
-          setMovies(filterMovies(search, res));
+          setMovies(filterMovies(localStorage.getItem('dataSearch'), res));
         }
       })
       .catch((err) => {
@@ -158,12 +159,9 @@ function App() {
   }
 
   function tokenCheck() {
-    // Проверяем наличие куки, делаем запрос
     auth.checkToken()
       .then((res) => {
         if (res) {
-          // авторизуем пользователя
-          console.log(res, 'autorise')
           setCurrentUser({ name: res.name, email: res.email, id: res._id })
           setLoggedIn(true);
           navigate('/movies');
@@ -178,11 +176,11 @@ function App() {
 
   function signOut() {
     auth.signOut()
-      .then((res) => {
+      .then(() => {
         setLoggedIn(false)
         navigate('/');
       })
-      .catch((err) => console.log('ошибка при выходе', err));
+      .catch((err) => console.log('Ошибка при выходе', err));
   }
 
   return (

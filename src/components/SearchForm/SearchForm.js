@@ -22,9 +22,12 @@ function SearchForm({ dataSearch, loading }) {
     setSearch(e.target.value);
   }
 
+
   function handleFormSubmit(e) {
     e.preventDefault();
-    dataSearch({ search: search, isChecked: isChecked });
+    localStorage.setItem('dataSearch', search);
+    localStorage.setItem('dataSearchChecked', isChecked);
+    dataSearch();
   }
 
   return (

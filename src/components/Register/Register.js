@@ -98,7 +98,6 @@ function Register({ onCreateUser }) {
                   type="password"
                   minLength="2"
                   maxLength="30"
-                  pattern='^[A-Za-z\d!@#$%^&*()_+-={}[]|\:;<>,.?~]{2,}$'
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">{errorMessagePassword}</span>

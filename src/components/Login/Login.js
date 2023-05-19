@@ -73,7 +73,6 @@ function Login({ onLogin }) {
                   minLength="2"
                   maxLength="30"
                   noValidate
-                  pattern='^[A-Za-z\d!@#$%^&*()_+-={}[]|\:;<>,.?~]{2,}$'
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">{errorMessagePassword}</span>
