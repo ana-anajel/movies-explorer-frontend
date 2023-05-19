@@ -8,7 +8,12 @@ import ErrorSearch from '../ErrorSearch/ErrorSearch'
 function SavedMovies({ dataSaveSearch, saveMovies, loading, nullRequest, error, deleteMovie }) {
   return (
     <div className="movies">
-      <SearchForm dataSearch={dataSaveSearch} loading={loading} />
+      <SearchForm
+        dataSearch={dataSaveSearch}
+        loading={loading}
+        dataSearchType={'dataSaveSearch'}
+        checkedType={'dataSearchSaveChecked'}
+      />
       {loading && <Preloader />}
       {nullRequest && <ErrorSearch message={'Ничего не найдено.'} />}
       {error && <ErrorSearch message={'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'} />}

@@ -53,9 +53,21 @@ function App() {
     })
   }
 
+  // useEffect(() => {
+  //   const results = JSON.parse(localStorage.getItem('arrMovies'));
+  //   const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
+  //   if (results && saveResults) {
+  //     setMovies(results)
+  //     setSaveMovies(saveResults)
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (localStorage.getItem('dataSearchChecked')) {
+    const results = JSON.parse(localStorage.getItem('arrMovies'));
+    const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
+    if (results && saveResults) {
       dataSearch();
+      dataSaveSearch();
     }
   }, []);
 
@@ -67,32 +79,43 @@ function App() {
 
     api.getMovies()
       .then((res) => {
-        if (localStorage.getItem('dataSearchChecked')) {
-          setMovies(filterMovies(localStorage.getItem('dataSearch'), filterTime(res)));
+        if (JSON.parse(localStorage.getItem('dataSearchChecked'))) {
+          const resultsMovies = filterMovies(localStorage.getItem('dataSearch'), filterTime(res));
+          setMovies(resultsMovies);
+          localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
         } else {
-          setMovies(filterMovies(localStorage.getItem('dataSearch'), res));
+          const resultsMovies = filterMovies(localStorage.getItem('dataSearch'), res);
+          setMovies(resultsMovies);
+          localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
         }
       })
       .catch((err) => {
+        setLoading(false);
         setError(true);
         console.log(err, 'ошибка при поиске')
       })
   }
 
-  const dataSaveSearch = ({ search, isChecked }) => {
+  const dataSaveSearch = () => {
     setSaveLoading(true);
     setSaveError(false);
     setSaveNullRequest(false);
     setSaveRequest(true);
+
     auth.getSaveMovies()
       .then((res) => {
-        if (isChecked) {
-          setSaveMovies(filterMovies(search, filterTime(res)));
+        if (JSON.parse(localStorage.getItem('dataSearchSaveChecked'))) {
+          const resultsMovies = filterMovies(localStorage.getItem('dataSaveSearch'), filterTime(res));
+          setSaveMovies(resultsMovies);
+          localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
         } else {
-          setSaveMovies(filterMovies(search, res));
+          const resultsMovies = filterMovies(localStorage.getItem('dataSaveSearch'), res);
+          setSaveMovies(resultsMovies);
+          localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
         }
       })
       .catch((err) => {
+        setLoading(false);
         setSaveError(true);
         console.log(err, 'ошибка при поиске в сохраненках')
       })

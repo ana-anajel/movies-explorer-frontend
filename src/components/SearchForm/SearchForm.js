@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import Search from '../../images/search.svg'
 import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
-function SearchForm({ dataSearch, loading }) {
+function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
   const [errorMessageSearch, setErrorMessageSearch] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const [search, setSearch] = useState('');
 
+  const [search, setSearch] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    const query = localStorage.getItem(dataSearchType);
+    const checked = JSON.parse(localStorage.getItem(checkedType));
+    if (query && checked) {
+      setSearch(query);
+      setIsChecked(checked);
+    }
+  }, []);
 
   function handleCheckbox() {
     setIsChecked(!isChecked);
@@ -25,8 +34,8 @@ function SearchForm({ dataSearch, loading }) {
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    localStorage.setItem('dataSearch', search);
-    localStorage.setItem('dataSearchChecked', isChecked);
+    localStorage.setItem(dataSearchType, search);
+    localStorage.setItem(checkedType, JSON.stringify(isChecked));
     dataSearch();
   }
 
