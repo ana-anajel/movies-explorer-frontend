@@ -65,7 +65,7 @@ function Profile({ signOut, dataProfile }) {
                   minLength="2"
                   noValidate
                   placeholder='Имя профиля'
-                  pattern='[a-zA-Zа-яА-Я]*'
+                  pattern='[a-zA-Zа-яА-Я-\s]*'
                   required
                 />
               </label>

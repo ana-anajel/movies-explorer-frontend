@@ -44,7 +44,7 @@ function SearchForm({ dataSearch, loading }) {
           id="search"
           name="search"
           maxLength="30"
-          pattern='[a-zA-Zа-яА-Я0-9]*'
+          pattern='[a-zA-Zа-яА-Я0-9-\s]*'
           noValidate
           required
         />

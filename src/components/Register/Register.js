@@ -62,7 +62,7 @@ function Register({ onCreateUser }) {
                   type="text"
                   minLength="2"
                   maxLength='30'
-                  pattern='[a-zA-Zа-яА-Я]*'
+                  pattern='[a-zA-Zа-яА-Я-\s]*'
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">{errorMessageName}</span>
