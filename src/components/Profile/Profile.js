@@ -65,6 +65,7 @@ function Profile({ signOut, dataProfile }) {
                   minLength="2"
                   noValidate
                   placeholder='Имя профиля'
+                  pattern='[a-zA-Zа-яА-Я]*'
                   required
                 />
               </label>
@@ -82,6 +83,7 @@ function Profile({ signOut, dataProfile }) {
                   value={email}
                   placeholder='E-mail'
                   noValidate
+                  pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
                   required
                 />
               </label>

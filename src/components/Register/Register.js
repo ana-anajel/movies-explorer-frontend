@@ -62,6 +62,7 @@ function Register({ onCreateUser }) {
                   type="text"
                   minLength="2"
                   maxLength='30'
+                  pattern='[a-zA-Zа-яА-Я]*'
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">{errorMessageName}</span>
@@ -78,6 +79,7 @@ function Register({ onCreateUser }) {
                   id="email"
                   name="email"
                   type="email"
+                  pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">{errorMessageEmail}</span>
@@ -96,6 +98,7 @@ function Register({ onCreateUser }) {
                   type="password"
                   minLength="2"
                   maxLength="30"
+                  pattern='^[A-Za-z\d!@#$%^&*()_+-={}[]|\:;<>,.?~]{2,}$'
                   required
                 />
                 <span className="sign-form__error-message popup__input-error-name">{errorMessagePassword}</span>

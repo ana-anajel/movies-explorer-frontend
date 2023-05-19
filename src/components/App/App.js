@@ -58,6 +58,12 @@ function App() {
     setError(false);
     setNullRequest(false);
     setRequest(true);
+    // localStorage.setItem('dataSearch', JSON.stringify({
+    //   search: search,
+    //   isChecked: isChecked
+    // }));
+
+
     api.getMovies()
       .then((res) => {
         if (isChecked) {
@@ -126,7 +132,7 @@ function App() {
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
-      .then((res) => {
+      .then(() => {
         handleAuthorization({ email, password });
       })
       .catch((err) => {
