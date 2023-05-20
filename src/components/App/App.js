@@ -53,15 +53,6 @@ function App() {
     })
   }
 
-  // useEffect(() => {
-  //   const results = JSON.parse(localStorage.getItem('arrMovies'));
-  //   const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
-  //   if (results && saveResults) {
-  //     setMovies(results)
-  //     setSaveMovies(saveResults)
-  //   }
-  // }, []);
-
   useEffect(() => {
     const results = JSON.parse(localStorage.getItem('arrMovies'));
     const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
@@ -170,7 +161,9 @@ function App() {
         setLoggedIn(true);
       })
       .then(() => navigate('/movies'))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+      });
   }
 
   function handleUpdateUser({ name, email }) {
@@ -178,7 +171,9 @@ function App() {
       .then(res => {
         setCurrentUser({ name: res.name, email: res.email });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function tokenCheck() {
