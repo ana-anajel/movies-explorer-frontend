@@ -80,14 +80,17 @@ function App() {
 
     api.getMovies()
       .then((res) => {
-        if (checked) {
+        if (checked && dataSearch) {
           const resultsMovies = filterMovies(dataSearch, filterTime(res));
           // localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
           setMovies(resultsMovies);
-        } else {
+        } else if (dataSearch) {
           const resultsMovies = filterMovies(dataSearch, res);
           // localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
           setMovies(resultsMovies);
+        }
+        else {
+          setMovies(res);
         }
       })
       .catch(() => {
@@ -218,6 +221,9 @@ function App() {
   function signOut() {
     auth.signOut()
       .then(() => {
+        setSaveMovies([]);
+        setMovies([]);
+        setCurrentUser({})
         localStorage.removeItem('arrMovies');
         localStorage.removeItem('arrSaveMovies');
         localStorage.removeItem('dataSearchChecked');

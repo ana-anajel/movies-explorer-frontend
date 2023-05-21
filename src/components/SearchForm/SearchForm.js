@@ -18,13 +18,11 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
     if (typeSearch === 'search') {
       const query = localStorage.getItem(dataSearchType);
       const checked = JSON.parse(localStorage.getItem(checkedType));
-      console.log(query, checked)
-
-      if (query && checked) {
+      if (query) {
         setSearch(query);
         setIsChecked(checked);
+        dataSearch();
       }
-      dataSearch();
     } else if (typeSearch === 'saveSearch') {
       setSearch('');
       setIsChecked(false);
