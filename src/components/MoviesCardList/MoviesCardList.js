@@ -3,7 +3,8 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
-function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
+function MoviesCardList({ addMovie, deleteMovie, type }) {
+  const movies = JSON.parse(localStorage.getItem('arrMovies'))
   const [sise, setSise] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
@@ -45,10 +46,9 @@ function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
 
   const moviesElements = movies.slice(0, showMore ? startIndex : movies.length).map((card) => (
     <MoviesCard
-      saveMovies={saveMovies}
       addMovie={addMovie}
       deleteMovie={deleteMovie}
-      key={card.id || card._id}
+      key={card.id}
       card={card}
       type={type}
     />

@@ -57,6 +57,7 @@
   color: #000;
   background: none;
   padding: 0;
+  outline: none;
 }
 
 .profile__input:invalid {

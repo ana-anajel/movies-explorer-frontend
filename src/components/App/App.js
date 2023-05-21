@@ -41,7 +41,10 @@ function App() {
 
   const [saveNullRequest, setSaveNullRequest] = useState(false);
 
+  // ошибки
   const [errorCreateUser, setErrorCreateUser] = useState('');
+  const [errorAuthorization, setErrorAuthorization] = useState('');
+  const [errorUpdateUser, setErrorUpdateUser] = useState('');
 
   // фильтры для формы поиска
   function filterMovies(search, arr) {
@@ -61,16 +64,20 @@ function App() {
   function resetError() {
     setErrorCreateUser('');
     setErrorAuthorization('');
+    setErrorUpdateUser('')
   }
 
-  useEffect(() => {
-    const results = JSON.parse(localStorage.getItem('arrMovies'));
-    const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
-    if (results && saveResults) {
-      dataSearch();
-      dataSaveSearch();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     console.log(JSON.parse(localStorage.getItem('arrMovies')))
+  //     // const results = JSON.parse(localStorage.getItem('arrMovies'));
+  //     // const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
+  //     // if (results && saveResults) {
+  //     //   dataSearch();
+  //     //   dataSaveSearch();
+  //     // }
+  //   }
+  // }, []);
 
   const dataSearch = () => {
     setLoading(true);
@@ -78,22 +85,24 @@ function App() {
     setNullRequest(false);
     setRequest(true);
 
+    const checked = JSON.parse(localStorage.getItem('dataSearchChecked'));
+    const dataSearch = localStorage.getItem('dataSearch');
+
     api.getMovies()
       .then((res) => {
-        if (JSON.parse(localStorage.getItem('dataSearchChecked'))) {
-          const resultsMovies = filterMovies(localStorage.getItem('dataSearch'), filterTime(res));
-          setMovies(resultsMovies);
+        if (checked) {
+          const resultsMovies = filterMovies(dataSearch, filterTime(res));
           localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
+          setMovies(resultsMovies);
         } else {
-          const resultsMovies = filterMovies(localStorage.getItem('dataSearch'), res);
-          setMovies(resultsMovies);
+          const resultsMovies = filterMovies(dataSearch, res);
           localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
+          setMovies(resultsMovies);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
         setError(true);
-        console.log(err, 'ошибка при поиске')
       })
   }
 
@@ -165,13 +174,9 @@ function App() {
       })
   }
 
-  const [errorAuthorization, setErrorAuthorization] = useState('');
-
   function handleAuthorization({ email, password }) {
-    setErrorAuthorization('');
     auth.authorize(email, password)
-      .then((res) => {
-        // console.log(res)
+      .then(() => {
         setLoggedIn(true);
       })
       .then(() => navigate('/movies'))
@@ -186,7 +191,7 @@ function App() {
         setCurrentUser({ name: res.name, email: res.email });
       })
       .catch((err) => {
-        console.log(err);
+        setErrorUpdateUser(err);
       });
   }
 
@@ -209,6 +214,12 @@ function App() {
   function signOut() {
     auth.signOut()
       .then(() => {
+        localStorage.removeItem('arrMovies');
+        localStorage.removeItem('arrSaveMovies');
+        localStorage.removeItem('dataSearchChecked');
+        localStorage.removeItem('dataSearch')
+        localStorage.removeItem('dataSaveSearch');
+        localStorage.removeItem('dataSaveSearchChecked');
         setLoggedIn(false)
         navigate('/');
       })
@@ -243,8 +254,6 @@ function App() {
               <Header theme={false} loggedIn={loggedIn} />
               <Movies
                 dataSearch={dataSearch}
-                movies={movies}
-                saveMovies={saveMovies}
                 loading={loading}
                 error={error}
                 nullRequest={nullRequest}
@@ -259,7 +268,6 @@ function App() {
               <Header theme={false} loggedIn={loggedIn} />
               <SavedMovies
                 dataSaveSearch={dataSaveSearch}
-                saveMovies={saveMovies}
                 deleteMovie={deleteMovie}
                 loading={saveloading}
                 error={saveError}
@@ -272,7 +280,11 @@ function App() {
           <Route path='/profile' element={loggedIn ?
             <>
               <Header theme={false} loggedIn={loggedIn} />
-              <Profile signOut={signOut} dataProfile={handleUpdateUser} />
+              <Profile signOut={signOut}
+                resetError={resetError}
+                errorUpdateUser={errorUpdateUser}
+                handleUpdateUser={handleUpdateUser}
+              />
             </>
             : <Navigate to="/signin" replace />} />
 

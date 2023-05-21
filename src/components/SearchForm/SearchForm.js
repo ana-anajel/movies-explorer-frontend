@@ -5,23 +5,29 @@ import Search from '../../images/search.svg'
 import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
-function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
+function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSearch }) {
   const [isValid, setIsValid] = useState(true);
-
   const [search, setSearch] = useState('');
   const [isChecked, setIsChecked] = useState(false);
-
 
   // if (!search) {
   //   setNullInput(true);
   // }
 
   useEffect(() => {
-    const query = localStorage.getItem(dataSearchType);
-    const checked = JSON.parse(localStorage.getItem(checkedType));
-    if (query && checked) {
-      setSearch(query);
-      setIsChecked(checked);
+    if (typeSearch === 'search') {
+      const query = localStorage.getItem(dataSearchType);
+      const checked = JSON.parse(localStorage.getItem(checkedType));
+      console.log(query, checked)
+
+      if (query && checked) {
+        setSearch(query);
+        setIsChecked(checked);
+      }
+      dataSearch();
+    } else if (typeSearch === 'saveSearch') {
+      setSearch('');
+      setIsChecked(false);
     }
   }, []);
 
@@ -55,7 +61,7 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
           type="text"
           placeholder="Фильм"
           onChange={handleSearch}
-          value={search || ''}
+          value={search}
           id="search"
           name="search"
           maxLength="30"
@@ -65,7 +71,7 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
         <button
           disabled={!isValid || loading}
           type='submit'
-          className={`search__button ${!isValid || loading ? 'search__button_disabled' : ''} animation__button `}
+          className={`search__button ${!isValid || loading ? 'search__button_disabled' : 'animation__button'}`}
         >
           <img src={SearchButton} className='search__icon' alt="Иконка кнопки поиска. Луппа." />
         </button>

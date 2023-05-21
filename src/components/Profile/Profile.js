@@ -1,43 +1,44 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 import '../Animation/Animation.css';
 
-function Profile({ signOut, dataProfile }) {
+function Profile({ signOut, resetError, errorUpdateUser, handleUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
   const [isEditProfile, setIsEditProfile] = useState(true);
-  const [errorMessageEmail, setErrorMessageEmail] = useState('');
-  const [errorMessageName, setErrorMessageName] = useState('');
-
   const [isValid, setIsValid] = useState(false);
-
-  const [name, setName] = useState(currentUser.name);
-  const [email, setEmail] = useState(currentUser.email);
+  const [errorMessage, setErrorMessage] = useState({
+    name: '',
+    email: ''
+  });
+  const [formData, setFormData] = useState({
+    name: currentUser.name,
+    email: currentUser.email
+  });
 
   function editProfile() {
     setIsEditProfile(false);
   }
 
-  function handleInput(e, setErrorMessage, setValue) {
-    setErrorMessage(e.target.validationMessage.split('.')[0])
-    setIsValid(e.target.form.checkValidity());
-    setValue(e.target.value);
-  }
+  useEffect(() => {
+    if (!errorUpdateUser) {
+      setIsEditProfile(true);
+    }
+  }, [currentUser])
 
-  function handleName(e) {
-    handleInput(e, setErrorMessageName, setName);
-  }
-
-  function handleEmail(e) {
-    handleInput(e, setErrorMessageEmail, setEmail);
+  function handleChange(e) {
+    resetError();
+    const { name, value, validationMessage, form } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrorMessage({ ...errorMessage, [name]: validationMessage });
+    setIsValid(form.checkValidity());
   }
 
   function onSubmit(e) {
     e.preventDefault();
-    setIsEditProfile(true);
-    dataProfile({
-      name: name,
-      email: email
+    handleUpdateUser({
+      name: formData.name,
+      email: formData.email
     });
   }
 
@@ -56,10 +57,10 @@ function Profile({ signOut, dataProfile }) {
               <label className="profile__label-container">
                 <h3 className='profile__element'>Имя</h3>
                 <input className='profile__element profile__input'
-                  onChange={handleName}
+                  onChange={handleChange}
                   disabled={isEditProfile}
                   type="text"
-                  value={name}
+                  value={formData.name}
                   id="name"
                   name="name"
                   minLength="2"
@@ -75,12 +76,12 @@ function Profile({ signOut, dataProfile }) {
               <label className="profile__label-container">
                 <h3 className='profile__element'>E-mail</h3>
                 <input className='profile__element profile__input'
-                  onChange={handleEmail}
+                  onChange={handleChange}
                   disabled={isEditProfile}
                   id="email"
                   name="email"
                   type="email"
-                  value={email}
+                  value={formData.email}
                   placeholder='E-mail'
                   noValidate
                   pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -96,11 +97,11 @@ function Profile({ signOut, dataProfile }) {
           >Редактировать</span>)
             :
             (<div className='profile__button-container'>
-              <span className="profile__error-message popup__input-error-name">{errorMessageName || errorMessageEmail}</span>
+              <span className="profile__error-message popup__input-error-name">{errorMessage.name || errorMessage.email || errorUpdateUser}</span>
               <button
-                className={`profile__save-button ${isValid ? 'profile__save-button_activ' : ''} animation__button`}
+                className={`profile__save-button ${isValid && !errorUpdateUser ? 'profile__save-button_activ animation__button' : ''}`}
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || errorUpdateUser}
                 aria-label="Сохранить"
               >Сохранить</button>
             </div>)}

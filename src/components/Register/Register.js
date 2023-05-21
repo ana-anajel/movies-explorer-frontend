@@ -100,7 +100,7 @@ function Register({ onCreateUser, errorCreateUser, resetError }) {
           <div className='sign-form__button-container'>
             <span className="sign-form__error-message_form">{errorCreateUser}</span>
             <button
-              className={`sign-form__button ${!isValid || errorCreateUser ? 'sign-form__button_disabled animation__button' : ''}`}
+              className={`sign-form__button ${!isValid || errorCreateUser ? 'sign-form__button_disabled' : 'animation__button'}`}
               type="submit"
               aria-label="Кнопка сохранить"
               disabled={!isValid || errorCreateUser}
