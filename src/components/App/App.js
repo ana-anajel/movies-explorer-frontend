@@ -38,8 +38,12 @@ function App() {
   const [saveRequest, setSaveRequest] = useState(false);
   const [saveloading, setSaveLoading] = useState(false);
   const [saveError, setSaveError] = useState(false);
+
   const [saveNullRequest, setSaveNullRequest] = useState(false);
 
+  const [errorCreateUser, setErrorCreateUser] = useState('');
+
+  // фильтры для формы поиска
   function filterMovies(search, arr) {
     return arr.filter((item) => {
       return item.nameEN.toLowerCase().includes(search.toLowerCase()) ||
@@ -51,6 +55,12 @@ function App() {
     return arr.filter((item) => {
       return item.duration < 40;
     })
+  }
+
+  // сбросить состояние ошибки к значению по умолчанию
+  function resetError() {
+    setErrorCreateUser('');
+    setErrorAuthorization('');
   }
 
   useEffect(() => {
@@ -151,18 +161,22 @@ function App() {
         handleAuthorization({ email, password });
       })
       .catch((err) => {
-        console.log(err);
+        setErrorCreateUser(err);
       })
   }
 
+  const [errorAuthorization, setErrorAuthorization] = useState('');
+
   function handleAuthorization({ email, password }) {
+    setErrorAuthorization('');
     auth.authorize(email, password)
-      .then(() => {
+      .then((res) => {
+        // console.log(res)
         setLoggedIn(true);
       })
       .then(() => navigate('/movies'))
       .catch((err) => {
-        console.log(err)
+        setErrorAuthorization(err);
       });
   }
 
@@ -185,7 +199,7 @@ function App() {
           navigate('/movies');
         }
       })
-      .catch((err) => console.log(err, "Пользователь неавторизирован."));
+      .catch((err) => console.log(err, "Не удалось авторизировать пользователя."));
   }
 
   useEffect(() => {
@@ -206,10 +220,14 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route path="/signup" element={<Register
+            errorCreateUser={errorCreateUser}
             onCreateUser={handleCreateUser}
+            resetError={resetError}
           />} />
           <Route path="/signin" element={<Login
             onLogin={handleAuthorization}
+            errorAuthorization={errorAuthorization}
+            resetError={resetError}
           />} />
 
           <Route path="/" element={(

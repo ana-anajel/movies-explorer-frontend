@@ -4,40 +4,32 @@ import logo from '../../images/logo.svg';
 import '../SignForm/SignForm.css';
 import '../Animation/Animation.css';
 
-function Register({ onCreateUser }) {
-  const [errorMessageName, setErrorMessageName] = useState('');
-  const [errorMessageEmail, setErrorMessageEmail] = useState('');
-  const [errorMessagePassword, setErrorMessagePassword] = useState('');
+function Register({ onCreateUser, errorCreateUser, resetError }) {
+  const [errorMessage, setErrorMessage] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
 
   const [isValid, setIsValid] = useState(false);
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  function handleInput(e, setErrorMessage, setValue) {
-    setErrorMessage(e.target.validationMessage.split('.')[0])
-    setIsValid(e.target.form.checkValidity());
-    setValue(e.target.value);
-  }
-
-  function handleName(e) {
-    handleInput(e, setErrorMessageName, setName);
-  }
-  function handleEmail(e) {
-    handleInput(e, setErrorMessageEmail, setEmail);
-  }
-  function handlePassword(e) {
-    handleInput(e, setErrorMessagePassword, setPassword);
+  function handleChange(e) {
+    resetError();
+    const { name, value, validationMessage, form } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrorMessage({ ...errorMessage, [name]: validationMessage });
+    setIsValid(form.checkValidity());
   }
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    onCreateUser({
-      name: name,
-      email: email,
-      password: password
-    });
+    onCreateUser(formData);
   }
 
   return (
@@ -55,8 +47,8 @@ function Register({ onCreateUser }) {
                 <h3 className='sign-form__name'>Имя</h3>
                 <input
                   className='sign-form__input'
-                  value={name || ''}
-                  onChange={handleName}
+                  value={formData.name}
+                  onChange={handleChange}
                   id="name"
                   name="name"
                   type="text"
@@ -65,7 +57,7 @@ function Register({ onCreateUser }) {
                   pattern='[a-zA-Zа-яА-Я-\s]*'
                   required
                 />
-                <span className="sign-form__error-message popup__input-error-name">{errorMessageName}</span>
+                <span className="sign-form__error-message popup__input-error-name">{errorMessage.name}</span>
               </label>
             </li>
 
@@ -74,15 +66,15 @@ function Register({ onCreateUser }) {
                 <h3 className='sign-form__name'>E-mail</h3>
                 <input
                   className='sign-form__input'
-                  value={email || ''}
-                  onChange={handleEmail}
+                  value={formData.email}
+                  onChange={handleChange}
                   id="email"
                   name="email"
                   type="email"
                   pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
                   required
                 />
-                <span className="sign-form__error-message popup__input-error-name">{errorMessageEmail}</span>
+                <span className="sign-form__error-message popup__input-error-name">{errorMessage.email}</span>
               </label>
             </li>
 
@@ -91,8 +83,8 @@ function Register({ onCreateUser }) {
                 <h3 className='sign-form__name'>Пароль</h3>
                 <input
                   className='sign-form__input'
-                  value={password || ''}
-                  onChange={handlePassword}
+                  value={formData.password}
+                  onChange={handleChange}
                   id="password"
                   name="password"
                   type="password"
@@ -100,17 +92,20 @@ function Register({ onCreateUser }) {
                   maxLength="30"
                   required
                 />
-                <span className="sign-form__error-message popup__input-error-name">{errorMessagePassword}</span>
+                <span className="sign-form__error-message popup__input-error-name">{errorMessage.password}</span>
               </label>
             </li>
           </ul>
 
-          <button
-            className={`sign-form__button ${!isValid ? 'sign-form__button_disabled' : ''} animation__button`}
-            type="submit"
-            aria-label="Кнопка сохранить"
-            disabled={!isValid}
-          >Зарегистрироваться</button>
+          <div className='sign-form__button-container'>
+            <span className="sign-form__error-message_form">{errorCreateUser}</span>
+            <button
+              className={`sign-form__button ${!isValid || errorCreateUser ? 'sign-form__button_disabled animation__button' : ''}`}
+              type="submit"
+              aria-label="Кнопка сохранить"
+              disabled={!isValid || errorCreateUser}
+            >Зарегистрироваться</button>
+          </div>
           <h2 className='sign-form__span'>Уже зарегистрированы?
             <Link className='sign-form__link animation__link' to='/signin'> Войти</Link>
           </h2>

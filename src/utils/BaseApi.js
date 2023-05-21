@@ -5,20 +5,16 @@ export class BaseApi {
     this._headers = config.headers;
   }
 
-  get _headerz() {
-    return {
-      ...this._headers,
-      token: `Bearer ${localStorage.getItem('token')}`
-    }
-  }
-
-  _checkResponse(res, err) {
-    if (res.ok) {
-      return res.json();
-    }
-    else {
-      return Promise.reject(`Ошибка: ${res.status}`);
-    }
+  _checkResponse(res) {
+    return res.json().then(jsonRes => {
+      if (res.ok) {
+        return jsonRes;
+      } else if (jsonRes.message) {
+        return Promise.reject(`Ошибка: ${jsonRes.message}`);
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
+    })
   }
 
   _request(url, options) {

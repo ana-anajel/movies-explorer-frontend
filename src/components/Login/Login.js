@@ -4,40 +4,39 @@ import logo from '../../images/logo.svg';
 import '../SignForm/SignForm.css';
 import '../Animation/Animation.css';
 
-function Login({ onLogin }) {
-  const [errorMessageEmail, setErrorMessageEmail] = useState('');
-  const [errorMessagePassword, setErrorMessagePassword] = useState('');
+function Login({ onLogin, errorAuthorization, resetError }) {
+  const [errorMessage, setErrorMessage] = useState({
+    email: '',
+    password: ''
+  });
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
 
   const [isValid, setIsValid] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  function handleInput(e, setErrorMessage, setValue) {
-    setErrorMessage(e.target.validationMessage.split('.')[0])
-    setIsValid(e.target.form.checkValidity());
-    setValue(e.target.value);
-  }
-
-  function handleEmail(e) {
-    handleInput(e, setErrorMessageEmail, setEmail);
-  }
-  function handlePassword(e) {
-    handleInput(e, setErrorMessagePassword, setPassword);
+  function handleChange(e) {
+    resetError();
+    const { name, value, validationMessage, form } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrorMessage({ ...errorMessage, [name]: validationMessage });
+    setIsValid(form.checkValidity());
   }
 
   function handleFormSubmit(e) {
     e.preventDefault();
     onLogin({
-      email: email,
-      password: password
+      email: formData.email,
+      password: formData.password
     });
   }
 
   return (
     <article className="sign-form">
       <div className="sign-form__container">
-        <img className='sign-form__logo' alt="Логотип сайта. Черный круг." src={logo} />
+        <Link className='sign-form__link animation__button' to='/'><img className='sign-form__logo' alt="Логотип сайта. Черный круг." src={logo} /></Link>
         <h1 className="sign-form__title">Рады видеть!</h1>
 
         <form className='sign-form__form' onSubmit={handleFormSubmit} noValidate >
@@ -47,8 +46,8 @@ function Login({ onLogin }) {
                 <h3 className='sign-form__name'>E-mail</h3>
                 <input
                   className='sign-form__input'
-                  value={email || ''}
-                  onChange={handleEmail}
+                  value={formData.email}
+                  onChange={handleChange}
                   id="email"
                   name="email"
                   type="email"
@@ -56,7 +55,7 @@ function Login({ onLogin }) {
                   pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
                   required
                 />
-                <span className="sign-form__error-message popup__input-error-name">{errorMessageEmail}</span>
+                <span className="sign-form__error-message popup__input-error-name">{errorMessage.email}</span>
               </label>
             </li>
 
@@ -65,8 +64,8 @@ function Login({ onLogin }) {
                 <h3 className='sign-form__name'>Пароль</h3>
                 <input
                   className='sign-form__input sign-form__input-error'
-                  value={password || ''}
-                  onChange={handlePassword}
+                  value={formData.password}
+                  onChange={handleChange}
                   id="password"
                   name="password"
                   type="password"
@@ -75,17 +74,20 @@ function Login({ onLogin }) {
                   noValidate
                   required
                 />
-                <span className="sign-form__error-message popup__input-error-name">{errorMessagePassword}</span>
+                <span className="sign-form__error-message popup__input-error-name">{errorMessage.password}</span>
               </label>
             </li>
           </ul>
 
-          <button
-            className={`sign-form__button ${!isValid ? 'sign-form__button_disabled' : ''} animation__button`}
-            type="submit"
-            aria-label="Кнопка сохранить"
-            disabled={!isValid}
-          >Войти</button>
+          <div className='sign-form__button-container'>
+            <span className="sign-form__error-message_form">{errorAuthorization}</span>
+            <button
+              className={`sign-form__button ${!isValid || errorAuthorization ? 'sign-form__button_disabled' : 'animation__button'}`}
+              type="submit"
+              aria-label="Кнопка сохранить"
+              disabled={!isValid || errorAuthorization}
+            >Войти</button>
+          </div>
           <h2 className='sign-form__span'>Ещё не зарегистрированы?
             <Link className='sign-form__link animation__link' to='/signup'> Регистрация</Link></h2>
         </form>

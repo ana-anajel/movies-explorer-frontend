@@ -6,11 +6,15 @@ import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
 function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
-  const [errorMessageSearch, setErrorMessageSearch] = useState('');
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   const [search, setSearch] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+
+
+  // if (!search) {
+  //   setNullInput(true);
+  // }
 
   useEffect(() => {
     const query = localStorage.getItem(dataSearchType);
@@ -26,7 +30,6 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
   }
 
   function handleSearch(e) {
-    setErrorMessageSearch(e.target.validationMessage.split('.')[0])
     setIsValid(e.target.form.checkValidity());
     setSearch(e.target.value);
   }
@@ -58,7 +61,6 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType }) {
           maxLength="30"
           pattern='[a-zA-Zа-яА-Я0-9-\s]*'
           noValidate
-          required
         />
         <button
           disabled={!isValid || loading}

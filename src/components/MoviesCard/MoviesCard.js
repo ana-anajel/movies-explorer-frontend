@@ -12,7 +12,7 @@ function MoviesCard({ saveMovies, addMovie, card, deleteMovie, type }) {
   const currentUser = useContext(CurrentUserContext);
 
   const isLiked = saveMovies?.some((i) => i.movieId === card.id);
-
+  // console.log(saveMovies)
   function handleLike() {
     if (isLiked) {
       const saveCard = saveMovies.find((i) => i.movieId === card.id);
