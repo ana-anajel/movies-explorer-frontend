@@ -67,17 +67,7 @@ function App() {
     setErrorUpdateUser('')
   }
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     console.log(JSON.parse(localStorage.getItem('arrMovies')))
-  //     // const results = JSON.parse(localStorage.getItem('arrMovies'));
-  //     // const saveResults = JSON.parse(localStorage.getItem('arrSaveMovies'));
-  //     // if (results && saveResults) {
-  //     //   dataSearch();
-  //     //   dataSaveSearch();
-  //     // }
-  //   }
-  // }, []);
+
 
   const dataSearch = () => {
     setLoading(true);
@@ -92,11 +82,11 @@ function App() {
       .then((res) => {
         if (checked) {
           const resultsMovies = filterMovies(dataSearch, filterTime(res));
-          localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
+          // localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
           setMovies(resultsMovies);
         } else {
           const resultsMovies = filterMovies(dataSearch, res);
-          localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
+          // localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
           setMovies(resultsMovies);
         }
       })
@@ -112,16 +102,19 @@ function App() {
     setSaveNullRequest(false);
     setSaveRequest(true);
 
+    const checked = JSON.parse(localStorage.getItem('dataSearchSaveChecked'));
+    const dataSearch = localStorage.getItem('dataSaveSearch');
+
     auth.getSaveMovies()
       .then((res) => {
-        if (JSON.parse(localStorage.getItem('dataSearchSaveChecked'))) {
-          const resultsMovies = filterMovies(localStorage.getItem('dataSaveSearch'), filterTime(res));
+        if (checked) {
+          const resultsMovies = filterMovies(dataSearch, filterTime(res));
           setSaveMovies(resultsMovies);
-          localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
+          // localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
         } else {
-          const resultsMovies = filterMovies(localStorage.getItem('dataSaveSearch'), res);
+          const resultsMovies = filterMovies(dataSearch, res);
           setSaveMovies(resultsMovies);
-          localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
+          // localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
         }
       })
       .catch((err) => {
@@ -134,7 +127,14 @@ function App() {
   function addMovie(data) {
     auth.createMovie(data)
       .then((newMovie) => {
+        // const saveMovies = JSON.parse(localStorage.getItem('arrSaveMovies'));
         setSaveMovies([newMovie, ...saveMovies]);
+        // if (saveMovies) {
+        //   localStorage.setItem('arrSaveMovies', [JSON.stringify(newMovie), ...JSON.stringify(saveMovies)]);
+        // } else {
+        //   localStorage.setItem('arrSaveMovies', JSON.stringify(newMovie));
+        // }
+        // setSaveMovies([newMovie, ...saveMovies]);
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
   }
@@ -142,6 +142,10 @@ function App() {
   function deleteMovie(card) {
     auth.deleteMovie(card._id)
       .then(() => {
+        // const saveMovies = JSON.parse(localStorage.getItem('arrSaveMovies'));
+        // const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
+        // localStorage.setItem('arrSaveMovies', JSON.stringify(updateSaveMovies));
+
         const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
         setSaveMovies(updateSaveMovies);
       })
@@ -253,6 +257,9 @@ function App() {
             <>
               <Header theme={false} loggedIn={loggedIn} />
               <Movies
+                saveMovies={saveMovies}
+                movies={movies}
+
                 dataSearch={dataSearch}
                 loading={loading}
                 error={error}
@@ -267,6 +274,8 @@ function App() {
             <>
               <Header theme={false} loggedIn={loggedIn} />
               <SavedMovies
+                saveMovies={saveMovies}
+
                 dataSaveSearch={dataSaveSearch}
                 deleteMovie={deleteMovie}
                 loading={saveloading}

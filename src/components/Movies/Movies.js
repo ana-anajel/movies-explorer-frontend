@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import ErrorSearch from '../ErrorSearch/ErrorSearch';
 
-function Movies({ loading, nullRequest, error, addMovie, deleteMovie, dataSearch }) {
+function Movies({ loading, nullRequest, error, addMovie, deleteMovie, dataSearch, movies, saveMovies }) {
   return (
     <div className="movies">
       <SearchForm
@@ -20,7 +20,7 @@ function Movies({ loading, nullRequest, error, addMovie, deleteMovie, dataSearch
       {nullRequest && <ErrorSearch message={'Ничего не найдено.'} />}
       {/* {nullInput && <ErrorSearch message={'Введите ключевое слово.'} />} */}
       {error && <ErrorSearch message={'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'} />}
-      {!loading && !error && !nullRequest && <MoviesCardList addMovie={addMovie} deleteMovie={deleteMovie} type={true} />}
+      {!loading && !error && !nullRequest && <MoviesCardList saveMovies={saveMovies} movies={movies} addMovie={addMovie} deleteMovie={deleteMovie} type={true} />}
     </div>
   );
 }

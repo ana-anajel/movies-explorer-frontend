@@ -8,13 +8,15 @@ import './MoviesCard.css';
 import '../Animation/Animation.css';
 import { MOVIES_API } from "../../constants/Api";
 
-function MoviesCard({ addMovie, card, deleteMovie, type }) {
-  const currentUser = useContext(CurrentUserContext);
+function MoviesCard({ saveMovies, addMovie, card, deleteMovie, type }) {
+  // const currentUser = useContext(CurrentUserContext);
 
-  const saveMovies = JSON.parse(localStorage.getItem('arrSaveMovies'))
+  // const saveMovies = JSON.parse(localStorage.getItem('arrSaveMovies'));
 
   const isLiked = saveMovies?.some((i) => i.movieId === card.id);
-  // console.log(saveMovies)
+
+  // console.log(saveMovies, isLiked);
+
   function handleClick() {
     if (isLiked) {
       const saveCard = saveMovies.find((i) => i.movieId === card.id);
