@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 import '../Animation/Animation.css';
 
-function Profile({ signOut, resetError, errorUpdateUser, handleUpdateUser }) {
+function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
   const [isEditProfile, setIsEditProfile] = useState(true);
   const [isValid, setIsValid] = useState(false);
@@ -90,21 +90,22 @@ function Profile({ signOut, resetError, errorUpdateUser, handleUpdateUser }) {
               </label>
             </li>
           </ul>
-
-          {isEditProfile ? (<span
-            className='profile__button animation__link'
-            onClick={editProfile}
-          >Редактировать</span>)
-            :
-            (<div className='profile__button-container'>
-              <span className="profile__error-message popup__input-error-name">{errorMessage.name || errorMessage.email || errorUpdateUser}</span>
-              <button
-                className={`profile__save-button ${isValid && !errorUpdateUser ? 'profile__save-button_activ animation__button' : ''}`}
-                type="submit"
-                disabled={!isValid || errorUpdateUser}
-                aria-label="Сохранить"
-              >Сохранить</button>
-            </div>)}
+          <div className='profile__button-container'>
+            <span className="profile__message profile__message_ok">{messageOk}</span>
+            <span className="profile__message profile__message_error">{errorMessage.name || errorMessage.email || errorUpdateUser}</span>
+            {isEditProfile ? (<span
+              className='profile__button animation__link'
+              onClick={editProfile}
+            >Редактировать</span>)
+              :
+              (
+                <button
+                  className={`profile__save-button ${isValid && !errorUpdateUser ? 'profile__save-button_activ animation__button' : ''}`}
+                  type="submit"
+                  disabled={!isValid || errorUpdateUser}
+                  aria-label="Сохранить"
+                >Сохранить</button>
+              )}</div>
 
 
         </form>

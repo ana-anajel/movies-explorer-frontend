@@ -46,6 +46,16 @@ function App() {
   const [errorAuthorization, setErrorAuthorization] = useState('');
   const [errorUpdateUser, setErrorUpdateUser] = useState('');
 
+  const [messageOk, setMessageOk] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMessageOk('');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [messageOk]);
+
   // фильтры для формы поиска
   function filterMovies(search, arr) {
     return arr.filter((item) => {
@@ -67,8 +77,6 @@ function App() {
     setErrorUpdateUser('')
   }
 
-
-
   const dataSearch = () => {
     setLoading(true);
     setError(false);
@@ -82,11 +90,9 @@ function App() {
       .then((res) => {
         if (checked && dataSearch) {
           const resultsMovies = filterMovies(dataSearch, filterTime(res));
-          // localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
           setMovies(resultsMovies);
         } else if (dataSearch) {
           const resultsMovies = filterMovies(dataSearch, res);
-          // localStorage.setItem('arrMovies', JSON.stringify(resultsMovies));
           setMovies(resultsMovies);
         }
         else {
@@ -113,11 +119,9 @@ function App() {
         if (checked) {
           const resultsMovies = filterMovies(dataSearch, filterTime(res));
           setSaveMovies(resultsMovies);
-          // localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
         } else {
           const resultsMovies = filterMovies(dataSearch, res);
           setSaveMovies(resultsMovies);
-          // localStorage.setItem('arrSaveMovies', JSON.stringify(resultsMovies));
         }
       })
       .catch((err) => {
@@ -130,14 +134,7 @@ function App() {
   function addMovie(data) {
     auth.createMovie(data)
       .then((newMovie) => {
-        // const saveMovies = JSON.parse(localStorage.getItem('arrSaveMovies'));
         setSaveMovies([newMovie, ...saveMovies]);
-        // if (saveMovies) {
-        //   localStorage.setItem('arrSaveMovies', [JSON.stringify(newMovie), ...JSON.stringify(saveMovies)]);
-        // } else {
-        //   localStorage.setItem('arrSaveMovies', JSON.stringify(newMovie));
-        // }
-        // setSaveMovies([newMovie, ...saveMovies]);
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
   }
@@ -145,10 +142,6 @@ function App() {
   function deleteMovie(card) {
     auth.deleteMovie(card._id)
       .then(() => {
-        // const saveMovies = JSON.parse(localStorage.getItem('arrSaveMovies'));
-        // const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
-        // localStorage.setItem('arrSaveMovies', JSON.stringify(updateSaveMovies));
-
         const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
         setSaveMovies(updateSaveMovies);
       })
@@ -195,6 +188,7 @@ function App() {
   function handleUpdateUser({ name, email }) {
     auth.editDataUser(email, name)
       .then(res => {
+        setMessageOk('Данные профиля успешно изменены.');
         setCurrentUser({ name: res.name, email: res.email });
       })
       .catch((err) => {
@@ -299,6 +293,7 @@ function App() {
                 resetError={resetError}
                 errorUpdateUser={errorUpdateUser}
                 handleUpdateUser={handleUpdateUser}
+                messageOk={messageOk}
               />
             </>
             : <Navigate to="/signin" replace />} />

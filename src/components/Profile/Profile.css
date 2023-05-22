@@ -116,7 +116,7 @@
   color: #FFF;
 }
 
-.profile__error-message {
+.profile__message {
   display: inline-block;
   position: absolute;
   left: 50%;
@@ -128,7 +128,14 @@
   font-size: 11px;
   line-height: 13px;
   text-align: center;
+}
+
+.profile__message_error {
   color: #FF4062;
+}
+
+.profile__message_ok {
+  color: #2BE080;
 }
 
 @media screen and (max-width: 924px) {
