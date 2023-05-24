@@ -5,20 +5,21 @@ import MoviesSaveCardList from '../MoviesSaveCardList/MoviesSaveCardList';
 import Preloader from '../Preloader/Preloader';
 import ErrorSearch from '../ErrorSearch/ErrorSearch'
 
-function SavedMovies({ saveMovies, dataSaveSearch, loading, nullRequest, error, deleteMovie }) {
+function SavedMovies({ movies, dataSearch, loading, nullRequest, nullRsult, error, deleteMovie }) {
   return (
     <div className="movies">
       <SearchForm
         typeSearch={'saveSearch'}
-        dataSearch={dataSaveSearch}
+        dataSearch={dataSearch}
         loading={loading}
         dataSearchType={'dataSaveSearch'}
         checkedType={'dataSearchSaveChecked'}
       />
       {loading && <Preloader />}
-      {nullRequest && <ErrorSearch message={'Ничего не найдено.'} />}
+      {nullRequest && <ErrorSearch message={'Введите ключевое слово.'} />}
+      {nullRsult && <ErrorSearch message={'Ничего не найдено.'} />}
       {error && <ErrorSearch message={'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'} />}
-      {!loading && !error && !nullRequest && <MoviesSaveCardList saveMovies={saveMovies} type={false} deleteMovie={deleteMovie} />}
+      {!loading && !error && !nullRequest && <MoviesSaveCardList movies={movies} type={false} deleteMovie={deleteMovie} />}
     </div>
   );
 }

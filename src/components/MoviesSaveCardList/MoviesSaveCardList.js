@@ -2,12 +2,13 @@ import '../MoviesCardList/MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
-function MoviesSaveCardList({ saveMovies, deleteMovie, type }) {
-  // const movies = JSON.parse(localStorage.getItem('arrSaveMovies'))
+function MoviesSaveCardList({ movies, deleteMovie, type }) {
+  // const movies = JSON.parse(localStorage.getItem('saveMoviesList'));
+  console.log(movies);
 
-  const moviesElements = saveMovies.slice(0, saveMovies.length).map((card) => (
+  const moviesElements = movies?.slice(0, movies.length).map((card) => (
     <MoviesCard
-      saveMovies={saveMovies}
+      saveMovies={movies}
 
       deleteMovie={deleteMovie}
       key={card._id}

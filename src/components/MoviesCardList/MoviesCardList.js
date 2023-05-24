@@ -4,12 +4,11 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
 function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
-  // const movies = JSON.parse(localStorage.getItem('arrMovies'))
   const [sise, setSise] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
 
-
+  // console.log(movies);
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth > 1030) {

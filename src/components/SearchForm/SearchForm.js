@@ -16,12 +16,12 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
 
   useEffect(() => {
     if (typeSearch === 'search') {
-      const query = localStorage.getItem(dataSearchType);
-      const checked = JSON.parse(localStorage.getItem(checkedType));
-      if (query) {
-        setSearch(query);
+      const checked = JSON.parse(localStorage.getItem('dataSearchChecked')) || false;
+      const filterText = localStorage.getItem('dataSearch') || '';
+
+      if (filterText) {
+        setSearch(filterText);
         setIsChecked(checked);
-        dataSearch();
       }
     } else if (typeSearch === 'saveSearch') {
       setSearch('');
@@ -37,7 +37,6 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
     setIsValid(e.target.form.checkValidity());
     setSearch(e.target.value);
   }
-
 
   function handleFormSubmit(e) {
     e.preventDefault();

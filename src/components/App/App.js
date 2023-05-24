@@ -25,6 +25,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
   const [saveMovies, setSaveMovies] = useState([]);
+  //данные локалсторедж
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(false);
@@ -34,6 +36,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [nullRequest, setNullRequest] = useState(false);
+  const [nullRsult, setNullRsult] = useState(false);
 
   const [saveRequest, setSaveRequest] = useState(false);
   const [saveloading, setSaveLoading] = useState(false);
@@ -77,43 +80,117 @@ function App() {
     setErrorUpdateUser('')
   }
 
-  const dataSearch = () => {
-    setLoading(true);
+  useEffect(() => {
+    if (loggedIn) {
+      const arrMovies = JSON.parse(localStorage.getItem('moviesList')) || [];
+      const arrSaveMovies = JSON.parse(localStorage.getItem('saveMoviesList')) || [];
+
+      if (arrMovies.length === 0) {
+        Promise.all([api.getMovies(), auth.getSaveMovies()])
+          .then(([dataMovies, dataSaveMovies]) => {
+            localStorage.setItem('moviesList', JSON.stringify(dataMovies));
+            localStorage.setItem('saveMoviesList', JSON.stringify(dataSaveMovies));
+            setMovies(JSON.parse(localStorage.getItem('moviesList')));
+            setSaveMovies(JSON.parse(localStorage.getItem('moviesList')));
+          })
+          .catch((err) => console.log(err, 'Ошибка при получении данных.'));
+      } else {
+        setMovies(arrMovies);
+        setSaveMovies(arrSaveMovies);
+      }
+      const filterText = localStorage.getItem('dataSearch') || '';
+      if (filterText) {
+        dataSearch()
+      }
+    }
+  }, [loggedIn]);
+
+  // const dataSearch = async () => {
+  //   setLoading(true);
+  //   setError(false);
+  //   setNullRequest(false);
+  //   setRequest(true);
+  //   setNullRsult(false)
+  //   try {
+  //     const checked = await JSON.parse(localStorage.getItem('dataSearchChecked'));
+  //     const dataSearch = localStorage.getItem('dataSearch');
+  //     if (!dataSearch) {
+  //       setNullRequest(true);
+  //       setLoading(false);
+  //       return;
+  //     } else {
+  //       if (checked && Boolean(dataSearch)) {
+  //         const dataFilteredMovies = await filterMovies(dataSearch, filterTime(movies));
+  //         setFilteredMovies(dataFilteredMovies);
+  //       } else if (dataSearch) {
+  //         const dataFilteredMovies = await filterMovies(dataSearch, movies);
+  //         setFilteredMovies(dataFilteredMovies);
+  //       }
+  //       console.log(dataSearch, filteredMovies);
+  //       if (filteredMovies.length === 0) {
+  //         setNullRsult(true);
+  //         setLoading(false);
+  //       }
+  //       return setLoading(false);
+  //       return
+  //     }
+  //   } catch (e) {
+  //     console.log(e)
+  //     setError(false);
+  //     setLoading(false);
+  //   }
+
+
+  const dataSearch = async () => {
     setError(false);
     setNullRequest(false);
-    setRequest(true);
+    setNullRsult(false);
+    setLoading(true);
+    try {
+      const checked = JSON.parse(localStorage.getItem('dataSearchChecked'));
+      const dataSearch = localStorage.getItem('dataSearch');
 
-    const checked = JSON.parse(localStorage.getItem('dataSearchChecked'));
-    const dataSearch = localStorage.getItem('dataSearch');
+      if (!dataSearch) {
+        setTimeout(() => {
+          setLoading(false);
+          setNullRequest(true);
+        }, 1000);
+        return;
+      }
 
-    api.getMovies()
-      .then((res) => {
-        if (checked && dataSearch) {
-          const resultsMovies = filterMovies(dataSearch, filterTime(res));
-          setMovies(resultsMovies);
-        } else if (dataSearch) {
-          const resultsMovies = filterMovies(dataSearch, res);
-          setMovies(resultsMovies);
-        }
-        else {
-          setMovies(res);
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-        setError(true);
-      })
+      let dataFilteredMovies = [];
+      if (checked && Boolean(dataSearch)) {
+        dataFilteredMovies = await filterMovies(dataSearch, filterTime(movies));
+      } else if (dataSearch) {
+        dataFilteredMovies = await filterMovies(dataSearch, movies);
+      }
+      setFilteredMovies(dataFilteredMovies);
+      setLoading(false);
+      return;
+
+    } catch (e) {
+      console.log(e)
+      setError(true);
+    }
   }
 
+  useEffect(() => {
+    if (filteredMovies.length === 0) {
+      setLoading(false);
+      setNullRsult(true);
+    }
+  }, [filteredMovies]);
+
   const dataSaveSearch = () => {
-    setSaveLoading(true);
     setSaveError(false);
     setSaveNullRequest(false);
     setSaveRequest(true);
+    setSaveLoading(true);
 
     const checked = JSON.parse(localStorage.getItem('dataSearchSaveChecked'));
     const dataSearch = localStorage.getItem('dataSaveSearch');
 
+    const movies = JSON.parse(localStorage.getItem('saveMoviesList'));
     auth.getSaveMovies()
       .then((res) => {
         if (checked) {
@@ -147,14 +224,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
-  useEffect(() => {
-    if (request) {
-      setNullRequest(movies.length === 0);
-      setRequest(false);
-    }
-    setLoading(false);
-  }, [movies]);
 
   useEffect(() => {
     if (saveRequest) {
@@ -218,6 +287,9 @@ function App() {
         setSaveMovies([]);
         setMovies([]);
         setCurrentUser({})
+        localStorage.removeItem('moviesList');
+        localStorage.removeItem('saveMoviesList');
+
         localStorage.removeItem('arrMovies');
         localStorage.removeItem('arrSaveMovies');
         localStorage.removeItem('dataSearchChecked');
@@ -258,12 +330,14 @@ function App() {
               <Header theme={false} loggedIn={loggedIn} />
               <Movies
                 saveMovies={saveMovies}
-                movies={movies}
+                movies={filteredMovies}
+                request={request}
 
                 dataSearch={dataSearch}
                 loading={loading}
                 error={error}
                 nullRequest={nullRequest}
+                nullRsult={nullRsult}
                 addMovie={addMovie}
                 deleteMovie={deleteMovie} />
               <Footer />
@@ -274,9 +348,9 @@ function App() {
             <>
               <Header theme={false} loggedIn={loggedIn} />
               <SavedMovies
-                saveMovies={saveMovies}
+                movies={saveMovies}
 
-                dataSaveSearch={dataSaveSearch}
+                dataSearch={dataSaveSearch}
                 deleteMovie={deleteMovie}
                 loading={saveloading}
                 error={saveError}
