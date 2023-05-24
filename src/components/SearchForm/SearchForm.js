@@ -10,10 +10,6 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
   const [search, setSearch] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
-  // if (!search) {
-  //   setNullInput(true);
-  // }
-
   useEffect(() => {
     if (typeSearch === 'search') {
       const checked = JSON.parse(localStorage.getItem('dataSearchChecked')) || false;

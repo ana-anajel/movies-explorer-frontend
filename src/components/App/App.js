@@ -41,14 +41,13 @@ function App() {
   const [saveRequest, setSaveRequest] = useState(false);
   const [saveloading, setSaveLoading] = useState(false);
   const [saveError, setSaveError] = useState(false);
-
   const [saveNullRequest, setSaveNullRequest] = useState(false);
+  const [saveNullRsult, setSaveNullRsult] = useState(false);
 
-  // ошибки
+  // сообщения
   const [errorCreateUser, setErrorCreateUser] = useState('');
   const [errorAuthorization, setErrorAuthorization] = useState('');
   const [errorUpdateUser, setErrorUpdateUser] = useState('');
-
   const [messageOk, setMessageOk] = useState('');
 
   useEffect(() => {
@@ -85,6 +84,8 @@ function App() {
       const arrMovies = JSON.parse(localStorage.getItem('moviesList')) || [];
       const arrSaveMovies = JSON.parse(localStorage.getItem('saveMoviesList')) || [];
 
+      console.log('data?', arrSaveMovies)
+
       if (arrMovies.length === 0) {
         Promise.all([api.getMovies(), auth.getSaveMovies()])
           .then(([dataMovies, dataSaveMovies]) => {
@@ -102,44 +103,9 @@ function App() {
       if (filterText) {
         dataSearch()
       }
+      console.log('da', arrSaveMovies)
     }
   }, [loggedIn]);
-
-  // const dataSearch = async () => {
-  //   setLoading(true);
-  //   setError(false);
-  //   setNullRequest(false);
-  //   setRequest(true);
-  //   setNullRsult(false)
-  //   try {
-  //     const checked = await JSON.parse(localStorage.getItem('dataSearchChecked'));
-  //     const dataSearch = localStorage.getItem('dataSearch');
-  //     if (!dataSearch) {
-  //       setNullRequest(true);
-  //       setLoading(false);
-  //       return;
-  //     } else {
-  //       if (checked && Boolean(dataSearch)) {
-  //         const dataFilteredMovies = await filterMovies(dataSearch, filterTime(movies));
-  //         setFilteredMovies(dataFilteredMovies);
-  //       } else if (dataSearch) {
-  //         const dataFilteredMovies = await filterMovies(dataSearch, movies);
-  //         setFilteredMovies(dataFilteredMovies);
-  //       }
-  //       console.log(dataSearch, filteredMovies);
-  //       if (filteredMovies.length === 0) {
-  //         setNullRsult(true);
-  //         setLoading(false);
-  //       }
-  //       return setLoading(false);
-  //       return
-  //     }
-  //   } catch (e) {
-  //     console.log(e)
-  //     setError(false);
-  //     setLoading(false);
-  //   }
-
 
   const dataSearch = async () => {
     setError(false);
@@ -175,9 +141,11 @@ function App() {
   }
 
   useEffect(() => {
-    if (filteredMovies.length === 0) {
-      setLoading(false);
-      setNullRsult(true);
+    if (request) {
+      if (filteredMovies.length === 0) {
+        setLoading(false);
+        setNullRsult(true);
+      }
     }
   }, [filteredMovies]);
 
@@ -190,7 +158,6 @@ function App() {
     const checked = JSON.parse(localStorage.getItem('dataSearchSaveChecked'));
     const dataSearch = localStorage.getItem('dataSaveSearch');
 
-    const movies = JSON.parse(localStorage.getItem('saveMoviesList'));
     auth.getSaveMovies()
       .then((res) => {
         if (checked) {
@@ -209,18 +176,23 @@ function App() {
   }
 
   function addMovie(data) {
+
     auth.createMovie(data)
       .then((newMovie) => {
         setSaveMovies([newMovie, ...saveMovies]);
+        localStorage.setItem('saveMoviesList', JSON.stringify(saveMovies));
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
+    console.log(saveMovies);
   }
 
   function deleteMovie(card) {
     auth.deleteMovie(card._id)
       .then(() => {
+        console.log(card._id)
         const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
         setSaveMovies(updateSaveMovies);
+        localStorage.setItem('saveMoviesList', JSON.stringify(saveMovies));
       })
       .catch((err) => console.log(err));
   }
@@ -231,7 +203,7 @@ function App() {
       setSaveRequest(false);
     }
     setSaveLoading(false);
-  }, [saveMovies]);
+  }, []);
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
@@ -248,7 +220,7 @@ function App() {
       .then(() => {
         setLoggedIn(true);
       })
-      .then(() => navigate('/movies'))
+      // .then(() => navigate('/movies'))
       .catch((err) => {
         setErrorAuthorization(err);
       });
@@ -271,7 +243,6 @@ function App() {
         if (res) {
           setCurrentUser({ name: res.name, email: res.email, id: res._id })
           setLoggedIn(true);
-          navigate('/movies');
         }
       })
       .catch((err) => console.log(err, "Не удалось авторизировать пользователя."));
@@ -306,16 +277,17 @@ function App() {
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
-          <Route path="/signup" element={<Register
+          <Route path="/signup" element={!loggedIn ? <Register
             errorCreateUser={errorCreateUser}
             onCreateUser={handleCreateUser}
             resetError={resetError}
-          />} />
-          <Route path="/signin" element={<Login
+          /> : <Navigate to="/movies" replace />} />
+
+          <Route path="/signin" element={!loggedIn ? <Login
             onLogin={handleAuthorization}
             errorAuthorization={errorAuthorization}
             resetError={resetError}
-          />} />
+          /> : <Navigate to="/movies" replace />} />
 
           <Route path="/" element={(
             <>
