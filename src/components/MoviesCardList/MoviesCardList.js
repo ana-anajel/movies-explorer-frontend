@@ -43,7 +43,7 @@ function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
     setStartIndex(startIndex + sise);
     handleShowMore()
   }
-  console.log(movies[1])
+
   const moviesElements = movies.slice(0, showMore ? startIndex : movies.length).map((card) => (
 
     < MoviesCard

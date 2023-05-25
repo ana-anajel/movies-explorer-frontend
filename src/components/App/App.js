@@ -27,6 +27,7 @@ function App() {
   const [saveMovies, setSaveMovies] = useState([]);
   //данные локалсторедж
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [filteredSaveMovies, setFilteredSaveMovies] = useState([]);
 
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(false);
@@ -84,15 +85,13 @@ function App() {
       const arrMovies = JSON.parse(localStorage.getItem('moviesList')) || [];
       const arrSaveMovies = JSON.parse(localStorage.getItem('saveMoviesList')) || [];
 
-      console.log('data?', arrSaveMovies)
-
       if (arrMovies.length === 0) {
         Promise.all([api.getMovies(), auth.getSaveMovies()])
           .then(([dataMovies, dataSaveMovies]) => {
             localStorage.setItem('moviesList', JSON.stringify(dataMovies));
             localStorage.setItem('saveMoviesList', JSON.stringify(dataSaveMovies));
             setMovies(JSON.parse(localStorage.getItem('moviesList')));
-            setSaveMovies(JSON.parse(localStorage.getItem('moviesList')));
+            setSaveMovies(JSON.parse(localStorage.getItem('saveMoviesList')));
           })
           .catch((err) => console.log(err, 'Ошибка при получении данных.'));
       } else {
@@ -103,7 +102,6 @@ function App() {
       if (filterText) {
         dataSearch()
       }
-      console.log('da', arrSaveMovies)
     }
   }, [loggedIn]);
 
@@ -154,26 +152,44 @@ function App() {
     setSaveNullRequest(false);
     setSaveRequest(true);
     setSaveLoading(true);
+    setSaveNullRsult(false)
 
-    const checked = JSON.parse(localStorage.getItem('dataSearchSaveChecked'));
-    const dataSearch = localStorage.getItem('dataSaveSearch');
+    try {
+      const checked = JSON.parse(localStorage.getItem('dataSearchSaveChecked'));
+      const dataSearch = localStorage.getItem('dataSaveSearch');
 
-    auth.getSaveMovies()
-      .then((res) => {
-        if (checked) {
-          const resultsMovies = filterMovies(dataSearch, filterTime(res));
-          setSaveMovies(resultsMovies);
-        } else {
-          const resultsMovies = filterMovies(dataSearch, res);
-          setSaveMovies(resultsMovies);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        setSaveError(true);
-        console.log(err, 'ошибка при поиске в сохраненках')
-      })
+      if (!dataSearch) {
+        setTimeout(() => {
+          setSaveLoading(false);
+          setSaveNullRequest(true);
+        }, 1000);
+        return;
+      }
+
+      let dataFilteredMovies = [];
+      if (checked && Boolean(dataSearch)) {
+        dataFilteredMovies = filterMovies(dataSearch, filterTime(saveMovies));
+      } else if (dataSearch) {
+        dataFilteredMovies = filterMovies(dataSearch, saveMovies);
+      }
+      setFilteredSaveMovies(dataFilteredMovies);
+      setSaveLoading(false);
+      return;
+
+    } catch (err) {
+      setSaveLoading(false);
+      setSaveError(true);
+      console.log(err, 'ошибка при поиске в сохраненках')
+    }
   }
+
+  useEffect(() => {
+    if (saveRequest) {
+      setSaveNullRequest(filteredSaveMovies.length === 0)
+      setSaveLoading(false);
+      setSaveNullRsult(true);
+    }
+  }, [filteredSaveMovies]);
 
   function addMovie(data) {
 
@@ -196,14 +212,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
-  useEffect(() => {
-    if (saveRequest) {
-      setSaveNullRequest(movies.length === 0);
-      setSaveRequest(false);
-    }
-    setSaveLoading(false);
-  }, []);
 
   function handleCreateUser({ name, email, password }) {
     auth.register(name, email, password)
