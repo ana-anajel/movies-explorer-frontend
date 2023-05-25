@@ -33,13 +33,11 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   //состояния
-  const [request, setRequest] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [nullRequest, setNullRequest] = useState(false);
   const [nullRsult, setNullRsult] = useState(false);
 
-  const [saveRequest, setSaveRequest] = useState(false);
   const [saveloading, setSaveLoading] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [saveNullRequest, setSaveNullRequest] = useState(false);
@@ -84,7 +82,6 @@ function App() {
     if (loggedIn) {
       const arrMovies = JSON.parse(localStorage.getItem('moviesList')) || [];
       const arrSaveMovies = JSON.parse(localStorage.getItem('saveMoviesList')) || [];
-
       if (arrMovies.length === 0) {
         Promise.all([api.getMovies(), auth.getSaveMovies()])
           .then(([dataMovies, dataSaveMovies]) => {
@@ -98,18 +95,23 @@ function App() {
         setMovies(arrMovies);
         setSaveMovies(arrSaveMovies);
       }
-      const filterText = localStorage.getItem('dataSearch') || '';
-      if (filterText) {
-        dataSearch()
-      }
     }
   }, [loggedIn]);
 
+  useEffect(() => {
+    const filterText = localStorage.getItem('dataSearch') || '';
+    if (filterText) {
+      dataSearch();
+    }
+  }, [movies])
+
+  //фильтрация
   const dataSearch = async () => {
+    setLoading(true);
     setError(false);
     setNullRequest(false);
     setNullRsult(false);
-    setLoading(true);
+
     try {
       const checked = JSON.parse(localStorage.getItem('dataSearchChecked'));
       const dataSearch = localStorage.getItem('dataSearch');
@@ -121,7 +123,6 @@ function App() {
         }, 1000);
         return;
       }
-
       let dataFilteredMovies = [];
       if (checked && Boolean(dataSearch)) {
         dataFilteredMovies = await filterMovies(dataSearch, filterTime(movies));
@@ -129,29 +130,22 @@ function App() {
         dataFilteredMovies = await filterMovies(dataSearch, movies);
       }
       setFilteredMovies(dataFilteredMovies);
-      setLoading(false);
-      return;
 
+      if (dataFilteredMovies.length === 0) {
+        setNullRsult(true);
+      }
+      setLoading(false);
+      return
     } catch (e) {
       console.log(e)
       setError(true);
     }
   }
 
-  useEffect(() => {
-    if (request) {
-      if (filteredMovies.length === 0) {
-        setLoading(false);
-        setNullRsult(true);
-      }
-    }
-  }, [filteredMovies]);
-
   const dataSaveSearch = () => {
+    setSaveLoading(true);
     setSaveError(false);
     setSaveNullRequest(false);
-    setSaveRequest(true);
-    setSaveLoading(true);
     setSaveNullRsult(false)
 
     try {
@@ -173,6 +167,11 @@ function App() {
         dataFilteredMovies = filterMovies(dataSearch, saveMovies);
       }
       setFilteredSaveMovies(dataFilteredMovies);
+
+      if (dataFilteredMovies.length === 0) {
+        setSaveNullRsult(true);
+      }
+
       setSaveLoading(false);
       return;
 
@@ -182,14 +181,6 @@ function App() {
       console.log(err, 'ошибка при поиске в сохраненках')
     }
   }
-
-  useEffect(() => {
-    if (saveRequest) {
-      setSaveNullRequest(filteredSaveMovies.length === 0)
-      setSaveLoading(false);
-      setSaveNullRsult(true);
-    }
-  }, [filteredSaveMovies]);
 
   function addMovie(data) {
 
@@ -275,6 +266,8 @@ function App() {
         localStorage.removeItem('dataSearch')
         localStorage.removeItem('dataSaveSearch');
         localStorage.removeItem('dataSaveSearchChecked');
+        localStorage.removeItem('dataSearchSaveChecked');
+
         setLoggedIn(false)
         navigate('/');
       })
@@ -311,7 +304,6 @@ function App() {
               <Movies
                 saveMovies={saveMovies}
                 movies={filteredMovies}
-                request={request}
 
                 dataSearch={dataSearch}
                 loading={loading}
@@ -329,12 +321,14 @@ function App() {
               <Header theme={false} loggedIn={loggedIn} />
               <SavedMovies
                 movies={saveMovies}
+                filteredMovies={filterMovies}
 
                 dataSearch={dataSaveSearch}
-                deleteMovie={deleteMovie}
                 loading={saveloading}
                 error={saveError}
                 nullRequest={saveNullRequest}
+                nullRsult={saveNullRsult}
+                deleteMovie={deleteMovie}
               />
               <Footer />
             </>

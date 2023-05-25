@@ -10,16 +10,16 @@ function SavedMovies({ movies, dataSearch, loading, nullRequest, nullRsult, erro
     <div className="movies">
       <SearchForm
         typeSearch={'saveSearch'}
-        dataSearch={dataSearch}
         loading={loading}
         dataSearchType={'dataSaveSearch'}
         checkedType={'dataSearchSaveChecked'}
+        dataSearch={dataSearch}
       />
       {loading && <Preloader />}
       {nullRequest && <ErrorSearch message={'Введите ключевое слово.'} />}
       {nullRsult && <ErrorSearch message={'Ничего не найдено.'} />}
       {error && <ErrorSearch message={'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.'} />}
-      {!loading && !error && !nullRequest && <MoviesSaveCardList movies={movies} type={false} deleteMovie={deleteMovie} />}
+      {!loading && !error && !nullRequest && !nullRsult && <MoviesSaveCardList movies={movies} type={false} deleteMovie={deleteMovie} />}
     </div>
   );
 }

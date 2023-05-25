@@ -41,6 +41,9 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
     dataSearch();
   }
 
+  // console.log('6', JSON.parse(localStorage.getItem(checkedType)))
+  // console.log('8', localStorage.getItem(dataSearchType))
+
   return (
     <form className='search' onSubmit={handleFormSubmit} noValidate>
       <div className='search__form-element'>
