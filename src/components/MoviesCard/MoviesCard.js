@@ -9,23 +9,29 @@ import '../Animation/Animation.css';
 import { MOVIES_API } from "../../constants/Api";
 
 function MoviesCard({ saveMovies, addMovie, card, deleteMovie, type }) {
+  const saveMov = JSON.parse(localStorage.getItem('saveMoviesList'));
+  const [isLiked, setIsLiked] = useState(saveMov?.some((i) => i.movieId === card.id))
 
-  const isLiked = saveMovies?.some((i) => i.movieId === card.id);
-
+  // const isLiked = saveMovies?.some((i) => i.movieId === card.id);
 
   function handleClick() {
     if (isLiked) {
-      const saveCard = saveMovies.find((i) => i.movieId === card.id);
+      const mov = JSON.parse(localStorage.getItem('saveMoviesList'));
+      const saveCard = mov.find((i) => i.movieId === card.id);
       deleteMovie(saveCard);
-      console.log('click del');
-    } else {
-      console.log('click');
+      console.log('click del', card.nameRU);
+    } else if (!isLiked) {
+      console.log('click', card.nameRU);
       addMovie(card);
     }
+    // setIsLiked(saveMov?.some((i) => i.movieId === card.id))
+    setIsLiked(!isLiked)
   }
 
   function handleDeleteMovie() {
+    console.log('click del', card.nameRU);
     deleteMovie(card);
+    setIsLiked(false);
   }
 
   return (

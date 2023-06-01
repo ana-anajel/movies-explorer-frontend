@@ -186,20 +186,27 @@ function App() {
 
     auth.createMovie(data)
       .then((newMovie) => {
-        setSaveMovies([newMovie, ...saveMovies]);
-        localStorage.setItem('saveMoviesList', JSON.stringify(saveMovies));
+        const mov = JSON.parse(localStorage.getItem('saveMoviesList'));
+        // console.log(newMovie)
+        localStorage.setItem('saveMoviesList', JSON.stringify([newMovie, ...mov]));
+        // setSaveMovies([newMovie, ...saveMovies]);
+        // localStorage.setItem('saveMoviesList', JSON.stringify(saveMovies));
+        const mo = JSON.parse(localStorage.getItem('saveMoviesList'));
+        console.log('add', mo)
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
-    console.log(saveMovies);
+    // console.log(saveMovies);
   }
 
   function deleteMovie(card) {
     auth.deleteMovie(card._id)
       .then(() => {
-        console.log(card._id)
-        const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
+        const del = JSON.parse(localStorage.getItem('saveMoviesList'));
+        // const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
+        const updateSaveMovies = del.filter((i) => i._id !== card._id);
         setSaveMovies(updateSaveMovies);
-        localStorage.setItem('saveMoviesList', JSON.stringify(saveMovies));
+        localStorage.setItem('saveMoviesList', JSON.stringify(updateSaveMovies));
+        console.log(JSON.parse(localStorage.getItem('saveMoviesList')));
       })
       .catch((err) => console.log(err));
   }

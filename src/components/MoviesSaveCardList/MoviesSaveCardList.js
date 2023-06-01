@@ -2,7 +2,8 @@ import '../MoviesCardList/MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
-function MoviesSaveCardList({ movies, deleteMovie, type }) {
+function MoviesSaveCardList({ deleteMovie, type }) {
+  const movies = JSON.parse(localStorage.getItem('saveMoviesList'));
   const moviesElements = movies?.slice(0, movies.length).map((card) => (
     <MoviesCard
       saveMovies={movies}
