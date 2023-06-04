@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Mark from '../../images/mark.svg';
 import MarkActiv from '../../images/markActiv.svg';
@@ -14,19 +13,16 @@ function MoviesCard({ addMovie, card, deleteMovie, type }) {
 
   function handleClick() {
     if (isLiked) {
-      const mov = JSON.parse(localStorage.getItem('saveMoviesList'));
-      const saveCard = mov.find((i) => i.movieId === card.id);
+      const saveMoviesList = JSON.parse(localStorage.getItem('saveMoviesList'));
+      const saveCard = saveMoviesList.find((i) => i.movieId === card.id);
       deleteMovie(saveCard);
-      console.log('click del', card.nameRU);
     } else if (!isLiked) {
-      console.log('click', card.nameRU);
       addMovie(card);
     }
     setIsLiked(!isLiked)
   }
 
   function handleDeleteMovie() {
-    console.log('click del', card.nameRU);
     deleteMovie(card);
     setIsLiked(false);
   }

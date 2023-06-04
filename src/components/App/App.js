@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import { auth } from '../../utils/MainApi';
 import { api } from '../../utils/MoviesApi';
@@ -182,13 +182,10 @@ function App() {
   }
 
   function addMovie(data) {
-
     auth.createMovie(data)
       .then((newMovie) => {
-        const mov = JSON.parse(localStorage.getItem('saveMoviesList'));
-        localStorage.setItem('saveMoviesList', JSON.stringify([newMovie, ...mov]));
-        const mo = JSON.parse(localStorage.getItem('saveMoviesList'));
-        console.log('add', mo)
+        const moviesList = JSON.parse(localStorage.getItem('saveMoviesList'));
+        localStorage.setItem('saveMoviesList', JSON.stringify([newMovie, ...moviesList]));
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
   }
@@ -198,9 +195,9 @@ function App() {
       .then(() => {
         const del = JSON.parse(localStorage.getItem('saveMoviesList'));
         const updateSaveMovies = del.filter((i) => i._id !== card._id);
-        const de = filteredSaveMovies.filter((i) => i._id !== card._id);
+        const filteredUpdateSaveMovies = filteredSaveMovies.filter((i) => i._id !== card._id);
         setSaveMovies(updateSaveMovies);
-        setFilteredSaveMovies(de);
+        setFilteredSaveMovies(filteredUpdateSaveMovies);
         localStorage.setItem('saveMoviesList', JSON.stringify(updateSaveMovies));
       })
       .catch((err) => console.log(err));
@@ -261,9 +258,6 @@ function App() {
         setCurrentUser({})
         localStorage.removeItem('moviesList');
         localStorage.removeItem('saveMoviesList');
-
-        // localStorage.removeItem('filteredMoviesList');
-        // localStorage.removeItem('filteredSaveMoviesList');
 
         localStorage.removeItem('searchQuery');
         localStorage.removeItem('checkboxState');
