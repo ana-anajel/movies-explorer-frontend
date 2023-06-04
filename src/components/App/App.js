@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-// import { Route } from 'react-router-dom';
-// import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
@@ -25,6 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [movies, setMovies] = useState([]);
   const [saveMovies, setSaveMovies] = useState([]);
+
   //данные локалсторедж
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [filteredSaveMovies, setFilteredSaveMovies] = useState([]);
@@ -99,24 +98,24 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    const filterText = localStorage.getItem('dataSearch') || '';
-    if (filterText) {
-      dataSearch();
+    const searchQuery = localStorage.getItem('searchQuery') || '';
+    if (searchQuery) {
+      searchMovies();
     }
-  }, [movies])
+  }, [movies]);
 
   //фильтрация
-  const dataSearch = async () => {
+  const searchMovies = async () => {
     setLoading(true);
     setError(false);
     setNullRequest(false);
     setNullRsult(false);
 
     try {
-      const checked = JSON.parse(localStorage.getItem('dataSearchChecked'));
-      const dataSearch = localStorage.getItem('dataSearch');
+      const checked = JSON.parse(localStorage.getItem('checkboxState'));
+      const searchQuery = localStorage.getItem('searchQuery');
 
-      if (!dataSearch) {
+      if (!searchQuery) {
         setTimeout(() => {
           setLoading(false);
           setNullRequest(true);
@@ -124,10 +123,10 @@ function App() {
         return;
       }
       let dataFilteredMovies = [];
-      if (checked && Boolean(dataSearch)) {
-        dataFilteredMovies = await filterMovies(dataSearch, filterTime(movies));
-      } else if (dataSearch) {
-        dataFilteredMovies = await filterMovies(dataSearch, movies);
+      if (checked && Boolean(searchQuery)) {
+        dataFilteredMovies = await filterMovies(searchQuery, filterTime(movies));
+      } else if (searchQuery) {
+        dataFilteredMovies = await filterMovies(searchQuery, movies);
       }
       setFilteredMovies(dataFilteredMovies);
 
@@ -142,17 +141,17 @@ function App() {
     }
   }
 
-  const dataSaveSearch = () => {
+  const searchSavedMovies = () => {
     setSaveLoading(true);
     setSaveError(false);
     setSaveNullRequest(false);
     setSaveNullRsult(false)
 
     try {
-      const checked = JSON.parse(localStorage.getItem('dataSearchSaveChecked'));
-      const dataSearch = localStorage.getItem('dataSaveSearch');
+      const checked = JSON.parse(localStorage.getItem('saveCheckboxState'));
+      const searchQuery = localStorage.getItem('saveSearchQuery');
 
-      if (!dataSearch) {
+      if (!searchQuery) {
         setTimeout(() => {
           setSaveLoading(false);
           setSaveNullRequest(true);
@@ -161,10 +160,10 @@ function App() {
       }
 
       let dataFilteredMovies = [];
-      if (checked && Boolean(dataSearch)) {
-        dataFilteredMovies = filterMovies(dataSearch, filterTime(saveMovies));
-      } else if (dataSearch) {
-        dataFilteredMovies = filterMovies(dataSearch, saveMovies);
+      if (checked && Boolean(searchQuery)) {
+        dataFilteredMovies = filterMovies(searchQuery, filterTime(saveMovies));
+      } else if (searchQuery) {
+        dataFilteredMovies = filterMovies(searchQuery, saveMovies);
       }
       setFilteredSaveMovies(dataFilteredMovies);
 
@@ -187,26 +186,22 @@ function App() {
     auth.createMovie(data)
       .then((newMovie) => {
         const mov = JSON.parse(localStorage.getItem('saveMoviesList'));
-        // console.log(newMovie)
         localStorage.setItem('saveMoviesList', JSON.stringify([newMovie, ...mov]));
-        // setSaveMovies([newMovie, ...saveMovies]);
-        // localStorage.setItem('saveMoviesList', JSON.stringify(saveMovies));
         const mo = JSON.parse(localStorage.getItem('saveMoviesList'));
         console.log('add', mo)
       })
       .catch((err) => console.log(err, 'не удалось создать карточку'));
-    // console.log(saveMovies);
   }
 
   function deleteMovie(card) {
     auth.deleteMovie(card._id)
       .then(() => {
         const del = JSON.parse(localStorage.getItem('saveMoviesList'));
-        // const updateSaveMovies = saveMovies.filter((i) => i._id !== card._id);
         const updateSaveMovies = del.filter((i) => i._id !== card._id);
+        const de = filteredSaveMovies.filter((i) => i._id !== card._id);
         setSaveMovies(updateSaveMovies);
+        setFilteredSaveMovies(de);
         localStorage.setItem('saveMoviesList', JSON.stringify(updateSaveMovies));
-        console.log(JSON.parse(localStorage.getItem('saveMoviesList')));
       })
       .catch((err) => console.log(err));
   }
@@ -267,13 +262,14 @@ function App() {
         localStorage.removeItem('moviesList');
         localStorage.removeItem('saveMoviesList');
 
-        localStorage.removeItem('arrMovies');
-        localStorage.removeItem('arrSaveMovies');
-        localStorage.removeItem('dataSearchChecked');
-        localStorage.removeItem('dataSearch')
-        localStorage.removeItem('dataSaveSearch');
-        localStorage.removeItem('dataSaveSearchChecked');
-        localStorage.removeItem('dataSearchSaveChecked');
+        // localStorage.removeItem('filteredMoviesList');
+        // localStorage.removeItem('filteredSaveMoviesList');
+
+        localStorage.removeItem('searchQuery');
+        localStorage.removeItem('checkboxState');
+
+        localStorage.removeItem('saveSearchQuery');
+        localStorage.removeItem('saveCheckboxState');
 
         setLoggedIn(false)
         navigate('/');
@@ -309,10 +305,9 @@ function App() {
             <>
               <Header theme={false} loggedIn={loggedIn} />
               <Movies
-                saveMovies={saveMovies}
-                movies={filteredMovies}
+                filteredMovies={filteredMovies}
 
-                dataSearch={dataSearch}
+                searchMovies={searchMovies}
                 loading={loading}
                 error={error}
                 nullRequest={nullRequest}
@@ -327,10 +322,12 @@ function App() {
             <>
               <Header theme={false} loggedIn={loggedIn} />
               <SavedMovies
-                movies={saveMovies}
-                filteredMovies={filterMovies}
+                movies={filteredSaveMovies}
+                setFilteredSaveMovies={setFilteredSaveMovies}
 
-                dataSearch={dataSaveSearch}
+                filteredMovies={filteredSaveMovies}
+
+                searchMovies={searchSavedMovies}
                 loading={saveloading}
                 error={saveError}
                 nullRequest={saveNullRequest}

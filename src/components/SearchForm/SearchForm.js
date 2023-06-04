@@ -5,15 +5,15 @@ import Search from '../../images/search.svg'
 import SearchButton from '../../images/searchButton.svg'
 import '../Animation/Animation.css';
 
-function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSearch }) {
+function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearch, setFilteredSaveMovies }) {
   const [isValid, setIsValid] = useState(true);
   const [search, setSearch] = useState('');
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     if (typeSearch === 'search') {
-      const checked = JSON.parse(localStorage.getItem('dataSearchChecked')) || false;
-      const filterText = localStorage.getItem('dataSearch') || '';
+      const checked = JSON.parse(localStorage.getItem('checkboxState')) || false;
+      const filterText = localStorage.getItem('searchQuery') || '';
 
       if (filterText) {
         setSearch(filterText);
@@ -22,6 +22,9 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
     } else if (typeSearch === 'saveSearch') {
       setSearch('');
       setIsChecked(false);
+      localStorage.removeItem('saveSearchQuery');
+      localStorage.removeItem('saveCheckboxState');
+      setFilteredSaveMovies([]);
     }
   }, []);
 
@@ -36,13 +39,13 @@ function SearchForm({ dataSearch, loading, dataSearchType, checkedType, typeSear
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    localStorage.setItem(dataSearchType, search);
-    localStorage.setItem(checkedType, JSON.stringify(isChecked));
-    dataSearch();
+    localStorage.setItem(searchType, search);
+    localStorage.setItem(checkboxType, JSON.stringify(isChecked));
+    searchMovies();
   }
 
-  // console.log('6', JSON.parse(localStorage.getItem(checkedType)))
-  // console.log('8', localStorage.getItem(dataSearchType))
+  // console.log('6', JSON.parse(localStorage.getItem(checkboxType)))
+  // console.log('8', localStorage.getItem(searchType))
 
   return (
     <form className='search' onSubmit={handleFormSubmit} noValidate>

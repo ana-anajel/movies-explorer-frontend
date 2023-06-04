@@ -3,7 +3,7 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
 
-function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
+function MoviesCardList({ filteredMovies, addMovie, deleteMovie, type }) {
   const [sise, setSise] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
@@ -32,7 +32,7 @@ function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
   }, [startIndex])
 
   function handleShowMore() {
-    if (movies.length > startIndex + sise) {
+    if (filteredMovies.length > startIndex + sise) {
       setShowMore(true);
     } else {
       setShowMore(false);
@@ -44,11 +44,9 @@ function MoviesCardList({ movies, saveMovies, addMovie, deleteMovie, type }) {
     handleShowMore()
   }
 
-  const moviesElements = movies.slice(0, showMore ? startIndex : movies.length).map((card) => (
+  const moviesElements = filteredMovies.slice(0, showMore ? startIndex : filteredMovies.length).map((card) => (
 
     < MoviesCard
-      saveMovies={saveMovies}
-
       addMovie={addMovie}
       deleteMovie={deleteMovie}
       key={card.id}
