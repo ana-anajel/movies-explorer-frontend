@@ -28,8 +28,9 @@ function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearc
     }
   }, []);
 
-  function handleCheckbox() {
+  function handleCheckbox(e) {
     setIsChecked(!isChecked);
+    handleFormSubmit(e);
   }
 
   function handleSearch(e) {
@@ -43,9 +44,6 @@ function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearc
     localStorage.setItem(checkboxType, JSON.stringify(isChecked));
     searchMovies();
   }
-
-  // console.log('6', JSON.parse(localStorage.getItem(checkboxType)))
-  // console.log('8', localStorage.getItem(searchType))
 
   return (
     <form className='search' onSubmit={handleFormSubmit} noValidate>
