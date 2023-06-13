@@ -15,7 +15,7 @@ function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdate
     name: currentUser.name,
     email: currentUser.email
   });
-  const [form, setForm] = useState(null);
+  const [form, setForm] = useState('');
 
   function editProfile() {
     setIsValid(false);
@@ -28,8 +28,12 @@ function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdate
     }
   }, [currentUser])
 
-  function checkFieldsDiversity(dataUser, newDataUser) {
-    return JSON.stringify(dataUser) === JSON.stringify(newDataUser);
+  function checkFieldsDiversity() {
+    const arr = {
+      name: currentUser.name,
+      email: currentUser.email
+    }
+    return JSON.stringify(arr) === JSON.stringify(formData);
   }
 
 
@@ -39,11 +43,10 @@ function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdate
     setForm(e.target.form);
     setFormData({ ...formData, [name]: value });
     setErrorMessage({ ...errorMessage, [name]: validationMessage });
-    checkFieldsDiversity();
   }
 
   useEffect(() => {
-    if (!checkFieldsDiversity(currentUser, formData)) {
+    if (form && !checkFieldsDiversity()) {
       setIsValid(form.checkValidity());
     } else {
       setIsValid(false);
