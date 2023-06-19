@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 // import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
@@ -47,6 +47,15 @@ function App() {
   const [errorAuthorization, setErrorAuthorization] = useState('');
   const [errorUpdateUser, setErrorUpdateUser] = useState('');
   const [messageOk, setMessageOk] = useState('');
+
+  const location = useLocation();
+
+  useEffect(() => {
+    localStorage.setItem('path', location.pathname);
+    navigate(localStorage.getItem('path'));
+  }, []);
+
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -264,6 +273,8 @@ function App() {
 
         localStorage.removeItem('saveSearchQuery');
         localStorage.removeItem('saveCheckboxState');
+
+        localStorage.removeItem('path');
 
         setLoggedIn(false)
         navigate('/');
