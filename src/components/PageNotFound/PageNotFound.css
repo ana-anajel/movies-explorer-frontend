@@ -28,6 +28,9 @@
   line-height: 17px;
   color: #000;
   text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 @media screen and (max-width: 924px) {

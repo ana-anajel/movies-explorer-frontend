@@ -321,7 +321,7 @@ function App() {
                 deleteMovie={deleteMovie} />
               <Footer />
             </>
-            : <Navigate to="/signin" replace />} />
+            : <Navigate to="/" replace />} />
 
           <Route path='/saved-movies' element={loggedIn ?
             <>
@@ -341,7 +341,7 @@ function App() {
               />
               <Footer />
             </>
-            : <Navigate to="/signin" replace />} />
+            : <Navigate to="/" replace />} />
 
           <Route path='/profile' element={loggedIn ?
             <>
@@ -353,9 +353,10 @@ function App() {
                 messageOk={messageOk}
               />
             </>
-            : <Navigate to="/signin" replace />} />
+            : <Navigate to="/" replace />} />
 
           <Route path="*" element={<PageNotFound />} />
+
         </Routes>
       </CurrentUserContext.Provider>
     </div >
