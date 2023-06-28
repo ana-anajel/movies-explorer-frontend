@@ -29,7 +29,7 @@ function App() {
   const [filteredSaveMovies, setFilteredSaveMovies] = useState([]);
 
   //Авторизован пользователь или нет
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('loggedIn')));
 
   //состояния
   const [loading, setLoading] = useState(false);
@@ -50,10 +50,13 @@ function App() {
 
   const location = useLocation();
 
-  useEffect(() => {
-    localStorage.setItem('path', location.pathname);
-    navigate(localStorage.getItem('path'));
-  }, []);
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     localStorage.setItem('path', location.pathname);
+  //     navigate(localStorage.getItem('path'));
+  //   }
+  // }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -250,6 +253,7 @@ function App() {
         if (res) {
           setCurrentUser({ name: res.name, email: res.email, id: res._id })
           setLoggedIn(true);
+          localStorage.setItem('loggedIn', res._id)
         }
       })
       .catch((err) => console.log(err, "Не удалось авторизировать пользователя."));
@@ -275,6 +279,7 @@ function App() {
         localStorage.removeItem('saveCheckboxState');
 
         localStorage.removeItem('path');
+        localStorage.removeItem('loggedIn');
 
         setLoggedIn(false)
         navigate('/');
