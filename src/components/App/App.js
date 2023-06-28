@@ -17,6 +17,8 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Footer from '../Footer/Footer';
 import Profile from '../Profile/Profile';
 
+import { FILM_DURATION } from '../../constants/constants'
+
 function App() {
   const navigate = useNavigate();
   //данные api
@@ -30,6 +32,7 @@ function App() {
 
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('loggedIn')));
+  // Boolean(localStorage.getItem('loggedIn'))
 
   //состояния
   const [loading, setLoading] = useState(false);
@@ -48,8 +51,7 @@ function App() {
   const [errorUpdateUser, setErrorUpdateUser] = useState('');
   const [messageOk, setMessageOk] = useState('');
 
-  const location = useLocation();
-
+  // const location = useLocation();
 
   // useEffect(() => {
   //   if (loggedIn) {
@@ -76,7 +78,7 @@ function App() {
 
   function filterTime(arr) {
     return arr.filter((item) => {
-      return item.duration < 40;
+      return item.duration < FILM_DURATION;
     })
   }
 

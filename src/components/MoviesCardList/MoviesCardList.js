@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard'
 import '../Animation/Animation.css';
+import {
+  WINDOW__SISE_DESKTOP,
+  WINDOW__SISE_TABLET,
+  MOVIES_ROW_DESKTOP,
+  MOVIES_ROW_TABLET,
+  MOVIES_ROW_MOBILE,
+  MOVIES_LINE_DESKTOP,
+  MOVIES_LINE_MOBILE
+} from '../../constants/constants';
 
 function MoviesCardList({ filteredMovies, addMovie, deleteMovie, type }) {
   const [sise, setSise] = useState(0);
@@ -10,15 +19,15 @@ function MoviesCardList({ filteredMovies, addMovie, deleteMovie, type }) {
 
   useEffect(() => {
     function handleResize() {
-      if (window.innerWidth > 1030) {
-        setSise(3);
-        setStartIndex(12);
-      } else if (window.innerWidth > 643) {
-        setSise(2);
-        setStartIndex(8);
+      if (window.innerWidth > WINDOW__SISE_DESKTOP) {
+        setSise(MOVIES_LINE_DESKTOP);
+        setStartIndex(MOVIES_ROW_DESKTOP);
+      } else if (window.innerWidth > WINDOW__SISE_TABLET) {
+        setSise(MOVIES_LINE_MOBILE);
+        setStartIndex(MOVIES_ROW_TABLET);
       } else {
-        setSise(2);
-        setStartIndex(5);
+        setSise(MOVIES_LINE_MOBILE);
+        setStartIndex(MOVIES_ROW_MOBILE);
       }
     }
     handleResize();
