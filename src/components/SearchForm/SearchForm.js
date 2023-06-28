@@ -14,7 +14,6 @@ function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearc
     if (typeSearch === 'search') {
       const checked = JSON.parse(localStorage.getItem('checkboxState')) || false;
       const filterText = localStorage.getItem('searchQuery') || '';
-
       if (filterText) {
         setSearch(filterText);
         setIsChecked(checked);
@@ -28,9 +27,22 @@ function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearc
     }
   }, []);
 
-  function handleCheckbox(e) {
+  useEffect(() => {
+    if (typeSearch === 'search') {
+      if (localStorage.getItem('searchQuery')) {
+        searchMovies();
+      }
+    } else if (typeSearch === 'saveSearch') {
+      // if (localStorage.getItem('saveSearchQuery') || JSON.parse(localStorage.getItem('saveCheckboxState'))) {
+      //   console.log('save', localStorage.getItem('saveSearchQuery'))
+      //   searchMovies();
+      // }
+    }
+  }, [isChecked]);
+
+  function handleCheckbox() {
     setIsChecked(!isChecked);
-    handleFormSubmit(e);
+    localStorage.setItem(checkboxType, JSON.stringify(!isChecked));
   }
 
   function handleSearch(e) {
@@ -41,7 +53,6 @@ function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearc
   function handleFormSubmit(e) {
     e.preventDefault();
     localStorage.setItem(searchType, search);
-    localStorage.setItem(checkboxType, JSON.stringify(isChecked));
     searchMovies();
   }
 

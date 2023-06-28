@@ -55,8 +55,6 @@ function App() {
     navigate(localStorage.getItem('path'));
   }, []);
 
-
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setMessageOk('');
@@ -169,6 +167,9 @@ function App() {
       }
 
       let dataFilteredMovies = [];
+      // if (Boolean(searchQuery)) {
+      //   dataFilteredMovies = filterTime(saveMovies);
+      // } else 
       if (checked && Boolean(searchQuery)) {
         dataFilteredMovies = filterMovies(searchQuery, filterTime(saveMovies));
       } else if (searchQuery) {
