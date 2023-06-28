@@ -8,7 +8,6 @@ function MoviesCardList({ filteredMovies, addMovie, deleteMovie, type }) {
   const [startIndex, setStartIndex] = useState(0);
   const [showMore, setShowMore] = useState(false);
 
-  // console.log(movies);
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth > 1030) {
@@ -29,7 +28,7 @@ function MoviesCardList({ filteredMovies, addMovie, deleteMovie, type }) {
 
   useEffect(() => {
     handleShowMore();
-  }, [startIndex])
+  }, [startIndex, filteredMovies])
 
   function handleShowMore() {
     if (filteredMovies.length > startIndex + sise) {
