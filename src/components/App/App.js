@@ -158,7 +158,7 @@ function App() {
       const checked = JSON.parse(localStorage.getItem('saveCheckboxState'));
       const searchQuery = localStorage.getItem('saveSearchQuery');
 
-      if (!searchQuery) {
+      if (!searchQuery && !checked) {
         setTimeout(() => {
           setSaveLoading(false);
           setSaveNullRequest(true);
@@ -167,13 +167,12 @@ function App() {
       }
 
       let dataFilteredMovies = [];
-      // if (Boolean(searchQuery)) {
-      //   dataFilteredMovies = filterTime(saveMovies);
-      // } else 
       if (checked && Boolean(searchQuery)) {
         dataFilteredMovies = filterMovies(searchQuery, filterTime(saveMovies));
       } else if (searchQuery) {
         dataFilteredMovies = filterMovies(searchQuery, saveMovies);
+      } else if (checked) {
+        dataFilteredMovies = filterTime(saveMovies);
       }
       setFilteredSaveMovies(dataFilteredMovies);
 

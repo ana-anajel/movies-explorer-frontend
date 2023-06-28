@@ -33,10 +33,12 @@ function SearchForm({ searchMovies, loading, searchType, checkboxType, typeSearc
         searchMovies();
       }
     } else if (typeSearch === 'saveSearch') {
-      // if (localStorage.getItem('saveSearchQuery') || JSON.parse(localStorage.getItem('saveCheckboxState'))) {
-      //   console.log('save', localStorage.getItem('saveSearchQuery'))
-      //   searchMovies();
-      // }
+      if (localStorage.getItem('saveSearchQuery') || JSON.parse(localStorage.getItem('saveCheckboxState'))) {
+        searchMovies();
+      } else {
+        setFilteredSaveMovies([]);
+      }
+      return;
     }
   }, [isChecked]);
 
