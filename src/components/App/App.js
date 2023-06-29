@@ -32,7 +32,6 @@ function App() {
 
   //Авторизован пользователь или нет
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem('loggedIn')));
-  // Boolean(localStorage.getItem('loggedIn'))
 
   //состояния
   const [loading, setLoading] = useState(false);
@@ -50,15 +49,6 @@ function App() {
   const [errorAuthorization, setErrorAuthorization] = useState('');
   const [errorUpdateUser, setErrorUpdateUser] = useState('');
   const [messageOk, setMessageOk] = useState('');
-
-  // const location = useLocation();
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     localStorage.setItem('path', location.pathname);
-  //     navigate(localStorage.getItem('path'));
-  //   }
-  // }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
