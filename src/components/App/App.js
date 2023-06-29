@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
-// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import { auth } from '../../utils/MainApi';
 import { api } from '../../utils/MoviesApi';
@@ -313,32 +313,34 @@ function App() {
             </>
           )} />
 
-          <Route path='/movies' element={loggedIn ?
-            <>
-              <Header theme={false} loggedIn={loggedIn} />
-              <Movies
+          <Route
+            path='/movies'
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                theme={false}
+                component={Movies}
                 filteredMovies={filteredMovies}
-
                 searchMovies={searchMovies}
                 loading={loading}
                 error={error}
                 nullRequest={nullRequest}
                 nullRsult={nullRsult}
                 addMovie={addMovie}
-                deleteMovie={deleteMovie} />
-              <Footer />
-            </>
-            : <Navigate to="/" replace />} />
+                deleteMovie={deleteMovie}
+              />
+            } />
 
-          <Route path='/saved-movies' element={loggedIn ?
-            <>
-              <Header theme={false} loggedIn={loggedIn} />
-              <SavedMovies
+          <Route
+            path='/saved-movies'
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                theme={false}
+                component={SavedMovies}
                 movies={filteredSaveMovies}
                 setFilteredSaveMovies={setFilteredSaveMovies}
-
                 filteredMovies={filteredSaveMovies}
-
                 searchMovies={searchSavedMovies}
                 loading={saveloading}
                 error={saveError}
@@ -346,21 +348,22 @@ function App() {
                 nullRsult={saveNullRsult}
                 deleteMovie={deleteMovie}
               />
-              <Footer />
-            </>
-            : <Navigate to="/" replace />} />
+            } />
 
-          <Route path='/profile' element={loggedIn ?
-            <>
-              <Header theme={false} loggedIn={loggedIn} />
-              <Profile signOut={signOut}
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                theme={false}
+                component={Profile}
+                signOut={signOut}
                 resetError={resetError}
                 errorUpdateUser={errorUpdateUser}
                 handleUpdateUser={handleUpdateUser}
                 messageOk={messageOk}
               />
-            </>
-            : <Navigate to="/" replace />} />
+            } />
 
           <Route path="*" element={<PageNotFound />} />
 

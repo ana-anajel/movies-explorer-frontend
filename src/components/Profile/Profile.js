@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import Header from '../Header/Header';
 import './Profile.css';
 import '../Animation/Animation.css';
 
-function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdateUser }) {
+function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdateUser, theme, loggedIn }) {
   const currentUser = useContext(CurrentUserContext);
   const [isEditProfile, setIsEditProfile] = useState(true);
   const [isValid, setIsValid] = useState(false);
@@ -62,81 +63,85 @@ function Profile({ messageOk, signOut, resetError, errorUpdateUser, handleUpdate
   }
 
   return (
-    <article className='profile'>
-      <div className='profile__content'>
+    <>
+      <Header theme={theme} loggedIn={loggedIn} />
+      <article className='profile'>
+        <div className='profile__content'>
 
-        <h2 className='profile__title'>{`Привет, ${currentUser.name}!`}</h2>
-        <form
-          onSubmit={onSubmit}
-          noValidate
-        >
-          <ul className='profile__list'>
+          <h2 className='profile__title'>{`Привет, ${currentUser.name}!`}</h2>
+          <form
+            onSubmit={onSubmit}
+            noValidate
+          >
+            <ul className='profile__list'>
 
-            <li className="profile__list-element">
-              <label className="profile__label-container">
-                <h3 className='profile__element'>Имя</h3>
-                <input className='profile__element profile__input'
-                  onChange={handleChange}
-                  disabled={isEditProfile}
-                  type="text"
-                  value={formData.name}
-                  id="name"
-                  name="name"
-                  minLength="2"
-                  noValidate
-                  placeholder='Имя профиля'
-                  pattern='[a-zA-Zа-яА-Я-\s]*'
-                  required
-                />
-              </label>
-            </li>
+              <li className="profile__list-element">
+                <label className="profile__label-container">
+                  <h3 className='profile__element'>Имя</h3>
+                  <input className='profile__element profile__input'
+                    onChange={handleChange}
+                    disabled={isEditProfile}
+                    type="text"
+                    value={formData.name}
+                    id="name"
+                    name="name"
+                    minLength="2"
+                    noValidate
+                    placeholder='Имя профиля'
+                    pattern='[a-zA-Zа-яА-Я-\s]*'
+                    required
+                  />
+                </label>
+              </li>
 
-            <li className="profile__list-element">
-              <label className="profile__label-container">
-                <h3 className='profile__element'>E-mail</h3>
-                <input className='profile__element profile__input'
-                  onChange={handleChange}
-                  disabled={isEditProfile}
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  placeholder='E-mail'
-                  noValidate
-                  pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-                  required
-                />
-              </label>
-            </li>
-          </ul>
-          <div className='profile__button-container'>
-            <span className="profile__message profile__message_ok">{messageOk}</span>
-            <span className="profile__message profile__message_error">{errorMessage.name || errorMessage.email || errorUpdateUser}</span>
-            {isEditProfile ? (<span
-              className='profile__button animation__link'
-              onClick={editProfile}
-            >Редактировать</span>)
-              :
-              (
-                <button
-                  className={`profile__save-button ${isValid && !errorUpdateUser ? 'profile__save-button_activ animation__button' : ''}`}
-                  type="submit"
-                  disabled={!isValid || errorUpdateUser}
-                  aria-label="Сохранить"
-                >Сохранить</button>
-              )}</div>
+              <li className="profile__list-element">
+                <label className="profile__label-container">
+                  <h3 className='profile__element'>E-mail</h3>
+                  <input className='profile__element profile__input'
+                    onChange={handleChange}
+                    disabled={isEditProfile}
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    placeholder='E-mail'
+                    noValidate
+                    pattern='^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+                    required
+                  />
+                </label>
+              </li>
+            </ul>
+            <div className='profile__button-container'>
+              <span className="profile__message profile__message_ok">{messageOk}</span>
+              <span className="profile__message profile__message_error">{errorMessage.name || errorMessage.email || errorUpdateUser}</span>
+              {isEditProfile ? (<span
+                className='profile__button animation__link'
+                onClick={editProfile}
+              >Редактировать</span>)
+                :
+                (
+                  <button
+                    className={`profile__save-button ${isValid && !errorUpdateUser ? 'profile__save-button_activ animation__button' : ''}`}
+                    type="submit"
+                    disabled={!isValid || errorUpdateUser}
+                    aria-label="Сохранить"
+                  >Сохранить</button>
+                )}</div>
 
 
-        </form>
+          </form>
 
-        {isEditProfile ? (<span
-          className='profile__button profile__logout-button animation__link'
-          onClick={signOut}
-        >Выйти из аккаунта</span>
-        ) : ('')}
-      </div>
+          {isEditProfile ? (<span
+            className='profile__button profile__logout-button animation__link'
+            onClick={signOut}
+          >Выйти из аккаунта</span>
+          ) : ('')}
+        </div>
 
-    </article >
+      </article >
+    </>
+
   );
 }
 
