@@ -7,6 +7,7 @@
 .profile__content {
   max-width: 410px;
   margin: 0 auto;
+  text-align: center;
 }
 
 .profile__title {
@@ -25,8 +26,6 @@
 
 .profile__list-element {
   box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
 }
 
 .profile__list-element:last-child {
@@ -38,6 +37,12 @@
   border-bottom: #E8E8E8 1px solid;
 }
 
+.profile__label-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .profile__element {
   font-weight: 400;
@@ -46,8 +51,22 @@
   margin: 0;
 }
 
+.profile__input {
+  text-align: right;
+  border: none;
+  color: #000;
+  background: none;
+  padding: 0;
+  outline: none;
+}
+
+.profile__input:invalid {
+  color: #FF4062;
+}
+
 .profile__element:first-child {
   font-weight: 500;
+  font-size: 11px;
 }
 
 .profile__button {
@@ -58,12 +77,65 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+  margin: 0;
+  text-decoration: none;
+  display: block;
 }
 
-.profile__button:last-child {
+.profile__logout-button {
   color: #FF4062;
   margin-top: 16px;
   font-weight: 500;
+}
+
+.profile__button-of {
+  display: none;
+}
+
+.profile__button-container {
+  position: relative;
+}
+
+.profile__save-button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 0 15px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #C2C2C2;
+  background-color: #F8F8F8;
+  border-radius: 3px;
+}
+
+.profile__save-button_activ {
+  background: #3456F3;
+  color: #FFF;
+}
+
+.profile__message {
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: -20px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+}
+
+.profile__message_error {
+  color: #FF4062;
+}
+
+.profile__message_ok {
+  color: #2BE080;
 }
 
 @media screen and (max-width: 924px) {

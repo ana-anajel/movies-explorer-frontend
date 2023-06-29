@@ -12,12 +12,12 @@
 }
 
 /* кнопка переключатель */
-.filter.active .filter__checkbox-switch {
+.filter.check-active .filter__checkbox-switch {
   left: 18px;
   background-color: #F5F5F5;
 }
 
-.filter.active .filter__checkbox {
+.filter.check-active .filter__checkbox {
   background-color: #2BE080;
 }
 

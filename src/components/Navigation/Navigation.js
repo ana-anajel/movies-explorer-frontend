@@ -12,15 +12,15 @@ function Navigation({ handleBurgerClick }) {
       <span className='menu__blur' />
       <nav className='menu'>
         <span>
-          <NavLink to='/' className='menu__link menu__link-span animation__link' activeClassName="active">Главная</NavLink>
+          <NavLink to='/' onClick={handleBurgerClick} className='menu__link menu__link-span animation__link' activeclassname='active' >Главная</NavLink>
         </span>
         <ul className='menu__list menu__list-movies'>
-          <li className='menu__link-movies animation__link'><NavLink className='menu__link menu__text-movies' activeClassName="active" to='/movies'>Фильмы</NavLink></li>
-          <li className='menu__link-movies animation__link'><NavLink className='menu__link menu__text-save-movies' activeClassName="active" to='/saved-movies'>Сохранённые фильмы</NavLink></li>
+          <li className='menu__link-movies animation__link'><NavLink onClick={handleBurgerClick} className='menu__link menu__text-movies' activeclassname='active' to='/movies'>Фильмы</NavLink></li>
+          <li className='menu__link-movies animation__link'><NavLink onClick={handleBurgerClick} className='menu__link menu__text-save-movies' activeclassname='active' to='/saved-movies'>Сохранённые фильмы</NavLink></li>
         </ul>
         <ul className='menu__list'>
-          <li className='animation__link'><NavLink className='menu__link menu__text-profile' activeClassName="active" to='/profile'>Аккаунт</NavLink></li>
-          <li className='menu__avatar-container animation__button'><Link className='menu__link' to='/profile'><img className='menu__avatar' alt="Иконка аватара. Силуэт портрета человечика." src={Avatar} /></Link></li>
+          <li className='animation__link'><NavLink onClick={handleBurgerClick} className='menu__link menu__text-profile' activeclassname='active' to='/profile'>Аккаунт</NavLink></li>
+          <li className='menu__avatar-container animation__button'><Link onClick={handleBurgerClick} className='menu__link' to='/profile'><img className='menu__avatar' alt="Иконка аватара. Силуэт портрета человечика." src={Avatar} /></Link></li>
         </ul>
       </nav >
     </>
