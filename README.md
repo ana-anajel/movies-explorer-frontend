@@ -6,12 +6,13 @@
 - обновление данных пользователей,
 - операции с карточками фильмов.
 
-Адрес [Github](https://github.com/ana-anajel/movies-explorer-frontend) репозитория.
-Ссылка на [Pull request](https://github.com/ana-anajel/movies-explorer-frontend/pull/10).
+- свёрстаны компоненты на React, разметка портирована в его формат;
+- описана логика и вёрстка страниц регистрации, логина, редактирования профиля, сохранённых фильмов;
+- реализованы асинхронные GET- и POST-запросы к API;
+- проработаны авторизованные и неавторизованные состояния, сохранение фильмов в профиле;
+
+Инструменты и стек: HTML, CSS, React;
 
 Макет проекта [Figma](https://www.figma.com/file/OQUb5GkeMIupd67QPBtSJ8/Diploma-Pink?node-id=932-3593&t=Q0lqvDGhAcpJ4WrT-0).
 
 Backend: https://api.dip.movies-explorer.nomoredomains.monster
-
-<!-- Проект доступен по [ссылке](https://ana-anajel.github.io/movies-explorer-frontend/). -->
-Front-end: https://diploma.movies-explorer.nomoredomains.monster
